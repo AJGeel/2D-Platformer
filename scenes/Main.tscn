@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://resources/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/GameCamera.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/Coin.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/Spikes.tscn" type="PackedScene" id=5]
 
 [node name="Node" type="Node"]
 
@@ -30,3 +31,42 @@ position = Vector2( 40, 272 )
 
 [node name="Coin4" parent="." instance=ExtResource( 4 )]
 position = Vector2( -279, 243 )
+
+[node name="Spikes" parent="." instance=ExtResource( 5 )]
+position = Vector2( 9, 72 )
+
+[node name="Spikes2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 27, 72 )
+
+[node name="Spikes3" parent="." instance=ExtResource( 5 )]
+position = Vector2( 45, 72 )
+
+[node name="Spikes4" parent="." instance=ExtResource( 5 )]
+position = Vector2( 117, 54 )
+
+[node name="Spikes5" parent="." instance=ExtResource( 5 )]
+position = Vector2( 153, 180 )
+
+[node name="Spikes6" parent="." instance=ExtResource( 5 )]
+position = Vector2( 135, 180 )
+
+[node name="Spikes7" parent="." instance=ExtResource( 5 )]
+position = Vector2( 117, 180 )
+
+[node name="Spikes8" parent="." instance=ExtResource( 5 )]
+position = Vector2( 99, 180 )
+
+[node name="Spikes9" parent="." instance=ExtResource( 5 )]
+position = Vector2( 9, 270 )
+
+[node name="Spikes10" parent="." instance=ExtResource( 5 )]
+position = Vector2( -261, 288 )
+
+[node name="Spikes11" parent="." instance=ExtResource( 5 )]
+position = Vector2( -279, 180 )
+
+[node name="Spikes12" parent="." instance=ExtResource( 5 )]
+position = Vector2( -297, 180 )
+
+[node name="Spikes13" parent="." instance=ExtResource( 5 )]
+position = Vector2( -108, 504 )
