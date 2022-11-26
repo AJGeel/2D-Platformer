@@ -21,7 +21,7 @@ tile_data = PoolIntArray( -851957, 0, 0, -851956, 0, 2, -786421, 0, 65536, -7864
 position = Vector2( -144, 72 )
 
 [node name="GameCamera" parent="." instance=ExtResource( 1 )]
-backgroundColor = Color( 0.87451, 0.964706, 0.960784, 1 )
+backgroundColor = Color( 0.964706, 0.87451, 0.890196, 1 )
 
 [node name="Spikes" parent="." instance=ExtResource( 6 )]
 position = Vector2( 117, 54 )
