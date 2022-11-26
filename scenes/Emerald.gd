@@ -6,6 +6,9 @@ func _ready():
 func on_area_entered(area2d):
 	$AnimationPlayer.play("pickup")
 	call_deferred("disable_pickup")
+	
+	var baseLevel = get_tree().get_nodes_in_group("base_level")[0]
+	baseLevel.emerald_collected()
 
 func disable_pickup():
 	$Area2D/CollisionShape2D.disabled = true
