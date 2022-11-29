@@ -2,6 +2,8 @@ extends Node
 
 signal emerald_total_changed
 
+export(PackedScene) var levelCompleteScene
+
 var playerScene = preload("res://scenes/Player.tscn")
 var spawnPosition = Vector2.ZERO
 var currentPlayerNode = null
@@ -12,12 +14,10 @@ func _ready():
 	spawnPosition = $Player.global_position
 	register_player($Player)
 	emerald_total_changed(get_tree().get_nodes_in_group("emerald").size())
-	
 	$Flag.connect("player_won", self, "on_player_won")
 
 func emerald_collected():
 	collectedEmeralds += 1
-	print(totalEmeralds, collectedEmeralds)
 	emit_signal("emerald_total_changed", totalEmeralds, collectedEmeralds)
 
 func emerald_total_changed(newTotal):
@@ -39,4 +39,6 @@ func on_player_died():
 	create_player()
 
 func on_player_won():
-	$"/root/LevelManager".increment_level()
+	currentPlayerNode.queue_free()
+	var levelComplete = levelCompleteScene.instance()
+	add_child(levelComplete)
