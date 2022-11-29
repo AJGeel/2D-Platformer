@@ -19,6 +19,8 @@ var hasDash = false
 var currentState = State.NORMAL
 var isStateNew = true
 
+# Buffer Jump input https://www.youtube.com/watch?v=8wlQ5VCYFTI
+
 var defaultHazardMask = 0
 
 func _ready():
@@ -110,7 +112,11 @@ func update_animation():
 		$AnimatedSprite.play("jump")
 	elif (moveVec.x != 0):
 		$AnimatedSprite.play("run")
-	else: 
+	else:
+		# TODO: Add crouch state
+		#if Input.is_action_pressed("down")
+		#	$AnimatedSprite.play("fast_fall")
+		#else 
 		$AnimatedSprite.play("idle")
 	
 	if (moveVec.x != 0):
