@@ -7,4 +7,4 @@ func _ready():
 		baseLevels[0].connect("emerald_total_changed", self, "on_emerald_total_changed")
 
 func on_emerald_total_changed(totalEmeralds, collectedEmeralds):
-	$MarginContainer/EmeraldLabel.text = str(collectedEmeralds, "/", totalEmeralds)
+	$MarginContainer/HBoxContainer/EmeraldLabel.text = str(collectedEmeralds, "/", totalEmeralds)
