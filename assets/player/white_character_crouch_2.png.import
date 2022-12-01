@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/character_0009.png-dfb8a09866b220fb362b3316ce97e6b5.stex"
+path="res://.import/white_character_crouch_2.png-8647c63a9cf1225c471a078af651d2ec.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/player/character_0009.png"
-dest_files=[ "res://.import/character_0009.png-dfb8a09866b220fb362b3316ce97e6b5.stex" ]
+source_file="res://assets/player/white_character_crouch_2.png"
+dest_files=[ "res://.import/white_character_crouch_2.png-8647c63a9cf1225c471a078af651d2ec.stex" ]
 
 [params]
 
