@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 signal died
 
+var playerDeathScene = preload("res://scenes/PlayerDeath.tscn")
+
 enum State {NORMAL, DASHING}
 
 export(int, LAYERS_2D_PHYSICS) var dashHazardMask
@@ -19,6 +21,7 @@ var hasDoubleJump = false
 var hasDash = false
 var currentState = State.NORMAL
 var isStateNew = true
+var isDying = false
 
 # Buffer Jump input https://www.youtube.com/watch?v=8wlQ5VCYFTI
 
@@ -127,7 +130,17 @@ func update_animation():
 	if (moveVec.x != 0):
 		$AnimatedSprite.flip_h = true if moveVec.x > 0 else false	
 
-func on_hazard_area_entered(area2d):
-	$"/root/Helpers".apply_camera_shake(1)
-	emit_signal("died")
+func kill():
+	if (isDying):
+		return
+	else:
+		isDying = true
+		var playerDeathInstance = playerDeathScene.instance()
+		get_parent().add_child_below_node(self, playerDeathInstance)
+		playerDeathInstance.global_position = global_position
+		playerDeathInstance.velocity = velocity
+		emit_signal("died")
 
+func on_hazard_area_entered(area2d):
+	$"/root/Helpers".apply_camera_shake(0.75)
+	call_deferred("kill")
