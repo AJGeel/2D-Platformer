@@ -45,6 +45,7 @@ func change_state(newState):
 
 func process_normal(delta):
 	if (isStateNew):
+		stop_trail()
 		$DashArea/CollisionShape2D.disabled = true
 		$HazardArea.collision_mask = defaultHazardMask
 	
@@ -61,6 +62,10 @@ func process_normal(delta):
 		if (!is_on_floor() && $CoyoteTimer.is_stopped()):
 			$"/root/Helpers".apply_camera_shake(0.75)
 			hasDoubleJump = false
+			start_trail()
+			yield(get_tree().create_timer(.4), "timeout")
+			stop_trail()
+			
 		$CoyoteTimer.stop()
 	
 	if (velocity.y < 0 && !Input.is_action_pressed("jump")):
@@ -88,6 +93,7 @@ func process_normal(delta):
 
 func process_dash(delta):
 	if (isStateNew):
+		start_trail()
 		$"/root/Helpers".apply_camera_shake(1)
 		$DashArea/CollisionShape2D.disabled = false
 		$AnimatedSprite.play("jump")
@@ -143,3 +149,9 @@ func kill():
 func on_hazard_area_entered(area2d):
 	$"/root/Helpers".apply_camera_shake(0.75)
 	call_deferred("kill")
+
+func start_trail():
+	$TrailParticles.emitting = true
+
+func stop_trail():
+	$TrailParticles.emitting = false
