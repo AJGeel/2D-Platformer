@@ -22,9 +22,6 @@ func _process(delta):
 	
 	global_position = lerp(targetPosition, global_position, pow(2, -15 * delta))
 	
-	if (Input.is_action_just_pressed("dash")):
-		apply_shake(1)
-	
 	if (currentShakePercentage > 0):
 		xNoiseSamplePosition += xNoiseSampleVector * noiseSampleTravelRate * delta
 		yNoiseSamplePosition += yNoiseSampleVector * noiseSampleTravelRate * delta

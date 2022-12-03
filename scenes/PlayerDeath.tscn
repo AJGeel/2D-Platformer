@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/player/white_character_crouch_1.png" type="Texture" id=1]
 [ext_resource path="res://scenes/PlayerDeath.gd" type="Script" id=2]
 [ext_resource path="res://assets/effects/particles.png" type="Texture" id=3]
+[ext_resource path="res://assets/player/white_character_blink_1.png" type="Texture" id=4]
 
 [sub_resource type="Animation" id=2]
 resource_name = "death"
@@ -14,7 +15,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
+"times": PoolRealArray( 0, 0.35 ),
 "transitions": PoolRealArray( 2.14355, 1 ),
 "update": 0,
 "values": [ 0.0, -90.0 ]
@@ -29,7 +30,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.1, 0.35 ),
 "transitions": PoolRealArray( 1, 2.82843, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 0, -8 ), Vector2( 0, -6 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 0, -8 ), Vector2( 8, -6 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Visuals/Sprite:scale")
@@ -51,9 +52,9 @@ tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
 "times": PoolRealArray( 0, 0.35 ),
-"transitions": PoolRealArray( -2, 0.5 ),
+"transitions": PoolRealArray( -2, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 0.172549, 0.172549, 0.235294, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.207843, 0.207843, 0.266667, 1 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Visuals/DustParticles:emitting")
@@ -67,6 +68,26 @@ tracks/4/keys = {
 "update": 1,
 "values": [ false, true ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Visuals/GhostParticle:emitting")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.2, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Curve" id=8]
+_data = [ Vector2( 0, 0.326306 ), 0.0, 0.536173, 0, 0, Vector2( 0.11609, 0.556036 ), 2.03042, 2.03042, 0, 0, Vector2( 1, 0.871351 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=7]
+interpolation_mode = 2
+offsets = PoolRealArray( 0, 0.124154, 1 )
+colors = PoolColorArray( 1, 1, 1, 0, 0.780392, 0.870588, 0.956863, 0.945098, 1, 1, 1, 0 )
 
 [sub_resource type="CanvasItemMaterial" id=3]
 particles_animation = true
@@ -92,14 +113,28 @@ anims/death = SubResource( 2 )
 
 [node name="Visuals" type="Node2D" parent="."]
 
+[node name="GhostParticle" type="CPUParticles2D" parent="Visuals"]
+position = Vector2( -1, -6 )
+emitting = false
+amount = 1
+lifetime = 2.0
+one_shot = true
+texture = ExtResource( 4 )
+gravity = Vector2( 0, -35 )
+angular_velocity = 226.05
+angular_velocity_random = 0.42
+angle = 90.0
+scale_amount_curve = SubResource( 8 )
+color_ramp = SubResource( 7 )
+hue_variation = -0.12
+hue_variation_random = 1.0
+
 [node name="Sprite" type="Sprite" parent="Visuals"]
-modulate = Color( 0.172549, 0.172549, 0.235294, 1 )
-position = Vector2( 0, -6 )
-rotation = -1.5708
 texture = ExtResource( 1 )
 offset = Vector2( 0, -12 )
 
 [node name="DustParticles" type="CPUParticles2D" parent="Visuals"]
+visible = false
 material = SubResource( 3 )
 position = Vector2( -9, -6 )
 emitting = false
@@ -126,5 +161,5 @@ anim_offset = 1.0
 anim_offset_random = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player_death"]]
-position = Vector2( -9, -6.5 )
+position = Vector2( -1, -6.5 )
 shape = SubResource( 1 )

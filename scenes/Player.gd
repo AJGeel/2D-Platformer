@@ -66,11 +66,9 @@ func process_normal(delta):
 	if (velocity.y < 0 && !Input.is_action_pressed("jump")):
 		velocity.y += gravity * jumpTerminationMultiplier * delta
 	else:
-		if (Input.is_action_pressed("down")):
-			pass
+		velocity.y += gravity * delta
+		#if (Input.is_action_pressed("down")):
 			# velocity.y = maxVerticalSpeed
-		else:
-			velocity.y += gravity * delta
 	
 	var wasOnFloor = is_on_floor()
 	velocity = move_and_slide(velocity, Vector2.UP)
@@ -137,9 +135,9 @@ func kill():
 	else:
 		isDying = true
 		var playerDeathInstance = playerDeathScene.instance()
+		playerDeathInstance.velocity = velocity
 		get_parent().add_child_below_node(self, playerDeathInstance)
 		playerDeathInstance.global_position = global_position
-		playerDeathInstance.velocity = velocity
 		emit_signal("died")
 
 func on_hazard_area_entered(area2d):
