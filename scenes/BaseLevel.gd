@@ -2,15 +2,20 @@ extends Node
 
 signal emerald_total_changed
 signal death_tally_changed
+signal enemies_killed_changed
 
 export(PackedScene) var levelCompleteScene
 
 var playerScene = preload("res://scenes/Player.tscn")
 var spawnPosition = Vector2.ZERO
 var currentPlayerNode = null
+
+# Game stats
 var totalEmeralds = 0
 var collectedEmeralds = 0
 var deathTally = 0
+var enemiesKilled = 0
+var timeSpent = 0
 
 func _ready():
 	spawnPosition = $PlayerRoot/Player.global_position
@@ -29,6 +34,10 @@ func emerald_total_changed(newTotal):
 func death_tally_changed():
 	deathTally += 1
 	emit_signal("death_tally_changed", deathTally)
+
+func enemies_killed_changed():
+	enemiesKilled += 1
+	emit_signal("enemies_killed_changed", enemiesKilled)
 
 func register_player(player):
 	currentPlayerNode = player
@@ -50,5 +59,10 @@ func on_player_died():
 
 func on_player_won():
 	currentPlayerNode.queue_free()
+	print("Here is how you did:")
+	print("Emeralds collected: ", collectedEmeralds, "/", totalEmeralds)
+	print("Times died: ", deathTally)
+	print("Enemies Killed: ", enemiesKilled)
+	print("Time elapsed: ", timeSpent)
 	var levelComplete = levelCompleteScene.instance()
 	add_child(levelComplete)
