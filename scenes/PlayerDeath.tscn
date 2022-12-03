@@ -1,17 +1,14 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/player/white_character_crouch_1.png" type="Texture" id=1]
 [ext_resource path="res://scenes/PlayerDeath.gd" type="Script" id=2]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 9, 6.5 )
+[ext_resource path="res://assets/effects/particles.png" type="Texture" id=3]
 
 [sub_resource type="Animation" id=2]
 resource_name = "death"
-length = 0.35
 step = 0.05
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/path = NodePath("Visuals/Sprite:rotation_degrees")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -23,7 +20,7 @@ tracks/0/keys = {
 "values": [ 0.0, -90.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:position")
+tracks/1/path = NodePath("Visuals/Sprite:position")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -35,7 +32,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -8 ), Vector2( 0, -6 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Sprite:scale")
+tracks/2/path = NodePath("Visuals/Sprite:scale")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -47,7 +44,7 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.3, 1.3 ), Vector2( 1, 1 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite:modulate")
+tracks/3/path = NodePath("Visuals/Sprite:modulate")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -58,21 +55,76 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.172549, 0.172549, 0.235294, 1 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Visuals/DustParticles:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.2, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="CanvasItemMaterial" id=3]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0.00814664, 0.0239643 ), 0.0, 0.0, 0, 0, Vector2( 0.126273, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.407332, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=5]
+colors = PoolColorArray( 1, 1, 1, 1, 0.858824, 0.866667, 0.972549, 0.482353 )
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 9, 6.5 )
 
 [node name="PlayerDeath" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "death"
+anims/death = SubResource( 2 )
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Visuals"]
 modulate = Color( 0.172549, 0.172549, 0.235294, 1 )
 position = Vector2( 0, -6 )
 rotation = -1.5708
 texture = ExtResource( 1 )
 offset = Vector2( 0, -12 )
 
+[node name="DustParticles" type="CPUParticles2D" parent="Visuals"]
+material = SubResource( 3 )
+position = Vector2( -9, -6 )
+emitting = false
+amount = 20
+lifetime = 2.0
+one_shot = true
+explosiveness = 0.9
+lifetime_randomness = 0.5
+texture = ExtResource( 3 )
+emission_shape = 1
+emission_sphere_radius = 7.0
+direction = Vector2( 0, -1 )
+spread = 90.0
+gravity = Vector2( 0, -7 )
+initial_velocity = 20.0
+initial_velocity_random = 0.93
+angular_velocity = 180.0
+angular_velocity_random = 1.0
+scale_amount = 1.5
+scale_amount_random = 1.0
+scale_amount_curve = SubResource( 4 )
+color_ramp = SubResource( 5 )
+anim_offset = 1.0
+anim_offset_random = 1.0
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player_death"]]
 position = Vector2( -9, -6.5 )
 shape = SubResource( 1 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "death"
-anims/death = SubResource( 2 )

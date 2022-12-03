@@ -10,7 +10,7 @@ export(int, LAYERS_2D_PHYSICS) var dashHazardMask
 
 var gravity = 1000
 var velocity = Vector2.ZERO
-var maxVerticalSpeed = 500
+# var maxVerticalSpeed = 50
 var maxHorizontalSpeed = 140
 var maxDashSpeed = 500
 var minDashSpeed = 200
@@ -67,7 +67,8 @@ func process_normal(delta):
 		velocity.y += gravity * jumpTerminationMultiplier * delta
 	else:
 		if (Input.is_action_pressed("down")):
-			velocity.y = maxVerticalSpeed
+			pass
+			# velocity.y = maxVerticalSpeed
 		else:
 			velocity.y += gravity * delta
 	
