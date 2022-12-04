@@ -168,7 +168,7 @@ func addFootsteps(scale = 1):
 	footstep.scale = Vector2.ONE * scale
 	footstep.global_position = global_position
 
-func on_hazard_area_entered(area2d):
+func on_hazard_area_entered(_area2d):
 	$"/root/Helpers".apply_camera_shake(0.75)
 	call_deferred("kill")
 
