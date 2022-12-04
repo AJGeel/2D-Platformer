@@ -18,6 +18,9 @@ func _process(delta):
 	if (isSpawning):
 		return
 	
+	if (is_on_wall()):
+		change_direction()
+	
 	velocity.x = (direction * maxSpeed).x
 	velocity.y += gravity * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
@@ -33,8 +36,11 @@ func kill():
 	queue_free()
 
 func on_goal_entered(_area2d):
-	direction *= -1
+	change_direction()
 
 func on_hitbox_entered(_area2d):
 	$"/root/Helpers".apply_camera_shake(1)
 	call_deferred("kill")
+
+func change_direction():
+	direction *= -1
