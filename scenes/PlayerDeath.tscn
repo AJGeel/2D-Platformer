@@ -109,7 +109,7 @@ tracks/7/keys = {
 resource_name = "fly_away"
 length = 1.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("CPUParticles2D:emitting")
+tracks/0/path = NodePath("Visuals/YeetParticle:emitting")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -179,15 +179,15 @@ _data = [ Vector2( 0.00814664, 0.0239643 ), 0.0, 0.0, 0, 0, Vector2( 0.126273, 1
 [sub_resource type="Gradient" id=5]
 colors = PoolColorArray( 1, 1, 1, 1, 0.858824, 0.866667, 0.972549, 0.482353 )
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 9, 6.5 )
-
 [sub_resource type="Curve" id=10]
 max_value = 1.25
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.193772, 1.25 ), 0.0, 0.0, 0, 0, Vector2( 0.404844, 1.00833 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.480856 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="Gradient" id=11]
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 9, 6.5 )
 
 [sub_resource type="CircleShape2D" id=12]
 radius = 15.0
@@ -216,8 +216,7 @@ angular_velocity_random = 0.42
 angle = 90.0
 scale_amount_curve = SubResource( 8 )
 color_ramp = SubResource( 7 )
-hue_variation = -0.12
-hue_variation_random = 1.0
+hue_variation = 0.1
 
 [node name="Sprite" type="Sprite" parent="Visuals"]
 texture = ExtResource( 1 )
@@ -249,11 +248,7 @@ color_ramp = SubResource( 5 )
 anim_offset = 1.0
 anim_offset_random = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player_death"]]
-position = Vector2( -1, -6.5 )
-shape = SubResource( 1 )
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+[node name="YeetParticle" type="CPUParticles2D" parent="Visuals"]
 modulate = Color( 0.207843, 0.207843, 0.266667, 1 )
 position = Vector2( 0, -12 )
 emitting = false
@@ -271,6 +266,10 @@ angular_velocity_random = 0.5
 angle = 90.0
 scale_amount_curve = SubResource( 10 )
 color_ramp = SubResource( 11 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player_death"]]
+position = Vector2( -1, -6.5 )
+shape = SubResource( 1 )
 
 [node name="HurtboxArea" type="Area2D" parent="."]
 position = Vector2( 0, -8 )
