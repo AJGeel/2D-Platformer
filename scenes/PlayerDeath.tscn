@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/player/white_character_crouch_1.png" type="Texture" id=1]
 [ext_resource path="res://scenes/PlayerDeath.gd" type="Script" id=2]
@@ -80,6 +80,84 @@ tracks/5/keys = {
 "update": 1,
 "values": [ false, true ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("Visuals/Sprite:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( -0.05 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("CollisionShape2D:disabled")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( -0.05 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "fly_away"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Visuals/Sprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Curve" id=8]
 _data = [ Vector2( 0, 0.326306 ), 0.0, 0.536173, 0, 0, Vector2( 0.11609, 0.556036 ), 2.03042, 2.03042, 0, 0, Vector2( 1, 0.871351 ), 0.0, 0.0, 0, 0 ]
@@ -104,12 +182,24 @@ colors = PoolColorArray( 1, 1, 1, 1, 0.858824, 0.866667, 0.972549, 0.482353 )
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 9, 6.5 )
 
+[sub_resource type="Curve" id=10]
+max_value = 1.25
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.193772, 1.25 ), 0.0, 0.0, 0, 0, Vector2( 0.404844, 1.00833 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.480856 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=11]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="CircleShape2D" id=12]
+radius = 15.0
+
 [node name="PlayerDeath" type="KinematicBody2D"]
+collision_mask = 0
 script = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "death"
 anims/death = SubResource( 2 )
+anims/fly_away = SubResource( 9 )
 
 [node name="Visuals" type="Node2D" parent="."]
 
@@ -134,7 +224,6 @@ texture = ExtResource( 1 )
 offset = Vector2( 0, -12 )
 
 [node name="DustParticles" type="CPUParticles2D" parent="Visuals"]
-visible = false
 material = SubResource( 3 )
 position = Vector2( -9, -6 )
 emitting = false
@@ -163,3 +252,30 @@ anim_offset_random = 1.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player_death"]]
 position = Vector2( -1, -6.5 )
 shape = SubResource( 1 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+modulate = Color( 0.207843, 0.207843, 0.266667, 1 )
+position = Vector2( 0, -12 )
+emitting = false
+amount = 1
+lifetime = 0.6
+one_shot = true
+texture = ExtResource( 4 )
+direction = Vector2( 0, -1 )
+spread = 30.0
+gravity = Vector2( 0, 900 )
+initial_velocity = 500.0
+initial_velocity_random = 0.3
+angular_velocity = 540.0
+angular_velocity_random = 0.5
+angle = 90.0
+scale_amount_curve = SubResource( 10 )
+color_ramp = SubResource( 11 )
+
+[node name="HurtboxArea" type="Area2D" parent="."]
+position = Vector2( 0, -8 )
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxArea"]
+shape = SubResource( 12 )

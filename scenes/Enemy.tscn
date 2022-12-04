@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/enemy/character_0016.png" type="Texture" id=1]
 [ext_resource path="res://assets/enemy/character_0015.png" type="Texture" id=2]
@@ -56,6 +56,9 @@ tracks/3/keys = {
 "update": 1,
 "values": [ false ]
 }
+
+[sub_resource type="Animation" id=8]
+resource_name = "fly_away"
 
 [sub_resource type="Animation" id=6]
 resource_name = "spawn"
@@ -142,6 +145,7 @@ isSpawning = false
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "spawn"
 anims/default = SubResource( 7 )
+anims/fly_away = SubResource( 8 )
 anims/spawn = SubResource( 6 )
 next/default = "default"
 next/spawn = "default"
@@ -151,7 +155,8 @@ scale = Vector2( 1e-05, 1e-05 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Visuals"]
 frames = SubResource( 1 )
-animation = "spawn"
+animation = "run"
+frame = 1
 playing = true
 offset = Vector2( 0, -12 )
 
@@ -174,7 +179,6 @@ collision_mask = 262144
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HazardArea"]
 position = Vector2( 0, -7 )
 shape = SubResource( 4 )
-disabled = true
 
 [node name="HurtboxArea" type="Area2D" parent="."]
 position = Vector2( 0, -8 )
@@ -183,4 +187,3 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxArea"]
 shape = SubResource( 5 )
-disabled = true

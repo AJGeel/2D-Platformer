@@ -12,7 +12,7 @@ var startDirection = Vector2.RIGHT
 func _ready():
 	direction = startDirection
 	$GoalDetector.connect("area_entered", self, "on_goal_entered")
-	$HurtboxArea.connect("area_entered", self, "on_hitbox_entered")
+	$HurtboxArea.connect("area_entered", self, "on_hurtbox_entered")
 
 func _process(delta):
 	if (isSpawning):
@@ -38,7 +38,7 @@ func kill():
 func on_goal_entered(_area2d):
 	change_direction()
 
-func on_hitbox_entered(_area2d):
+func on_hurtbox_entered(_area2d):
 	$"/root/Helpers".apply_camera_shake(1)
 	call_deferred("kill")
 
