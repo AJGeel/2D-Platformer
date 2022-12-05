@@ -1,7 +1,6 @@
 extends Button
 
 func _ready():
-	grab_focus()
 	connect("mouse_entered", self, "on_mouse_entered")
 	connect("focus_entered", self, "on_mouse_entered")
 	connect("mouse_exited", self, "on_mouse_exited")
