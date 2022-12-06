@@ -38,6 +38,8 @@ format = 1
 
 [node name="Collectibles" type="Node2D" parent="."]
 
+[node name="StageInteractions" type="Node2D" parent="."]
+
 [node name="Hazards" type="Node2D" parent="."]
 
 [node name="PlayerRoot" type="Node2D" parent="."]

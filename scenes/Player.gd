@@ -169,6 +169,9 @@ func on_hazard_area_entered(_area2d):
 	$"/root/Helpers".apply_camera_shake(0.75)
 	call_deferred("kill")
 
+func on_bouncy_platform_entered(_area2d):
+	pass
+
 func on_animated_sprite_frame_changed():
 	if ($AnimatedSprite.animation == "run" && $AnimatedSprite.frame == 0):
 		addFootsteps()
