@@ -1,0 +1,68 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/UI/AnimatedButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://resources/Staatliches-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://scenes/UI/PauseMenu.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+extra_spacing_top = -5
+extra_spacing_bottom = -7
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[node name="PauseMenu" type="CanvasLayer"]
+pause_mode = 2
+script = ExtResource( 3 )
+
+[node name="Backdrop" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 0
+color = Color( 0.129412, 0.0823529, 0.192157, 0.713726 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 112.0
+margin_top = 44.0
+margin_right = 208.0
+margin_bottom = 135.0
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_left = 1.0
+margin_right = 94.0
+margin_bottom = 13.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 0.27451 )
+custom_fonts/font = SubResource( 1 )
+text = "GAME PAUSED"
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/VBoxContainer"]
+margin_top = 17.0
+margin_right = 96.0
+margin_bottom = 25.0
+custom_constants/separation = 8
+custom_styles/separator = SubResource( 2 )
+
+[node name="ResumeButton" parent="CenterContainer/VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 29.0
+margin_bottom = 47.0
+size_flags_horizontal = 4
+text = "RESUME"
+
+[node name="OptionsButton" parent="CenterContainer/VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 51.0
+margin_bottom = 69.0
+size_flags_horizontal = 4
+text = "OPTIONS"
+
+[node name="MainMenuButton" parent="CenterContainer/VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 73.0
+margin_bottom = 91.0
+size_flags_horizontal = 4
+text = "MAIN MENU"
