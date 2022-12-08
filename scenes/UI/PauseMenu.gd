@@ -28,4 +28,4 @@ func on_options_pressed():
 
 func on_main_menu_pressed():
 	unpause()
-	$"/root/ScreenTransitionManager".transition_to_scene("res://scenes/UI/MainMenu.tscn")
+	$"/root/ScreenTransitionManager".transition_to_menu()
