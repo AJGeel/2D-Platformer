@@ -4,6 +4,8 @@ onready var continueButton = $CanvasLayer/CenterContainer/VBoxContainer/ResumeBu
 onready var optionsButton = $CanvasLayer/CenterContainer/VBoxContainer/OptionsButton
 onready var mainMenuButton = $CanvasLayer/CenterContainer/VBoxContainer/MainMenuButton
 
+var optionsMenuScene = preload("res://scenes/UI/OptionsMenu.tscn")
+
 func _ready():
 	continueButton.grab_focus()
 	continueButton.connect("pressed", self, "on_continue_pressed")
@@ -24,8 +26,16 @@ func on_continue_pressed():
 	unpause()
 
 func on_options_pressed():
-	pass
+	var optionsMenuInstance = optionsMenuScene.instance()
+	add_child(optionsMenuInstance)
+	optionsMenuInstance.connect("back_pressed", self, "on_options_back_pressed")
+	$CanvasLayer.visible = false
 
 func on_main_menu_pressed():
 	unpause()
 	$"/root/ScreenTransitionManager".transition_to_menu()
+
+func on_options_back_pressed():
+	$OptionsMenu.queue_free()
+	$CanvasLayer.visible = true
+	pass

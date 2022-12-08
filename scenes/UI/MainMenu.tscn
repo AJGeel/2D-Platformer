@@ -106,7 +106,7 @@ margin_bottom = 84.0
 size_flags_horizontal = 4
 text = "CONNECT"
 
-[node name="OptionsButton2" parent="CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
+[node name="OptionsButton" parent="CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
 margin_top = 88.0
 margin_bottom = 106.0
 size_flags_horizontal = 4

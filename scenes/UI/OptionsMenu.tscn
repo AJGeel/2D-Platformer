@@ -1,0 +1,123 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scenes/UI/AnimatedButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://resources/theme.tres" type="Theme" id=2]
+[ext_resource path="res://scenes/UI/OptionsMenu.gd" type="Script" id=3]
+[ext_resource path="res://resources/Staatliches-Regular.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+extra_spacing_top = -5
+extra_spacing_bottom = -7
+font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="Animation" id=3]
+resource_name = "animate_in"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/CenterContainer:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CanvasLayer:offset")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ Vector2( 0, 10 ), Vector2( 0, 0 ) ]
+}
+
+[node name="OptionsMenu" type="CanvasLayer"]
+script = ExtResource( 3 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer"]
+margin_left = 100.0
+margin_top = 55.0
+margin_right = 219.0
+margin_bottom = 124.0
+
+[node name="Label" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer"]
+margin_left = 31.0
+margin_right = 88.0
+margin_bottom = 13.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 0.27451 )
+custom_fonts/font = SubResource( 1 )
+text = "OPTIONS"
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/CenterContainer/VBoxContainer"]
+margin_top = 17.0
+margin_right = 119.0
+margin_bottom = 25.0
+custom_constants/separation = 8
+custom_styles/separator = SubResource( 2 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/CenterContainer/VBoxContainer"]
+margin_top = 29.0
+margin_right = 119.0
+margin_bottom = 47.0
+
+[node name="Label" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_top = 4.0
+margin_right = 55.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Window mode"
+uppercase = true
+
+[node name="WindowModeButton" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 1 )]
+margin_left = 59.0
+margin_right = 119.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 60, 18 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/normal = SubResource( 4 )
+text = "WINDOWED"
+
+[node name="BackButton" parent="CanvasLayer/CenterContainer/VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 51.0
+margin_right = 119.0
+margin_bottom = 69.0
+text = "BACK"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "animate_in"
+anims/animate_in = SubResource( 3 )
