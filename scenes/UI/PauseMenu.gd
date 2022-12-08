@@ -1,8 +1,8 @@
 extends CanvasLayer
 
-onready var continueButton = $CenterContainer/VBoxContainer/ResumeButton
-onready var optionsButton = $CenterContainer/VBoxContainer/OptionsButton
-onready var mainMenuButton = $CenterContainer/VBoxContainer/MainMenuButton
+onready var continueButton = $CanvasLayer/CenterContainer/VBoxContainer/ResumeButton
+onready var optionsButton = $CanvasLayer/CenterContainer/VBoxContainer/OptionsButton
+onready var mainMenuButton = $CanvasLayer/CenterContainer/VBoxContainer/MainMenuButton
 
 func _ready():
 	continueButton.grab_focus()
