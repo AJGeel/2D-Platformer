@@ -64,7 +64,7 @@ func on_player_died():
 	create_player()
 
 func on_player_won():
-	currentPlayerNode.queue_free()
+	currentPlayerNode.disable_player_input()
 	print("Here is how you did:")
 	print("Emeralds collected: ", collectedEmeralds, "/", totalEmeralds)
 	print("Times died: ", deathTally)
