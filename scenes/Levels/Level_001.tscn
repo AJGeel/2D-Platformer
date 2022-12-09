@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/BaseLevel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Scroll.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Spikes.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Emerald.tscn" type="PackedScene" id=5]
 
@@ -12,64 +13,51 @@ tile_data = PoolIntArray( -1769473, 0, 0, -1835008, 0, 1, -1835007, 0, 1, -18350
 [node name="DecorativeTileMap" parent="." index="3"]
 tile_data = PoolIntArray( -1507332, 1610612743, 0, -1507331, 4, 0, -1441795, 4, 65536, -1441793, 1610612743, 1, -1507327, 1610612743, 0, -1376259, 4, 65536, -1441789, 4, 0, -1441788, 1610612743, 1, -1310723, 4, 65536, -1376253, 4, 65536, -1245187, 4, 65536, -1310717, 4, 65536, -1179651, 4, 65536, -1245181, 4, 65536, -1114115, 4, 65536, -1179645, 4, 65536, -1048579, 4, 65536, -1114109, 4, 65536, -983043, 4, 65536, -1048573, 4, 65536, -917524, 6, 0, -917507, 4, 65536, -983037, 4, 65536, -851971, 4, 65536, -917501, 4, 65536, -786449, 7, 2, -786435, 4, 65536, -851965, 4, 65536, -851957, 3, 0, -720911, 6, 0, -720899, 4, 131072, -786429, 4, 131072, -786421, 3, 65536, -655380, 7, 2, -655371, 7, 0, -720885, 3, 196608, -720884, 6, 0, -589833, 6, 1, -589826, 1610612743, 2, -655359, 1610612743, 0, -655357, 1610612743, 0, -458775, 1610612742, 0, -524278, 1610612743, 0, -524277, 1610612743, 1, -524276, 1610612743, 0, -393237, 1610612743, 0, -393235, 1610612742, 0, -393224, 1610612743, 2, -458723, 3, 0, -327695, 1610612742, 1, -327691, 1610612742, 1, -393187, 3, 65536, -262157, 1610612743, 0, -327665, 6, 1, -327654, 3, 0, -327651, 3, 65536, -262125, 6, 0, -262123, 7, 0, -262118, 3, 131072, -262115, 3, 131072, -196596, 7, 1, -196582, 3, 196608, -196579, 3, 196608, -131068, 7, 2, -131065, 6, 1, -2, 7, 0, -65535, 6, 1, 131072, 6, 0, 131081, 1610612743, 1, 131084, 4, 0, 131092, 1610612743, 1, 131101, 4, 0, 262140, 1610612743, 1, 196613, 1610612743, 0, 196620, 4, 65536, 196624, 4, 0, 196633, 4, 0, 196635, 1610612743, 0, 196637, 4, 65536, 262156, 4, 65536, 262160, 4, 131072, 262169, 4, 65536, 262173, 4, 131072, 327680, 4, 0, 327682, 1610612743, 1, 327692, 4, 131072, 327705, 4, 131072, 393216, 4, 131072 )
 
-[node name="Flag" parent="." index="4"]
+[node name="Scroll" parent="." index="4" instance=ExtResource( 2 )]
+position = Vector2( 36, -18 )
+text = "Use WASD or the arrow keys to move around..."
+
+[node name="Scroll2" parent="." index="5" instance=ExtResource( 2 )]
+position = Vector2( 198, -54 )
+text = "Hold 'W' or 'Up' to jump even higher!"
+
+[node name="Flag" parent="." index="6"]
 position = Vector2( -468, -252 )
 
-[node name="Emerald1" parent="Collectibles" index="0" instance=ExtResource( 5 )]
-position = Vector2( 117, -45 )
-
-[node name="Emerald2" parent="Collectibles" index="1" instance=ExtResource( 5 )]
-position = Vector2( 207, -63 )
-
-[node name="Emerald3" parent="Collectibles" index="2" instance=ExtResource( 5 )]
-position = Vector2( 288, -108 )
-
-[node name="Emerald4" parent="Collectibles" index="3" instance=ExtResource( 5 )]
-position = Vector2( 324, -90 )
-
-[node name="Emerald5" parent="Collectibles" index="4" instance=ExtResource( 5 )]
-position = Vector2( 414, -108 )
-
-[node name="Emerald6" parent="Collectibles" index="5" instance=ExtResource( 5 )]
-position = Vector2( 441, -126 )
-
-[node name="Emerald7" parent="Collectibles" index="6" instance=ExtResource( 5 )]
-position = Vector2( 513, -153 )
-
-[node name="Emerald8" parent="Collectibles" index="7" instance=ExtResource( 5 )]
+[node name="Emerald8" parent="Collectibles" index="0" instance=ExtResource( 5 )]
 position = Vector2( 396, -207 )
 
-[node name="Emerald9" parent="Collectibles" index="8" instance=ExtResource( 5 )]
+[node name="Emerald9" parent="Collectibles" index="1" instance=ExtResource( 5 )]
 position = Vector2( 378, -225 )
 
-[node name="Emerald10" parent="Collectibles" index="9" instance=ExtResource( 5 )]
+[node name="Emerald10" parent="Collectibles" index="2" instance=ExtResource( 5 )]
 position = Vector2( 351, -217 )
 
-[node name="Emerald11" parent="Collectibles" index="10" instance=ExtResource( 5 )]
+[node name="Emerald11" parent="Collectibles" index="3" instance=ExtResource( 5 )]
 position = Vector2( 135, -270 )
 
-[node name="Emerald12" parent="Collectibles" index="11" instance=ExtResource( 5 )]
+[node name="Emerald12" parent="Collectibles" index="4" instance=ExtResource( 5 )]
 position = Vector2( 108, -279 )
 
-[node name="Emerald13" parent="Collectibles" index="12" instance=ExtResource( 5 )]
+[node name="Emerald13" parent="Collectibles" index="5" instance=ExtResource( 5 )]
 position = Vector2( 81, -261 )
 
-[node name="Emerald14" parent="Collectibles" index="13" instance=ExtResource( 5 )]
+[node name="Emerald14" parent="Collectibles" index="6" instance=ExtResource( 5 )]
 position = Vector2( -90, -243 )
 
-[node name="Emerald15" parent="Collectibles" index="14" instance=ExtResource( 5 )]
+[node name="Emerald15" parent="Collectibles" index="7" instance=ExtResource( 5 )]
 position = Vector2( -126, -225 )
 
-[node name="Emerald16" parent="Collectibles" index="15" instance=ExtResource( 5 )]
+[node name="Emerald16" parent="Collectibles" index="8" instance=ExtResource( 5 )]
 position = Vector2( -153, -207 )
 
-[node name="Emerald17" parent="Collectibles" index="16" instance=ExtResource( 5 )]
+[node name="Emerald17" parent="Collectibles" index="9" instance=ExtResource( 5 )]
 position = Vector2( -270, -234 )
 
-[node name="Emerald18" parent="Collectibles" index="17" instance=ExtResource( 5 )]
+[node name="Emerald18" parent="Collectibles" index="10" instance=ExtResource( 5 )]
 position = Vector2( -288, -261 )
 
-[node name="Emerald19" parent="Collectibles" index="18" instance=ExtResource( 5 )]
+[node name="Emerald19" parent="Collectibles" index="11" instance=ExtResource( 5 )]
 position = Vector2( -324, -279 )
 
 [node name="Spikes43" parent="Hazards" index="0" instance=ExtResource( 4 )]
@@ -140,5 +128,8 @@ rotation = -6.28318
 position = Vector2( -297, -144 )
 rotation = -3.14159
 
-[node name="OutOfBounds" parent="." index="9"]
+[node name="PlayerRoot" parent="." index="11"]
+position = Vector2( -36, 0 )
+
+[node name="OutOfBounds" parent="." index="12"]
 position = Vector2( 0, 648 )
