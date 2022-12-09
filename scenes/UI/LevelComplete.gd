@@ -12,5 +12,4 @@ func on_next_button_pressed():
 	$"/root/LevelManager".increment_level()
 
 func on_retry_button_pressed():
-	print("Retry")
-	pass
+	$"/root/LevelManager".restart_level()

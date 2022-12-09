@@ -22,7 +22,7 @@ position = Vector2( 198, -54 )
 text = "Hold 'W' or 'Up' to jump even higher!"
 
 [node name="Flag" parent="." index="6"]
-position = Vector2( -468, -252 )
+position = Vector2( 108, -18 )
 
 [node name="Emerald8" parent="Collectibles" index="0" instance=ExtResource( 5 )]
 position = Vector2( 396, -207 )
