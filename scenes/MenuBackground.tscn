@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/EnemyGoal.tscn" type="PackedScene" id=4]
 [ext_resource path="res://resources/tileset.tres" type="TileSet" id=6]
 [ext_resource path="res://scenes/Spikes.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scenes/Emerald.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/Loop.tscn" type="PackedScene" id=9]
 [ext_resource path="res://resources/decorative_tileset.tres" type="TileSet" id=10]
 [ext_resource path="res://scenes/GameCamera.tscn" type="PackedScene" id=12]
 

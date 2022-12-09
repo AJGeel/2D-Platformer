@@ -38,4 +38,4 @@ func on_main_menu_pressed():
 func on_options_back_pressed():
 	$OptionsMenu.queue_free()
 	$CanvasLayer.visible = true
-	pass
+	continueButton.grab_focus()

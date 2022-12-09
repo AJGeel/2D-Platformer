@@ -1,6 +1,6 @@
 extends Node
 
-signal emerald_total_changed
+signal loop_total_changed
 signal death_tally_changed
 signal enemies_killed_changed
 
@@ -13,8 +13,8 @@ var spawnPosition = Vector2.ZERO
 var currentPlayerNode = null
 
 # Game stats
-var totalEmeralds = 0
-var collectedEmeralds = 0
+var totalLoops = 0
+var collectedLoops = 0
 var deathTally = 0
 var enemiesKilled = 0
 var timeSpent = 0
@@ -22,7 +22,7 @@ var timeSpent = 0
 func _ready():
 	spawnPosition = $PlayerRoot/Player.global_position
 	register_player($PlayerRoot/Player)
-	emerald_total_changed(get_tree().get_nodes_in_group("emerald").size())
+	loop_total_changed(get_tree().get_nodes_in_group("loop").size())
 	$Flag.connect("player_won", self, "on_player_won")
 
 func _unhandled_input(event):
@@ -30,13 +30,13 @@ func _unhandled_input(event):
 		var pauseInstance = pauseScene.instance()
 		add_child(pauseInstance)
 
-func emerald_collected():
-	collectedEmeralds += 1
-	emit_signal("emerald_total_changed", totalEmeralds, collectedEmeralds)
+func loop_collected():
+	collectedLoops += 1
+	emit_signal("loop_total_changed", totalLoops, collectedLoops)
 
-func emerald_total_changed(newTotal):
-	totalEmeralds = newTotal
-	emit_signal("emerald_total_changed", totalEmeralds, collectedEmeralds)
+func loop_total_changed(newTotal):
+	totalLoops = newTotal
+	emit_signal("loop_total_changed", totalLoops, collectedLoops)
 
 func death_tally_changed():
 	deathTally += 1
@@ -66,7 +66,7 @@ func on_player_died():
 func on_player_won():
 	currentPlayerNode.disable_player_input()
 	print("Here is how you did:")
-	print("Emeralds collected: ", collectedEmeralds, "/", totalEmeralds)
+	print("Loops collected: ", collectedLoops, "/", totalLoops)
 	print("Times died: ", deathTally)
 	print("Enemies Killed: ", enemiesKilled)
 	print("Time elapsed: ", timeSpent)
