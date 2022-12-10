@@ -29,6 +29,10 @@ window/size/test_height=720
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_height"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/center_pivot_offset/plugin.cfg", "res://addons/node_library/plugin.cfg", "res://addons/retile/plugin.cfg" )
+
 [global]
 
 pixel=false
