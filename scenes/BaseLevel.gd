@@ -1,8 +1,9 @@
 extends Node
 
 signal loop_total_changed
-signal death_tally_changed
+signal death_total_changed
 signal enemies_killed_changed
+signal time_total_changed
 
 export(PackedScene) var levelCompleteScene
 
@@ -15,15 +16,21 @@ var currentPlayerNode = null
 # Game stats
 var totalLoops = 0
 var collectedLoops = 0
-var deathTally = 0
+var deathTotal = 0
 var enemiesKilled = 0
-var timeSpent = 0
+var startTime = 0
+var totalTime = 0
+var timerActive = true
 
 func _ready():
 	spawnPosition = $PlayerRoot/Player.global_position
 	register_player($PlayerRoot/Player)
 	loop_total_changed(get_tree().get_nodes_in_group("loop").size())
+	startTime = OS.get_unix_time()
 	$Flag.connect("player_won", self, "on_player_won")
+
+func _process(_delta):
+	time_total_changed()
 
 func _unhandled_input(event):
 	if (event.is_action_pressed("pause")):
@@ -38,9 +45,15 @@ func loop_total_changed(newTotal):
 	totalLoops = newTotal
 	emit_signal("loop_total_changed", totalLoops, collectedLoops)
 
-func death_tally_changed():
-	deathTally += 1
-	emit_signal("death_tally_changed", deathTally)
+func time_total_changed():
+	if (timerActive):
+		var currentTime = OS.get_unix_time()
+		totalTime = currentTime - startTime
+		emit_signal("time_total_changed", totalTime)
+
+func death_total_changed():
+	deathTotal += 1
+	emit_signal("death_total_changed", deathTotal)
 
 func enemies_killed_changed():
 	enemiesKilled += 1
@@ -57,7 +70,7 @@ func create_player():
 	register_player(playerInstance)
 
 func on_player_died():
-	death_tally_changed()
+	death_total_changed()
 	currentPlayerNode.queue_free()
 	var timer = get_tree().create_timer(1.25)
 	yield(timer, "timeout")
@@ -65,10 +78,7 @@ func on_player_died():
 
 func on_player_won():
 	currentPlayerNode.disable_player_input()
-	print("Here is how you did:")
-	print("Loops collected: ", collectedLoops, "/", totalLoops)
-	print("Times died: ", deathTally)
-	print("Enemies Killed: ", enemiesKilled)
-	print("Time elapsed: ", timeSpent)
+	timerActive = false
+	
 	var levelComplete = levelCompleteScene.instance()
 	add_child(levelComplete)

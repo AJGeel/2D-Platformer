@@ -1,13 +1,16 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scenes/UI/LoopCounter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/UI/LevelComplete.gd" type="Script" id=2]
 [ext_resource path="res://resources/theme.tres" type="Theme" id=3]
+[ext_resource path="res://scenes/UI/TimeCounter.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/UI/AnimatedButton.tscn" type="PackedScene" id=5]
 [ext_resource path="res://resources/Staatliches-Regular.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://scenes/UI/DeathCounter.tscn" type="PackedScene" id=7]
+[ext_resource path="res://resources/font.tres" type="DynamicFont" id=8]
 
-[sub_resource type="DynamicFont" id=5]
-size = 20
+[sub_resource type="DynamicFont" id=10]
+size = 28
 extra_spacing_top = -5
 extra_spacing_bottom = -7
 font_data = ExtResource( 6 )
@@ -15,11 +18,20 @@ font_data = ExtResource( 6 )
 [sub_resource type="StyleBoxEmpty" id=6]
 
 [sub_resource type="StyleBoxFlat" id=8]
-bg_color = Color( 1, 1, 1, 0.0823529 )
+content_margin_bottom = 4.0
+bg_color = Color( 1, 1, 1, 0 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color( 0.8, 0.8, 0.8, 0.219608 )
 corner_radius_top_left = 1
 corner_radius_top_right = 1
 corner_radius_bottom_right = 1
 corner_radius_bottom_left = 1
+expand_margin_right = 3.0
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
 
 [sub_resource type="Animation" id=9]
 length = 0.001
@@ -59,9 +71,34 @@ tracks/2/keys = {
 "update": 0,
 "values": [ Vector2( 0, 0 ) ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("CanvasLayer/CenterContainer/VBoxContainer/BottomMenu:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("CanvasLayer/CenterContainer/VBoxContainer/ScorePanel:rect_scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=7]
 resource_name = "animate_in"
+length = 2.0
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Backdrop:modulate")
@@ -107,7 +144,7 @@ tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
 "times": PoolRealArray( 0, 0.25, 0.5 ),
-"transitions": PoolRealArray( 1, -2, -2 ),
+"transitions": PoolRealArray( 7.01111e-05, -2, -2 ),
 "update": 0,
 "values": [ Vector2( 1e-05, 1e-05 ), Vector2( 0, 0 ), Vector2( 1, 1 ) ]
 }
@@ -119,7 +156,7 @@ tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
 "times": PoolRealArray( 0, 0.4, 0.65 ),
-"transitions": PoolRealArray( 1, -2, -2 ),
+"transitions": PoolRealArray( 6.5416e-05, -2, -2 ),
 "update": 0,
 "values": [ Vector2( 1e-05, 1e-05 ), Vector2( 0, 0 ), Vector2( 1, 1 ) ]
 }
@@ -131,7 +168,31 @@ tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
 "times": PoolRealArray( 0, 0.55, 0.8 ),
-"transitions": PoolRealArray( 1, -2, -2 ),
+"transitions": PoolRealArray( 1.1564e-05, -2, -2 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 1, 1 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("CanvasLayer/CenterContainer/VBoxContainer/BottomMenu:modulate")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 1, 1.35 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("CanvasLayer/CenterContainer/VBoxContainer/ScorePanel:rect_scale")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.7, 0.95 ),
+"transitions": PoolRealArray( 1e-05, -2, -2 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 1, 1 ) ]
 }
@@ -147,39 +208,46 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer"]
-margin_left = 49.0
-margin_top = 32.0
-margin_right = 271.0
-margin_bottom = 148.0
+margin_left = 65.0
+margin_top = 27.0
+margin_right = 351.0
+margin_bottom = 207.0
 
-[node name="Label" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer"]
-margin_left = 52.0
-margin_right = 170.0
-margin_bottom = 13.0
-size_flags_horizontal = 4
+[node name="LevelComplete" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer"]
+margin_right = 286.0
+margin_bottom = 24.0
 size_flags_vertical = 0
-custom_colors/font_color = Color( 1, 1, 1, 0.27451 )
-custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0.870588, 0.301961, 0.364706, 1 )
+custom_fonts/font = SubResource( 10 )
 text = "LEVEL COMPLETE!"
 
+[node name="HowYouDid" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer"]
+margin_top = 28.0
+margin_right = 286.0
+margin_bottom = 38.0
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 0.67451 )
+custom_fonts/font = ExtResource( 8 )
+text = "HERE'S HOW YOU DID:"
+
 [node name="HSeparator" type="HSeparator" parent="CanvasLayer/CenterContainer/VBoxContainer"]
-margin_top = 17.0
-margin_right = 222.0
-margin_bottom = 25.0
-custom_constants/separation = 8
+margin_top = 42.0
+margin_right = 286.0
+margin_bottom = 58.0
+custom_constants/separation = 16
 custom_styles/separator = SubResource( 6 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/CenterContainer/VBoxContainer"]
-margin_top = 29.0
-margin_right = 222.0
-margin_bottom = 63.0
+margin_top = 62.0
+margin_right = 286.0
+margin_bottom = 98.0
 size_flags_horizontal = 0
-custom_constants/separation = 6
+custom_constants/separation = 8
 
 [node name="LoopPanel" type="Panel" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer"]
-margin_right = 70.0
-margin_bottom = 34.0
-rect_min_size = Vector2( 70, 34 )
+margin_right = 90.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 90, 36 )
 rect_scale = Vector2( 1e-05, 1e-05 )
 rect_pivot_offset = Vector2( 35, 17 )
 size_flags_horizontal = 4
@@ -197,27 +265,29 @@ margin_bottom = 12.5
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/LoopPanel/VBoxContainer"]
-margin_left = 24.0
-margin_right = 51.0
-margin_bottom = 10.0
-size_flags_horizontal = 4
-theme = ExtResource( 3 )
-text = "LOOPS:"
-
 [node name="LoopCounter" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/LoopPanel/VBoxContainer" instance=ExtResource( 1 )]
 margin_left = 18.0
-margin_top = 14.0
+margin_top = 0.0
 margin_right = 58.0
-margin_bottom = 25.0
+margin_bottom = 11.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
+[node name="Label" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/LoopPanel/VBoxContainer"]
+margin_left = 10.0
+margin_top = 15.0
+margin_right = 65.0
+margin_bottom = 25.0
+size_flags_horizontal = 4
+theme = ExtResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 0.407843 )
+text = "LOOPS FOUND"
+
 [node name="TimePanel" type="Panel" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer"]
-margin_left = 76.0
-margin_right = 146.0
-margin_bottom = 34.0
-rect_min_size = Vector2( 70, 34 )
+margin_left = 98.0
+margin_right = 188.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 90, 36 )
 rect_scale = Vector2( 1e-05, 1e-05 )
 rect_pivot_offset = Vector2( 35, 17 )
 size_flags_horizontal = 4
@@ -235,27 +305,26 @@ margin_bottom = 12.5
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/TimePanel/VBoxContainer"]
-margin_left = 29.0
-margin_right = 46.0
-margin_bottom = 10.0
+[node name="TimeCounter" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/TimePanel/VBoxContainer" instance=ExtResource( 4 )]
+margin_left = 22.0
+margin_right = 54.0
 size_flags_horizontal = 4
-theme = ExtResource( 3 )
-text = "TIME"
 
-[node name="LoopCounter" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/TimePanel/VBoxContainer" instance=ExtResource( 1 )]
-margin_left = 18.0
-margin_top = 14.0
-margin_right = 58.0
+[node name="Label" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/TimePanel/VBoxContainer"]
+margin_left = 15.0
+margin_top = 15.0
+margin_right = 61.0
 margin_bottom = 25.0
 size_flags_horizontal = 4
-size_flags_vertical = 4
+theme = ExtResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 0.407843 )
+text = "TIME SPENT"
 
 [node name="DeathsPanel" type="Panel" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer"]
-margin_left = 152.0
-margin_right = 222.0
-margin_bottom = 34.0
-rect_min_size = Vector2( 70, 34 )
+margin_left = 196.0
+margin_right = 286.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 90, 36 )
 rect_scale = Vector2( 1e-05, 1e-05 )
 rect_pivot_offset = Vector2( 35, 17 )
 size_flags_horizontal = 4
@@ -273,44 +342,119 @@ margin_bottom = 12.5
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/DeathsPanel/VBoxContainer"]
-margin_left = 22.0
-margin_right = 53.0
-margin_bottom = 10.0
+[node name="DeathCounter" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/DeathsPanel/VBoxContainer" instance=ExtResource( 7 )]
+margin_left = 23.0
+margin_right = 52.0
 size_flags_horizontal = 4
-theme = ExtResource( 3 )
-text = "DEATHS:"
 
-[node name="LoopCounter" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/DeathsPanel/VBoxContainer" instance=ExtResource( 1 )]
-margin_left = 18.0
-margin_top = 14.0
-margin_right = 58.0
+[node name="Label" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer/HBoxContainer/DeathsPanel/VBoxContainer"]
+margin_left = 23.0
+margin_top = 15.0
+margin_right = 52.0
 margin_bottom = 25.0
 size_flags_horizontal = 4
-size_flags_vertical = 4
+theme = ExtResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 0.407843 )
+text = "DEATHS"
 
 [node name="HSeparator2" type="HSeparator" parent="CanvasLayer/CenterContainer/VBoxContainer"]
-margin_top = 67.0
-margin_right = 222.0
-margin_bottom = 72.0
-custom_constants/separation = 5
+margin_top = 102.0
+margin_right = 286.0
+margin_bottom = 105.0
+custom_constants/separation = 3
 custom_styles/separator = SubResource( 6 )
 
-[node name="NextButton" parent="CanvasLayer/CenterContainer/VBoxContainer" instance=ExtResource( 5 )]
-margin_left = 63.0
-margin_top = 76.0
-margin_right = 159.0
-margin_bottom = 94.0
+[node name="ScorePanel" type="Panel" parent="CanvasLayer/CenterContainer/VBoxContainer"]
+margin_top = 109.0
+margin_right = 286.0
+margin_bottom = 139.0
+rect_min_size = Vector2( 0, 30 )
+rect_pivot_offset = Vector2( 143, 15 )
+custom_styles/panel = SubResource( 8 )
+
+[node name="HBox" type="HBoxContainer" parent="CanvasLayer/CenterContainer/VBoxContainer/ScorePanel"]
+margin_left = 6.0
+margin_top = 3.0
+margin_right = 284.0
+margin_bottom = 27.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer/ScorePanel/HBox"]
+margin_left = 106.0
+margin_right = 154.0
+margin_bottom = 24.0
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 10 )
+text = "1,337"
+
+[node name="Points" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer/ScorePanel/HBox"]
+margin_left = 158.0
+margin_top = 7.0
+margin_right = 172.0
+margin_bottom = 17.0
+size_flags_horizontal = 4
+theme = ExtResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 0.407843 )
+text = "PTS"
+
+[node name="HSeparator3" type="HSeparator" parent="CanvasLayer/CenterContainer/VBoxContainer"]
+margin_top = 143.0
+margin_right = 286.0
+margin_bottom = 158.0
+custom_constants/separation = 15
+custom_styles/separator = SubResource( 6 )
+
+[node name="BottomMenu" type="HBoxContainer" parent="CanvasLayer/CenterContainer/VBoxContainer"]
+margin_left = 53.0
+margin_top = 162.0
+margin_right = 233.0
+margin_bottom = 180.0
+size_flags_horizontal = 4
+custom_constants/separation = 10
+
+[node name="NextButton" parent="CanvasLayer/CenterContainer/VBoxContainer/BottomMenu" instance=ExtResource( 5 )]
+margin_right = 49.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 0, 18 )
 size_flags_horizontal = 4
 text = "NEXT LEVEL"
+align = 0
 
-[node name="RetryButton" parent="CanvasLayer/CenterContainer/VBoxContainer" instance=ExtResource( 5 )]
-margin_left = 63.0
-margin_top = 98.0
-margin_right = 159.0
-margin_bottom = 116.0
+[node name="Label" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer/BottomMenu"]
+margin_left = 59.0
+margin_top = 2.0
+margin_right = 63.0
+margin_bottom = 16.0
+size_flags_horizontal = 4
+text = "·"
+
+[node name="RetryButton" parent="CanvasLayer/CenterContainer/VBoxContainer/BottomMenu" instance=ExtResource( 5 )]
+margin_left = 73.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 0, 18 )
 size_flags_horizontal = 4
 text = "RETRY"
+align = 0
+
+[node name="Label2" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer/BottomMenu"]
+margin_left = 106.0
+margin_top = 2.0
+margin_right = 110.0
+margin_bottom = 16.0
+size_flags_horizontal = 4
+text = "·"
+
+[node name="MainMenuButton" parent="CanvasLayer/CenterContainer/VBoxContainer/BottomMenu" instance=ExtResource( 5 )]
+margin_left = 120.0
+margin_right = 180.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 0, 18 )
+size_flags_horizontal = 4
+text = "BACK TO MENU"
+align = 0
 
 [node name="Backdrop" type="ColorRect" parent="."]
 anchor_right = 1.0

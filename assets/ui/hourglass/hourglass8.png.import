@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/loop-static.png-a9de2c1c1c62799eba5ac18e08eb28a8.stex"
+path="res://.import/hourglass8.png-256ce227d92f6dc930bcd4c2fb4b9d91.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/loop/loop-static.png"
-dest_files=[ "res://.import/loop-static.png-a9de2c1c1c62799eba5ac18e08eb28a8.stex" ]
+source_file="res://assets/ui/hourglass/hourglass8.png"
+dest_files=[ "res://.import/hourglass8.png-256ce227d92f6dc930bcd4c2fb4b9d91.stex" ]
 
 [params]
 

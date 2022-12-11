@@ -12,3 +12,5 @@ func update_display(totalLoops, collectedLoops):
 
 func on_loop_total_changed(totalLoops, collectedLoops):
 	update_display(totalLoops, collectedLoops)
+	$AnimationPlayer.queue("shine")
+	$AnimationPlayer.queue("idle")

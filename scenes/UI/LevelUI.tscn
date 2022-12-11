@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://resources/theme.tres" type="Theme" id=1]
+[ext_resource path="res://scenes/UI/TimeCounter.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/UI/DeathCounter.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/UI/LoopCounter.tscn" type="PackedScene" id=4]
 
 [node name="LevelUI" type="CanvasLayer"]
@@ -15,4 +17,24 @@ custom_constants/margin_top = 9
 custom_constants/margin_left = 9
 custom_constants/margin_bottom = 9
 
-[node name="LoopCounter" parent="MarginContainer" instance=ExtResource( 4 )]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 9.0
+margin_top = 9.0
+margin_right = 407.0
+margin_bottom = 225.0
+
+[node name="LoopCounter" parent="MarginContainer/VBoxContainer" instance=ExtResource( 4 )]
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 40.0
+margin_bottom = 11.0
+
+[node name="TimeCounter" parent="MarginContainer/VBoxContainer" instance=ExtResource( 2 )]
+margin_top = 15.0
+margin_right = 32.0
+margin_bottom = 26.0
+
+[node name="DeathCounter" parent="MarginContainer/VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 30.0
+margin_right = 29.0
+margin_bottom = 41.0
