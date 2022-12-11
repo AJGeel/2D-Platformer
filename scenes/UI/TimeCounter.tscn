@@ -1,0 +1,60 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://resources/font_outlined.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/ui/hourglass/hourglass1.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/hourglass/hourglass3.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/hourglass/hourglass9.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/hourglass/hourglass6.png" type="Texture" id=5]
+[ext_resource path="res://assets/ui/hourglass/hourglass5.png" type="Texture" id=6]
+[ext_resource path="res://assets/ui/hourglass/hourglass2.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/hourglass/hourglass4.png" type="Texture" id=8]
+[ext_resource path="res://assets/ui/hourglass/hourglass7.png" type="Texture" id=9]
+[ext_resource path="res://assets/ui/hourglass/hourglass8.png" type="Texture" id=10]
+[ext_resource path="res://scenes/UI/TimeCounter.gd" type="Script" id=11]
+
+[sub_resource type="AnimatedTexture" id=1]
+frames = 9
+fps = 10.0
+frame_0/texture = ExtResource( 2 )
+frame_0/delay_sec = 1.0
+frame_1/texture = ExtResource( 7 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 3 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 8 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 6 )
+frame_4/delay_sec = 1.0
+frame_5/texture = ExtResource( 5 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 9 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 10 )
+frame_7/delay_sec = 0.0
+frame_8/texture = ExtResource( 4 )
+frame_8/delay_sec = 0.0
+
+[node name="TimeCounter" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 11.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource( 11 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 11.0
+margin_bottom = 11.0
+rect_min_size = Vector2( 11, 11 )
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = SubResource( 1 )
+expand = true
+
+[node name="TimeLabel" type="Label" parent="."]
+margin_left = 15.0
+margin_right = 32.0
+margin_bottom = 10.0
+size_flags_horizontal = 0
+custom_fonts/font = ExtResource( 1 )
+text = "4:20"
+valign = 1

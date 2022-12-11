@@ -1,0 +1,108 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://resources/font_outlined.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/ui/skull/skull4.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/skull/skull5.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/skull/skull1.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/skull/skull6.png" type="Texture" id=5]
+[ext_resource path="res://assets/ui/skull/skull2.png" type="Texture" id=6]
+[ext_resource path="res://assets/ui/skull/skull3.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/skull/skull8.png" type="Texture" id=8]
+[ext_resource path="res://assets/ui/skull/skull7.png" type="Texture" id=9]
+[ext_resource path="res://scenes/UI/DeathCounter.gd" type="Script" id=11]
+
+[sub_resource type="AnimatedTexture" id=1]
+frames = 8
+fps = 15.0
+frame_0/texture = ExtResource( 4 )
+frame_0/delay_sec = 1.0
+frame_1/texture = ExtResource( 6 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 7 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 2 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 3 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 5 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 9 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 8 )
+frame_7/delay_sec = 0.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "idle"
+length = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("DeathLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "shine"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("DeathLabel:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.870588, 0.301961, 0.364706, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("DeathLabel:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1, 1 ) ]
+}
+
+[node name="DeathCounter" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 11.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource( 11 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 11.0
+margin_bottom = 11.0
+rect_min_size = Vector2( 11, 11 )
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = SubResource( 1 )
+expand = true
+
+[node name="DeathLabel" type="Label" parent="."]
+margin_left = 15.0
+margin_right = 29.0
+margin_bottom = 10.0
+rect_pivot_offset = Vector2( 0, 4.5 )
+size_flags_horizontal = 0
+custom_fonts/font = ExtResource( 1 )
+text = "741"
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "idle"
+anims/idle = SubResource( 2 )
+anims/shine = SubResource( 3 )

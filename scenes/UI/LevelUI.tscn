@@ -1,28 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://resources/theme.tres" type="Theme" id=1]
-[ext_resource path="res://scenes/UI/LevelUI.gd" type="Script" id=2]
-[ext_resource path="res://resources/font_outlined.tres" type="DynamicFont" id=3]
-[ext_resource path="res://assets/emerald/emerald_0001.png" type="Texture" id=4]
-[ext_resource path="res://assets/emerald/emerald_0004.png" type="Texture" id=5]
-[ext_resource path="res://assets/emerald/emerald_0003.png" type="Texture" id=6]
-[ext_resource path="res://assets/emerald/emerald_0002.png" type="Texture" id=7]
-
-[sub_resource type="AnimatedTexture" id=1]
-frames = 5
-fps = 15.0
-frame_0/texture = ExtResource( 4 )
-frame_1/texture = ExtResource( 7 )
-frame_1/delay_sec = 0.0
-frame_2/texture = ExtResource( 6 )
-frame_2/delay_sec = 0.0
-frame_3/texture = ExtResource( 5 )
-frame_3/delay_sec = 0.0
-frame_4/texture = ExtResource( 4 )
-frame_4/delay_sec = 1.0
+[ext_resource path="res://scenes/UI/TimeCounter.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/UI/DeathCounter.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/UI/LoopCounter.tscn" type="PackedScene" id=4]
 
 [node name="LevelUI" type="CanvasLayer"]
-script = ExtResource( 2 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -34,28 +17,24 @@ custom_constants/margin_top = 9
 custom_constants/margin_left = 9
 custom_constants/margin_bottom = 9
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 margin_left = 9.0
 margin_top = 9.0
-margin_right = 49.0
-margin_bottom = 20.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-custom_constants/separation = 4
+margin_right = 407.0
+margin_bottom = 225.0
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
-margin_right = 11.0
-margin_bottom = 11.0
-rect_min_size = Vector2( 11, 11 )
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = SubResource( 1 )
-expand = true
-
-[node name="EmeraldLabel" type="Label" parent="MarginContainer/HBoxContainer"]
-margin_left = 15.0
+[node name="LoopCounter" parent="MarginContainer/VBoxContainer" instance=ExtResource( 4 )]
+margin_left = 0.0
+margin_top = 0.0
 margin_right = 40.0
-margin_bottom = 10.0
-size_flags_horizontal = 0
-custom_fonts/font = ExtResource( 3 )
-text = "13/37"
+margin_bottom = 11.0
+
+[node name="TimeCounter" parent="MarginContainer/VBoxContainer" instance=ExtResource( 2 )]
+margin_top = 15.0
+margin_right = 32.0
+margin_bottom = 26.0
+
+[node name="DeathCounter" parent="MarginContainer/VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 30.0
+margin_right = 29.0
+margin_bottom = 41.0

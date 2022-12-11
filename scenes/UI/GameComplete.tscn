@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://resources/Staatliches-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://scenes/UI/AnimatedButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/UI/GameComplete.gd" type="Script" id=3]
+[ext_resource path="res://scenes/MenuBackground.tscn" type="PackedScene" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+extra_spacing_top = -5
+extra_spacing_bottom = -7
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[node name="GameComplete" type="CanvasLayer"]
+script = ExtResource( 3 )
+
+[node name="MenuBackground" parent="." instance=ExtResource( 4 )]
+
+[node name="Backdrop" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 0
+color = Color( 0.129412, 0.0823529, 0.192157, 0.917647 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 103.0
+margin_top = 66.0
+margin_right = 217.0
+margin_bottom = 113.0
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_right = 114.0
+margin_bottom = 13.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 0.27451 )
+custom_fonts/font = SubResource( 1 )
+text = "GAME COMPLETE!"
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/VBoxContainer"]
+margin_top = 17.0
+margin_right = 114.0
+margin_bottom = 25.0
+custom_constants/separation = 8
+custom_styles/separator = SubResource( 2 )
+
+[node name="MainMenuButton" parent="CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
+margin_left = 9.0
+margin_top = 29.0
+margin_right = 105.0
+margin_bottom = 47.0
+size_flags_horizontal = 4
+text = "MAIN MENU"
