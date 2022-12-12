@@ -223,6 +223,9 @@ color_ramp = SubResource( 7 )
 hue_variation = 0.1
 
 [node name="Sprite" type="Sprite" parent="Visuals"]
+modulate = Color( 0.207843, 0.207843, 0.266667, 1 )
+position = Vector2( 8, -6 )
+rotation = -1.5708
 texture = ExtResource( 1 )
 offset = Vector2( 0, -12 )
 

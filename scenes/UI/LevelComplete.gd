@@ -5,7 +5,7 @@ onready var retryButton = $CanvasLayer/CenterContainer/VBoxContainer/BottomMenu/
 onready var mainMenuButton = $CanvasLayer/CenterContainer/VBoxContainer/BottomMenu/MainMenuButton
 onready var ScoreLabel = $CanvasLayer/CenterContainer/VBoxContainer/ScorePanel/HBox/ScoreLabel
 
-var baseScore = 1337
+var baseScore = 10000
 
 func _ready():
 	nextButton.connect("pressed", self, "on_next_button_pressed")

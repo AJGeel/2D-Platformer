@@ -3,5 +3,5 @@
 [ext_resource path="res://resources/Staatliches-Regular.ttf" type="DynamicFontData" id=1]
 
 [resource]
-size = 13
+size = 21
 font_data = ExtResource( 1 )
