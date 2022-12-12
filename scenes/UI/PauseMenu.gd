@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 onready var continueButton = $CanvasLayer/CenterContainer/VBoxContainer/ResumeButton
+onready var retryButton = $CanvasLayer/CenterContainer/VBoxContainer/RetryButton
 onready var optionsButton = $CanvasLayer/CenterContainer/VBoxContainer/OptionsButton
 onready var mainMenuButton = $CanvasLayer/CenterContainer/VBoxContainer/MainMenuButton
 
@@ -9,6 +10,7 @@ var optionsMenuScene = preload("res://scenes/UI/OptionsMenu.tscn")
 func _ready():
 	continueButton.grab_focus()
 	continueButton.connect("pressed", self, "on_continue_pressed")
+	retryButton.connect("pressed", self, "on_retry_pressed")
 	optionsButton.connect("pressed", self, "on_options_pressed")
 	mainMenuButton.connect("pressed", self, "on_main_menu_pressed")
 	get_tree().paused = true
@@ -24,6 +26,10 @@ func unpause():
 
 func on_continue_pressed():
 	unpause()
+
+func on_retry_pressed():
+	unpause()
+	$"/root/LevelManager".restart_level()
 
 func on_options_pressed():
 	var optionsMenuInstance = optionsMenuScene.instance()

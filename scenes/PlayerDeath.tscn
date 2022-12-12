@@ -19,7 +19,7 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.35 ),
-"transitions": PoolRealArray( 2.14355, 1 ),
+"transitions": PoolRealArray( 2, 1 ),
 "update": 0,
 "values": [ 0.0, -90.0 ]
 }
@@ -54,7 +54,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.35 ),
+"times": PoolRealArray( 0.05, 0.35 ),
 "transitions": PoolRealArray( -2, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.207843, 0.207843, 0.266667, 1 ) ]
@@ -223,6 +223,9 @@ color_ramp = SubResource( 7 )
 hue_variation = 0.1
 
 [node name="Sprite" type="Sprite" parent="Visuals"]
+modulate = Color( 0.207843, 0.207843, 0.266667, 1 )
+position = Vector2( 8, -6 )
+rotation = -1.5708
 texture = ExtResource( 1 )
 offset = Vector2( 0, -12 )
 

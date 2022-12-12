@@ -8,7 +8,7 @@
 [ext_resource path="res://scenes/MenuBackground.tscn" type="PackedScene" id=6]
 
 [sub_resource type="DynamicFont" id=3]
-size = 24
+size = 40
 extra_spacing_top = -11
 extra_spacing_bottom = -7
 font_data = ExtResource( 5 )
@@ -59,15 +59,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 160.0
-margin_top = 46.0
-margin_right = 256.0
-margin_bottom = 188.0
+margin_left = 152.0
+margin_top = 31.0
+margin_right = 263.0
+margin_bottom = 202.0
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
-margin_left = 15.0
-margin_right = 81.0
-margin_bottom = 17.0
+margin_left = 2.0
+margin_right = 109.0
+margin_bottom = 27.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme = ExtResource( 1 )
@@ -76,10 +76,9 @@ custom_fonts/font = ExtResource( 3 )
 text = "CALCIUM CREW"
 
 [node name="Label2" type="Label" parent="CenterContainer/VBoxContainer"]
-margin_left = 15.0
-margin_top = 21.0
-margin_right = 81.0
-margin_bottom = 34.0
+margin_top = 31.0
+margin_right = 111.0
+margin_bottom = 63.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme = ExtResource( 1 )
@@ -88,39 +87,47 @@ custom_fonts/font = SubResource( 3 )
 text = "-QUEST-"
 
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/VBoxContainer"]
-margin_top = 38.0
-margin_right = 96.0
-margin_bottom = 46.0
+margin_top = 67.0
+margin_right = 111.0
+margin_bottom = 75.0
 custom_constants/separation = 8
 custom_styles/separator = SubResource( 2 )
 
 [node name="PlayButton" parent="CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
-margin_top = 50.0
-margin_bottom = 68.0
+margin_left = 7.0
+margin_top = 79.0
+margin_right = 103.0
+margin_bottom = 97.0
 size_flags_horizontal = 4
 text = "PLAY"
 
 [node name="ConnectButton" parent="CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
-margin_top = 72.0
-margin_bottom = 90.0
+margin_left = 7.0
+margin_top = 101.0
+margin_right = 103.0
+margin_bottom = 119.0
 size_flags_horizontal = 4
 text = "CONNECT"
 
 [node name="OptionsButton" parent="CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
-margin_top = 94.0
-margin_bottom = 112.0
+margin_left = 7.0
+margin_top = 123.0
+margin_right = 103.0
+margin_bottom = 141.0
 size_flags_horizontal = 4
 text = "OPTIONS"
 
 [node name="HSeparator2" type="HSeparator" parent="CenterContainer/VBoxContainer"]
-margin_top = 116.0
-margin_right = 96.0
-margin_bottom = 120.0
+margin_top = 145.0
+margin_right = 111.0
+margin_bottom = 149.0
 custom_constants/separation = 4
 custom_styles/separator = SubResource( 2 )
 
 [node name="QuitButton" parent="CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
-margin_top = 124.0
-margin_bottom = 142.0
+margin_left = 7.0
+margin_top = 153.0
+margin_right = 103.0
+margin_bottom = 171.0
 size_flags_horizontal = 4
 text = "QUIT"

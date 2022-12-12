@@ -33,6 +33,10 @@ func _process(delta):
 		
 		currentShakePercentage = clamp(currentShakePercentage - shakeDecay * delta, 0, 1)
 
+func apply_twitch():
+	$CameraShader/AnimationPlayer.current_animation = "Twitch"
+	$CameraShader/AnimationPlayer.queue("RESET")
+
 func apply_shake(percentage):
 	currentShakePercentage = clamp(currentShakePercentage + percentage, 0, 1)
 
@@ -44,7 +48,6 @@ func acquire_target_position():
 func get_target_position_from_node_group(groupName):
 	var nodes  = get_tree().get_nodes_in_group(groupName)
 	if (nodes.size() > 0):
-		# var node = nodes[0]
 		var node = nodes[len(nodes) - 1]
 		targetPosition = node.global_position
 		return true
