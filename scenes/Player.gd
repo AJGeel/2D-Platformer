@@ -188,4 +188,4 @@ func on_bouncy_platform_entered(_area2d):
 
 func on_animated_sprite_frame_changed():
 	if ($AnimatedSprite.animation == "run" && $AnimatedSprite.frame == 0):
-		addFootsteps()
+		addFootsteps(0.5)
