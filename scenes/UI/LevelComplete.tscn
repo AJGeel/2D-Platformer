@@ -220,6 +220,7 @@ size_flags_vertical = 0
 custom_colors/font_color = Color( 0.870588, 0.301961, 0.364706, 1 )
 custom_fonts/font = SubResource( 10 )
 text = "LEVEL COMPLETE!"
+align = 1
 
 [node name="HowYouDid" type="Label" parent="CanvasLayer/CenterContainer/VBoxContainer"]
 margin_top = 28.0
@@ -229,6 +230,7 @@ size_flags_vertical = 0
 custom_colors/font_color = Color( 1, 1, 1, 0.67451 )
 custom_fonts/font = ExtResource( 8 )
 text = "HERE'S HOW YOU DID:"
+align = 1
 
 [node name="HSeparator" type="HSeparator" parent="CanvasLayer/CenterContainer/VBoxContainer"]
 margin_top = 42.0

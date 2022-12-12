@@ -172,6 +172,7 @@ func stop_trail():
 func addFootsteps(scale = 1):
 	var footstep = footstepParticles.instance()
 	get_parent().add_child(footstep)
+	$AudioPlayers/FootstepAudioPlayer.play()
 	footstep.scale = Vector2.ONE * scale
 	footstep.global_position = global_position
 
