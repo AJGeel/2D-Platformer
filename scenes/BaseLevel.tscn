@@ -53,7 +53,6 @@ script = ExtResource( 7 )
 levelCompleteScene = ExtResource( 6 )
 
 [node name="LevelUI" parent="." instance=ExtResource( 5 )]
-layer = 20
 
 [node name="GameCamera" parent="." instance=ExtResource( 1 )]
 backgroundColor = Color( 0.964706, 0.87451, 0.890196, 1 )
