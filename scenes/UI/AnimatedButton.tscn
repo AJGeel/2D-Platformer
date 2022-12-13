@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://resources/theme.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/UI/AnimatedButton.gd" type="Script" id=2]
+[ext_resource path="res://audio/custom/ui-move.ogg" type="AudioStream" id=3]
 [ext_resource path="res://audio/custom/ui-confirm.ogg" type="AudioStream" id=5]
 
 [sub_resource type="Animation" id=1]
@@ -49,7 +50,7 @@ tracks/1/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.25, 1.25 ), Vector2( 1, 1 ) ]
 }
 
-[node name="AnimatedButton" type="Button"]
+[node name="AnimatedButton" type="Button" groups=["animated_button"]]
 pause_mode = 2
 margin_right = 96.0
 margin_bottom = 20.0
@@ -69,4 +70,8 @@ anims/click = SubResource( 3 )
 
 [node name="Confirm" type="AudioStreamPlayer" parent="AudioStreams"]
 stream = ExtResource( 5 )
+bus = "SFX"
+
+[node name="Click" type="AudioStreamPlayer" parent="AudioStreams"]
+stream = ExtResource( 3 )
 bus = "SFX"

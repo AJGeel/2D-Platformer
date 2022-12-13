@@ -163,6 +163,8 @@ func kill():
 		playerDeathInstance.velocity = velocity
 		get_parent().add_child_below_node(self, playerDeathInstance)
 		playerDeathInstance.global_position = global_position
+		$"/root/Helpers".apply_twitch()
+		$"/root/Helpers".apply_camera_shake(1)
 		emit_signal("died")
 
 func start_trail():
