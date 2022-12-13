@@ -105,6 +105,8 @@ func process_dash(delta):
 		start_trail()
 		$"/root/Helpers".apply_camera_shake(1)
 		$"/root/Helpers".apply_twitch()
+		$AudioPlayers/DashAudioPlayer.play()
+		$AudioPlayers/DashAudioPlayer2.play()
 		$DashArea/CollisionShape2D.disabled = false
 		$AnimatedSprite.play("jump")
 		$HazardArea.collision_mask = dashHazardMask
@@ -172,6 +174,7 @@ func stop_trail():
 func addFootsteps(scale = 1):
 	var footstep = footstepParticles.instance()
 	get_parent().add_child(footstep)
+	$AudioPlayers/FootstepAudioPlayer.play()
 	footstep.scale = Vector2.ONE * scale
 	footstep.global_position = global_position
 
@@ -187,4 +190,4 @@ func on_bouncy_platform_entered(_area2d):
 
 func on_animated_sprite_frame_changed():
 	if ($AnimatedSprite.animation == "run" && $AnimatedSprite.frame == 0):
-		addFootsteps()
+		addFootsteps(0.5)

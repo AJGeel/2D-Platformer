@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://resources/theme.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/UI/AnimatedButton.gd" type="Script" id=2]
+[ext_resource path="res://audio/custom/ui-confirm.ogg" type="AudioStream" id=5]
 
 [sub_resource type="Animation" id=1]
 resource_name = "hover"
@@ -49,6 +50,7 @@ tracks/1/keys = {
 }
 
 [node name="AnimatedButton" type="Button"]
+pause_mode = 2
 margin_right = 96.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 96, 18 )
@@ -62,3 +64,9 @@ anims/hover = SubResource( 1 )
 
 [node name="ClickAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/click = SubResource( 3 )
+
+[node name="AudioStreams" type="Node" parent="."]
+
+[node name="Confirm" type="AudioStreamPlayer" parent="AudioStreams"]
+stream = ExtResource( 5 )
+bus = "SFX"

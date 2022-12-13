@@ -9,6 +9,9 @@ func _ready():
 	if (velocity.x > 0):
 		$Visuals.scale = Vector2(-1, 1)
 	$HurtboxArea.connect("area_entered", self, "on_hurtbox_entered")
+	$AudioPlayers/DeathSoundPlayer1.play()
+	$AudioPlayers/DeathSoundPlayer2.play()
+	$AudioPlayers/DeathSoundPlayer3.play()
 	# var randomWord = words[randi() % words.size()]
 	# $Text/Label.text = randomWord
 

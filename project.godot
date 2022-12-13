@@ -20,6 +20,7 @@ LevelManager="*res://scenes/LevelManager.tscn"
 Helpers="*res://scripts/helpers.gd"
 ScreenTransitionManager="*res://scenes/UI/ScreenTransitionManager.tscn"
 MouseCursor="*res://scenes/UI/MouseCursor.tscn"
+MusicPlayer="*res://scenes/MusicPlayer.tscn"
 
 [display]
 
@@ -66,6 +67,10 @@ texture={
 "size_limit": 0,
 "stream": false,
 "svg/scale": 1.0
+}
+ogg_vorbis={
+"loop": false,
+"loop_offset": 0
 }
 
 [input]
