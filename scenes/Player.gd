@@ -105,6 +105,8 @@ func process_dash(delta):
 		start_trail()
 		$"/root/Helpers".apply_camera_shake(1)
 		$"/root/Helpers".apply_twitch()
+		$AudioPlayers/DashAudioPlayer.play()
+		$AudioPlayers/DashAudioPlayer2.play()
 		$DashArea/CollisionShape2D.disabled = false
 		$AnimatedSprite.play("jump")
 		$HazardArea.collision_mask = dashHazardMask

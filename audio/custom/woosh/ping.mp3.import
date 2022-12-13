@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ping.mp3-f61d86234a733f6c9d9894b09c44e8e3.mp3str"
+
+[deps]
+
+source_file="res://audio/custom/woosh/ping.mp3"
+dest_files=[ "res://.import/ping.mp3-f61d86234a733f6c9d9894b09c44e8e3.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

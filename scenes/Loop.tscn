@@ -1,10 +1,14 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://assets/loop/loop.png" type="Texture" id=1]
+[ext_resource path="res://scenes/Util/RandomAudioStreamPlayer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://audio/custom/money-002.mp3" type="AudioStream" id=3]
+[ext_resource path="res://audio/custom/money-003.mp3" type="AudioStream" id=4]
 [ext_resource path="res://scenes/Loop.gd" type="Script" id=5]
 
 [sub_resource type="Animation" id=3]
 resource_name = "idle"
+length = 1.5
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:position")
@@ -131,6 +135,24 @@ collision_mask = 0
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -6.272 )
 frames = SubResource( 5 )
 frame = 3
 playing = true
+
+[node name="AudioPlayers" type="Node" parent="."]
+
+[node name="PickupSound" parent="AudioPlayers" instance=ExtResource( 2 )]
+numberToPlay = 1
+minPitchScale = 0.8
+maxPitchScale = 1.0
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="AudioPlayers/PickupSound"]
+stream = ExtResource( 3 )
+volume_db = -20.0
+bus = "SFX"
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="AudioPlayers/PickupSound"]
+stream = ExtResource( 4 )
+volume_db = -20.0
+bus = "SFX"
