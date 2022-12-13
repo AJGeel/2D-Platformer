@@ -1,8 +1,8 @@
 extends Button
 
 export(bool) var enablePitchRandomization = true
-export(float) var minPitchScale = 0.95
-export(float) var maxPitchScale = 1.05
+export(float) var minPitchScale = 0.98
+export(float) var maxPitchScale = 1.02
 
 onready var ConfirmNode = $AudioStreams/Confirm
 var rng = RandomNumberGenerator.new()
