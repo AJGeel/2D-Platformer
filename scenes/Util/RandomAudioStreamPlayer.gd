@@ -2,8 +2,8 @@ extends Node
 
 export(int) var numberToPlay = 3
 export(bool) var enablePitchRandomization = true
-export(float) var minPitchScale = 0.8
-export(float) var maxPitchScale = 1.2
+export(float) var minPitchScale = 0.9
+export(float) var maxPitchScale = 1.1
 
 var rng = RandomNumberGenerator.new()
 

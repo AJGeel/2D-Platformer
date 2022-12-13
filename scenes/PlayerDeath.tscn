@@ -1,9 +1,25 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://assets/player/white_character_crouch_1.png" type="Texture" id=1]
 [ext_resource path="res://scenes/PlayerDeath.gd" type="Script" id=2]
 [ext_resource path="res://assets/effects/particles.png" type="Texture" id=3]
 [ext_resource path="res://assets/player/white_character_blink_1.png" type="Texture" id=4]
+[ext_resource path="res://audio/kenney_impact/impactSoft_heavy_002.ogg" type="AudioStream" id=5]
+[ext_resource path="res://scenes/Util/RandomAudioStreamPlayer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://audio/kenney_impact/impactSoft_heavy_000.ogg" type="AudioStream" id=7]
+[ext_resource path="res://audio/kenney_impact/impactSoft_medium_003.ogg" type="AudioStream" id=8]
+[ext_resource path="res://audio/kenney_impact/footstep_snow_004.ogg" type="AudioStream" id=9]
+[ext_resource path="res://audio/kenney_impact/impactSoft_medium_001.ogg" type="AudioStream" id=10]
+[ext_resource path="res://audio/kenney_impact/impactSoft_heavy_003.ogg" type="AudioStream" id=11]
+[ext_resource path="res://audio/kenney_impact/impactSoft_heavy_001.ogg" type="AudioStream" id=12]
+[ext_resource path="res://audio/kenney_impact/impactSoft_medium_002.ogg" type="AudioStream" id=13]
+[ext_resource path="res://audio/kenney_impact/footstep_snow_001.ogg" type="AudioStream" id=14]
+[ext_resource path="res://audio/kenney_impact/footstep_snow_003.ogg" type="AudioStream" id=15]
+[ext_resource path="res://audio/kenney_impact/impactSoft_medium_000.ogg" type="AudioStream" id=16]
+[ext_resource path="res://audio/kenney_impact/impactSoft_medium_004.ogg" type="AudioStream" id=17]
+[ext_resource path="res://audio/kenney_impact/footstep_snow_002.ogg" type="AudioStream" id=18]
+[ext_resource path="res://audio/kenney_impact/footstep_snow_000.ogg" type="AudioStream" id=19]
+[ext_resource path="res://audio/kenney_impact/impactSoft_heavy_004.ogg" type="AudioStream" id=20]
 
 [sub_resource type="Animation" id=13]
 length = 0.001
@@ -204,6 +220,79 @@ autoplay = "death"
 anims/RESET = SubResource( 13 )
 anims/death = SubResource( 2 )
 anims/fly_away = SubResource( 9 )
+
+[node name="AudioPlayers" type="Node" parent="."]
+
+[node name="DeathSoundPlayer1" parent="AudioPlayers" instance=ExtResource( 6 )]
+numberToPlay = 1
+minPitchScale = 0.8
+maxPitchScale = 1.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer1"]
+stream = ExtResource( 7 )
+bus = "SFX"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer1"]
+stream = ExtResource( 12 )
+bus = "SFX"
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer1"]
+stream = ExtResource( 5 )
+bus = "SFX"
+
+[node name="AudioStreamPlayer4" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer1"]
+stream = ExtResource( 11 )
+bus = "SFX"
+
+[node name="AudioStreamPlayer5" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer1"]
+stream = ExtResource( 20 )
+bus = "SFX"
+
+[node name="DeathSoundPlayer2" parent="AudioPlayers" instance=ExtResource( 6 )]
+numberToPlay = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer2"]
+stream = ExtResource( 16 )
+bus = "SFX"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer2"]
+stream = ExtResource( 10 )
+bus = "SFX"
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer2"]
+stream = ExtResource( 13 )
+bus = "SFX"
+
+[node name="AudioStreamPlayer4" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer2"]
+stream = ExtResource( 8 )
+bus = "SFX"
+
+[node name="AudioStreamPlayer5" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer2"]
+stream = ExtResource( 17 )
+bus = "SFX"
+
+[node name="DeathSoundPlayer3" parent="AudioPlayers" instance=ExtResource( 6 )]
+numberToPlay = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer3"]
+stream = ExtResource( 19 )
+bus = "SFX"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer3"]
+stream = ExtResource( 14 )
+bus = "SFX"
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer3"]
+stream = ExtResource( 18 )
+bus = "SFX"
+
+[node name="AudioStreamPlayer4" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer3"]
+stream = ExtResource( 15 )
+bus = "SFX"
+
+[node name="AudioStreamPlayer5" type="AudioStreamPlayer" parent="AudioPlayers/DeathSoundPlayer3"]
+stream = ExtResource( 9 )
+bus = "SFX"
 
 [node name="Visuals" type="Node2D" parent="."]
 
