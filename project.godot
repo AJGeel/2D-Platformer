@@ -24,8 +24,8 @@ MusicPlayer="*res://scenes/MusicPlayer.tscn"
 
 [display]
 
-window/size/width=416
-window/size/height=234
+window/size/width=420
+window/size/height=236
 window/size/test_width=1280
 window/size/test_height=720
 window/stretch/mode="viewport"
