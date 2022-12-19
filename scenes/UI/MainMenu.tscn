@@ -1,133 +1,377 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://resources/theme.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/UI/AnimatedButton.tscn" type="PackedScene" id=2]
-[ext_resource path="res://resources/font_big.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/ui/main-menu/logo.png" type="Texture" id=3]
 [ext_resource path="res://scenes/UI/MainMenu.gd" type="Script" id=4]
-[ext_resource path="res://resources/Staatliches-Regular.ttf" type="DynamicFontData" id=5]
-[ext_resource path="res://scenes/MenuBackground.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/effects/sparkle.png" type="Texture" id=5]
+[ext_resource path="res://assets/ui/main-menu/galaxy.png" type="Texture" id=6]
+[ext_resource path="res://assets/ui/main-menu/sparkle.png" type="Texture" id=7]
+[ext_resource path="res://resources/font_outlined.tres" type="DynamicFont" id=8]
 
-[sub_resource type="DynamicFont" id=3]
-size = 40
-extra_spacing_top = -11
-extra_spacing_bottom = -7
-font_data = ExtResource( 5 )
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("../MainMenuOptions:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../MainMenuOptions:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("BGSprite:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("LogoSprite:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 54, 63 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("LogoSprite:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("SparklesEmitter:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("LogoParticles:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "fade_in"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("../MainMenuOptions:rect_position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5, 2.5 ),
+"transitions": PoolRealArray( 1e-05, -2, -2 ),
+"update": 0,
+"values": [ Vector2( 350, 63 ), Vector2( 350, 63 ), Vector2( 270, 63 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../MainMenuOptions:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.5, 2.5 ),
+"transitions": PoolRealArray( 1e-05, -2, -2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("BGSprite:modulate")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.4 ),
+"transitions": PoolRealArray( -2, 0.5 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("LogoSprite:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1.5, 2.5 ),
+"transitions": PoolRealArray( 0, -2, -2 ),
+"update": 0,
+"values": [ Vector2( -26, 63 ), Vector2( -26, 63 ), Vector2( 54, 63 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("LogoSprite:modulate")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1.5, 2.5 ),
+"transitions": PoolRealArray( 0, -2, -2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../Footer:modulate")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 2, 2.9 ),
+"transitions": PoolRealArray( 1e-05, -2, -2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("SparklesEmitter:modulate")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("LogoParticles:modulate")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 2.3, 3.4 ),
+"transitions": PoolRealArray( -2, -2, -2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0.784314 ) ]
+}
+
+[sub_resource type="Gradient" id=4]
+interpolation_mode = 2
+offsets = PoolRealArray( 0, 0.289398, 0.647564, 0.908309 )
+colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="CanvasItemMaterial" id=7]
+blend_mode = 1
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id=8]
+offsets = PoolRealArray( 0, 0.212034, 0.716332, 1 )
+colors = PoolColorArray( 0.898039, 0.423529, 0.478431, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0.898039, 0.423529, 0.478431, 0 )
 
 [sub_resource type="StyleBoxEmpty" id=2]
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource( 4 )
 
-[node name="MenuBackground" parent="." instance=ExtResource( 6 )]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../MenuBG")
+autoplay = "fade_in"
+anims/RESET = SubResource( 5 )
+anims/fade_in = SubResource( 6 )
 
-[node name="Backdrop" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-size_flags_horizontal = 0
-color = Color( 0.129412, 0.0823529, 0.192157, 0.713726 )
+color = Color( 0, 0, 0, 1 )
 
-[node name="BottomContainer" type="MarginContainer" parent="."]
+[node name="MenuBG" type="Node2D" parent="."]
+self_modulate = Color( 1, 1, 1, 0.5 )
+
+[node name="BGSprite" type="Sprite" parent="MenuBG"]
+position = Vector2( 210, 118 )
+texture = ExtResource( 6 )
+
+[node name="SparklesEmitter" type="CPUParticles2D" parent="MenuBG"]
+position = Vector2( 210, 118 )
+amount = 6
+lifetime = 6.0
+preprocess = 290.14
+lifetime_randomness = 0.4
+texture = ExtResource( 7 )
+emission_shape = 2
+emission_rect_extents = Vector2( 210, 118 )
+gravity = Vector2( 0, 0 )
+scale_amount = 0.8
+scale_amount_random = 0.42
+color_ramp = SubResource( 4 )
+hue_variation = 0.1
+hue_variation_random = 1.0
+
+[node name="LogoParticles" type="CPUParticles2D" parent="MenuBG"]
+material = SubResource( 7 )
+position = Vector2( 135, 99 )
+amount = 15
+lifetime = 1.5
+randomness = 0.88
+texture = ExtResource( 5 )
+emission_shape = 2
+emission_rect_extents = Vector2( 60, 30 )
+direction = Vector2( 0, 0 )
+gravity = Vector2( 0, -10 )
+radial_accel = 90.0
+radial_accel_random = 1.0
+scale_amount = 1.5
+scale_amount_random = 1.0
+color_ramp = SubResource( 8 )
+anim_speed = 1.0
+
+[node name="LogoSprite" type="Sprite" parent="MenuBG"]
+position = Vector2( 54, 63 )
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Footer" type="MarginContainer" parent="."]
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = -18.0
 size_flags_vertical = 8
 theme = ExtResource( 1 )
+custom_constants/margin_right = 8
+custom_constants/margin_left = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="BottomContainer"]
-modulate = Color( 1, 1, 1, 0.32549 )
-margin_left = 4.0
-margin_top = 220.0
+[node name="HBoxContainer" type="HBoxContainer" parent="Footer"]
+margin_left = 8.0
+margin_top = 4.0
 margin_right = 412.0
-margin_bottom = 230.0
+margin_bottom = 14.0
 size_flags_vertical = 8
 
-[node name="VersionLabel" type="Label" parent="BottomContainer/HBoxContainer"]
-margin_right = 295.0
+[node name="VersionLabel" type="Label" parent="Footer/HBoxContainer"]
+margin_right = 291.0
 margin_bottom = 10.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
+custom_fonts/font = ExtResource( 8 )
 text = "V.0.0.1 (ALPHA)"
 
-[node name="ConnectedLabel" type="Label" parent="BottomContainer/HBoxContainer"]
-margin_left = 299.0
-margin_right = 408.0
+[node name="ConnectedLabel" type="Label" parent="Footer/HBoxContainer"]
+margin_left = 295.0
+margin_right = 404.0
 margin_bottom = 10.0
+custom_fonts/font = ExtResource( 8 )
 text = "No l2 wallet connected"
 uppercase = true
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 152.0
-margin_top = 31.0
-margin_right = 263.0
-margin_bottom = 202.0
-
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
-margin_left = 2.0
-margin_right = 109.0
-margin_bottom = 27.0
-size_flags_horizontal = 4
+[node name="MainMenuOptions" type="VBoxContainer" parent="."]
+margin_left = 270.0
+margin_top = 63.0
+margin_right = 366.0
+margin_bottom = 155.0
+size_flags_horizontal = 0
 size_flags_vertical = 0
-theme = ExtResource( 1 )
-custom_colors/font_color = Color( 1, 1, 1, 0.380392 )
-custom_fonts/font = ExtResource( 3 )
-text = "CALCIUM CREW"
 
-[node name="Label2" type="Label" parent="CenterContainer/VBoxContainer"]
-margin_top = 31.0
-margin_right = 111.0
-margin_bottom = 63.0
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme = ExtResource( 1 )
-custom_colors/font_color = Color( 1, 1, 1, 0.380392 )
-custom_fonts/font = SubResource( 3 )
-text = "-QUEST-"
-
-[node name="HSeparator" type="HSeparator" parent="CenterContainer/VBoxContainer"]
-margin_top = 67.0
-margin_right = 111.0
-margin_bottom = 75.0
-custom_constants/separation = 8
-custom_styles/separator = SubResource( 2 )
-
-[node name="PlayButton" parent="CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
-margin_left = 7.0
-margin_top = 79.0
-margin_right = 103.0
-margin_bottom = 97.0
-size_flags_horizontal = 4
+[node name="PlayButton" parent="MainMenuOptions" instance=ExtResource( 2 )]
+margin_right = 60.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 60, 18 )
+rect_pivot_offset = Vector2( 0, 9 )
+size_flags_horizontal = 0
 text = "PLAY"
+align = 0
 
-[node name="ConnectButton" parent="CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
-margin_left = 7.0
-margin_top = 101.0
-margin_right = 103.0
-margin_bottom = 119.0
-size_flags_horizontal = 4
+[node name="ConnectButton" parent="MainMenuOptions" instance=ExtResource( 2 )]
+margin_top = 22.0
+margin_right = 60.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 60, 18 )
+rect_pivot_offset = Vector2( 0, 9 )
+size_flags_horizontal = 0
 text = "CONNECT"
+align = 0
 
-[node name="OptionsButton" parent="CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
-margin_left = 7.0
-margin_top = 123.0
-margin_right = 103.0
-margin_bottom = 141.0
-size_flags_horizontal = 4
+[node name="OptionsButton" parent="MainMenuOptions" instance=ExtResource( 2 )]
+margin_top = 44.0
+margin_right = 60.0
+margin_bottom = 62.0
+rect_min_size = Vector2( 60, 18 )
+rect_pivot_offset = Vector2( 0, 9 )
+size_flags_horizontal = 0
 text = "OPTIONS"
+align = 0
 
-[node name="HSeparator2" type="HSeparator" parent="CenterContainer/VBoxContainer"]
-margin_top = 145.0
-margin_right = 111.0
-margin_bottom = 149.0
+[node name="HSeparator2" type="HSeparator" parent="MainMenuOptions"]
+margin_top = 66.0
+margin_right = 60.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 60, 0 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
 custom_constants/separation = 4
 custom_styles/separator = SubResource( 2 )
 
-[node name="QuitButton" parent="CenterContainer/VBoxContainer" instance=ExtResource( 2 )]
-margin_left = 7.0
-margin_top = 153.0
-margin_right = 103.0
-margin_bottom = 171.0
-size_flags_horizontal = 4
+[node name="QuitButton" parent="MainMenuOptions" instance=ExtResource( 2 )]
+margin_top = 74.0
+margin_right = 60.0
+margin_bottom = 92.0
+rect_min_size = Vector2( 60, 18 )
+rect_pivot_offset = Vector2( 0, 9 )
+size_flags_horizontal = 0
 text = "QUIT"
+align = 0

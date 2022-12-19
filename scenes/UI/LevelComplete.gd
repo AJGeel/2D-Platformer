@@ -26,6 +26,7 @@ func calculate_score(node):
 	# 0% = 0.25x, 100% = 1.00x
 	var loopX = float(node.collectedLoops + 0.0000001) / float(node.totalLoops + 0.0000001)
 	var loopMultiplier = 0.75 * pow(loopX, 2) + 0.25
+	var loopBonus = float(node.collectedLoops * 50)
 	
 	# f(x) = 1 - (x - 5) / (80 - 5)
 	# 5 sec = 1.00x, 60+ sec = 0.26x
@@ -37,7 +38,7 @@ func calculate_score(node):
 	var deathX = clamp(float(node.deathTotal), 0, 10)
 	var deathMultiplier = 1 - sqrt(deathX) / 3.8
 	
-	return round(baseScore * loopMultiplier * timeMultiplier * deathMultiplier)
+	return round(baseScore * loopMultiplier * timeMultiplier * deathMultiplier + loopBonus)
 
 func format_score(score : String) -> String:
 	var i : int = score.length() - 3

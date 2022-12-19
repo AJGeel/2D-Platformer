@@ -139,7 +139,6 @@ anims/RESET = SubResource( 2 )
 anims/transition = SubResource( 1 )
 
 [node name="TransitionRect" type="ColorRect" parent="."]
-visible = false
 material = SubResource( 4 )
 anchor_right = 1.0
 anchor_bottom = 1.0

@@ -8,6 +8,9 @@ var footstepParticles = preload("res://scenes/FootstepParticles.tscn")
 enum State {NORMAL, DASHING, INPUT_DISABLED}
 
 export(int, LAYERS_2D_PHYSICS) var dashHazardMask
+export(bool) var unlockedDash = false
+export(bool) var unlockedDoubleJump = false
+export(bool) var unlockedWallJump = false
 
 var gravity = 1000
 var velocity = Vector2.ZERO
@@ -17,15 +20,15 @@ var minDashSpeed = 200
 var horizontalAcceleration = 2000
 var jumpSpeed = 320
 var jumpTerminationMultiplier = 4
+var bufferedJump = false
 var hasDoubleJump = false
 var hasDash = false
 var currentState = State.NORMAL
 var isStateNew = true
 var isDying = false
-
-# Buffer Jump input https://www.youtube.com/watch?v=8wlQ5VCYFTI
-
 var defaultHazardMask = 0
+
+onready var jumpBufferTimer: = $JumpBufferTimer
 
 func _ready():
 	$HazardArea.connect("area_entered", self, "on_hazard_area_entered")
@@ -48,7 +51,7 @@ func change_state(newState):
 
 func process_normal(delta):
 	if (isStateNew):
-		stop_trail()
+		change_trail_to(false)
 		$DashArea/CollisionShape2D.disabled = true
 		$HazardArea.collision_mask = defaultHazardMask
 	
@@ -58,19 +61,27 @@ func process_normal(delta):
 	velocity.x += moveVector.x * horizontalAcceleration * delta
 	if (moveVector.x == 0):
 		velocity.x = lerp(0, velocity.x, pow(2, -50 * delta))
-	
 	velocity.x = clamp(velocity.x, -maxHorizontalSpeed, maxHorizontalSpeed)
 	
-	if (moveVector.y < 0 && (is_on_floor() || !$CoyoteTimer.is_stopped() || hasDoubleJump)):
-		velocity.y = moveVector.y * jumpSpeed
+	if (moveVector.y < 0 && (is_on_floor() || !$CoyoteTimer.is_stopped() || (unlockedDoubleJump && hasDoubleJump))):
+		
 		if (!is_on_floor() && $CoyoteTimer.is_stopped()):
-			$"/root/Helpers".apply_camera_shake(0.75)
-			hasDoubleJump = false
-			start_trail()
-			yield(get_tree().create_timer(.4), "timeout")
-			stop_trail()
-			
+			# Double Jump
+			velocity.y = moveVector.y * jumpSpeed
+			add_double_jump_effects()
+		else:
+			# Single Jump
+			velocity.y = moveVector.y * jumpSpeed
 		$CoyoteTimer.stop()
+	
+	elif (is_on_floor() && bufferedJump == true):
+		bufferedJump = false
+		velocity.y = -1 * jumpSpeed
+	
+	# Jump input buffer
+	if Input.is_action_just_pressed("jump"):
+		bufferedJump = true
+		jumpBufferTimer.start()
 	
 	if (velocity.y < 0 && !Input.is_action_pressed("jump")):
 		velocity.y += gravity * jumpTerminationMultiplier * delta
@@ -87,14 +98,14 @@ func process_normal(delta):
 	if (!wasOnFloor && is_on_floor() && !isStateNew):
 		var footstepScale = clamp(prevVelocity.y / 300, 1, 3)
 		var shakeScale = clamp(prevVelocity.y / 800, 0, 1.5)
-		addFootsteps(footstepScale)
+		add_footsteps(footstepScale)
 		$"/root/Helpers".apply_camera_shake(shakeScale)
 	
 	if (is_on_floor()):
 		hasDoubleJump = true
 		hasDash = true
 	
-	if (hasDash && Input.is_action_just_pressed("dash")):
+	if (unlockedDash && hasDash && Input.is_action_just_pressed("dash")):
 		call_deferred("change_state", State.DASHING)
 		hasDash = false
 	
@@ -102,7 +113,7 @@ func process_normal(delta):
 
 func process_dash(delta):
 	if (isStateNew):
-		start_trail()
+		change_trail_to(true)
 		$"/root/Helpers".apply_camera_shake(1)
 		$"/root/Helpers".apply_twitch()
 		$AudioPlayers/DashAudioPlayer.play()
@@ -152,7 +163,7 @@ func update_animation():
 			$AnimatedSprite.play("idle")
 	
 	if (moveVec.x != 0):
-		$AnimatedSprite.flip_h = true if moveVec.x > 0 else false	
+		$AnimatedSprite.flip_h = true if moveVec.x > 0 else false
 
 func kill():
 	if (isDying):
@@ -167,18 +178,26 @@ func kill():
 		$"/root/Helpers".apply_camera_shake(1)
 		emit_signal("died")
 
-func start_trail():
-	$TrailParticles.emitting = true
+func change_trail_to(state):
+	if state == true:
+		$TrailParticles.emitting = true
+	else:
+		$TrailParticles.emitting = false
 
-func stop_trail():
-	$TrailParticles.emitting = false
-
-func addFootsteps(scale = 1):
+func add_footsteps(scale = 1):
 	var footstep = footstepParticles.instance()
 	get_parent().add_child(footstep)
 	$AudioPlayers/FootstepAudioPlayer.play()
 	footstep.scale = Vector2.ONE * scale
 	footstep.global_position = global_position
+
+func add_double_jump_effects():
+	$"/root/Helpers".apply_camera_shake(0.75)
+	$AudioPlayers/DoubleJumpAudioPlayer.play()
+	hasDoubleJump = false
+	change_trail_to(true)
+	yield(get_tree().create_timer(.4), "timeout")
+	change_trail_to(false)
 
 func disable_player_input():
 	change_state(State.INPUT_DISABLED)
@@ -192,4 +211,7 @@ func on_bouncy_platform_entered(_area2d):
 
 func on_animated_sprite_frame_changed():
 	if ($AnimatedSprite.animation == "run" && $AnimatedSprite.frame == 0):
-		addFootsteps(0.5)
+		add_footsteps(0.5)
+
+func _on_JumpBufferTimer_timeout():
+	bufferedJump = false

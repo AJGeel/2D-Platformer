@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/double-jump-002.ogg-f18d1b5a04c9b6b28120b97760c12f57.oggstr"
+
+[deps]
+
+source_file="res://audio/custom/player-movement/double-jump-002.ogg"
+dest_files=[ "res://.import/double-jump-002.ogg-f18d1b5a04c9b6b28120b97760c12f57.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/parchment.ogg-574f6fd61a09c2f6098524f74b73eed1.oggstr"
+
+[deps]
+
+source_file="res://audio/custom/parchment.ogg"
+dest_files=[ "res://.import/parchment.ogg-574f6fd61a09c2f6098524f74b73eed1.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

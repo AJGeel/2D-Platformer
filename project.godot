@@ -10,9 +10,12 @@ config_version=4
 
 [application]
 
-config/name="2D Platformer"
+config/name="Calcium Crew: Conquest"
 run/main_scene="res://scenes/UI/MainMenu.tscn"
-config/icon="res://icon.png"
+boot_splash/image="res://icon-transparent.png"
+boot_splash/fullsize=false
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
+config/icon="res://icon-transparent.png"
 
 [autoload]
 
@@ -40,6 +43,7 @@ enabled=PoolStringArray( "res://addons/center_pivot_offset/plugin.cfg", "res://a
 pixel=false
 camera=false
 layer=false
+boot=false
 
 [gui]
 

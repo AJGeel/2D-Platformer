@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/UI/OptionsMenuStandalone.gd" type="Script" id=1]
 [ext_resource path="res://scenes/UI/OptionsMenu.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/ui/main-menu/galaxy.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/main-menu/sparkle.png" type="Texture" id=4]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.289398, 0.65043, 1 )
+colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
 [node name="OptionsMenuStandalone" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -13,3 +19,29 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 0
 color = Color( 0.129412, 0.0823529, 0.192157, 0.917647 )
+
+[node name="MenuBG" type="Node2D" parent="."]
+self_modulate = Color( 1, 1, 1, 0.5 )
+
+[node name="BGSprite" type="Sprite" parent="MenuBG"]
+position = Vector2( 210, 118 )
+rotation = 3.14159
+scale = Vector2( 1.25, 1.25 )
+texture = ExtResource( 3 )
+
+[node name="SparklesEmitter" type="CPUParticles2D" parent="MenuBG"]
+position = Vector2( 210, 118 )
+scale = Vector2( 1, 1 )
+amount = 15
+lifetime = 6.0
+preprocess = 290.14
+lifetime_randomness = 0.4
+texture = ExtResource( 4 )
+emission_shape = 2
+emission_rect_extents = Vector2( 210, 118 )
+gravity = Vector2( 0, 0 )
+scale_amount = 0.8
+scale_amount_random = 0.42
+color_ramp = SubResource( 1 )
+hue_variation = 0.1
+hue_variation_random = 1.0

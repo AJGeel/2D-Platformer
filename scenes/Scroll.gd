@@ -13,6 +13,7 @@ func _ready():
 
 func on_area_entered(_area2d):
 	$AnimationPlayer.current_animation = "opened"
+	$ScrollAudioPlayer.play()
 
 func on_area_exited(_area2d):
 	$AnimationPlayer.play_backwards("opened")

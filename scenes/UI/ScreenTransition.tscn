@@ -1,80 +1,27 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/effects/screen-wipes/triangles.png" type="Texture" id=1]
 [ext_resource path="res://scenes/UI/ScreenTransition.gd" type="Script" id=2]
-[ext_resource path="res://assets/effects/screen-wipes/zigzag.png" type="Texture" id=3]
-[ext_resource path="res://assets/effects/screen-wipes/bones.jpg" type="Texture" id=4]
 [ext_resource path="res://assets/effects/screen-wipes/skull.png" type="Texture" id=5]
-[ext_resource path="res://assets/effects/screen-wipes/pied-de-poule.png" type="Texture" id=7]
-[ext_resource path="res://assets/effects/screen-wipes/diamond.jpg" type="Texture" id=8]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
-uniform sampler2D wipeImage1;
-uniform sampler2D wipeImage2;
-uniform sampler2D wipeImage3;
-uniform sampler2D wipeImage4;
-uniform sampler2D wipeImage5;
-uniform sampler2D wipeImage6;
-uniform sampler2D wipeImage7;
-// Improvement: make sampler2D as an array, generate and
-// pick a random wipeImage on every new transition
-
-uniform float selectedImage : hint_range(0, 1);
-uniform float percent : hint_range(0, 1);
+uniform sampler2D mask : hint_albedo;
+uniform float smooth_size : hint_range(0.0, 1.0);
+uniform float cutoff : hint_range(0.0, 1.0);
 
 void fragment() {
-	 if (selectedImage < 0.14 ) {
-		float textureValue = texture(wipeImage1, UV).r;
-		if (textureValue < percent) {
-			COLOR.a = 0.0;
-		}
-	} else if (selectedImage < 0.28) {
-		float textureValue = texture(wipeImage2, UV).r;
-		if (textureValue < percent) {
-			COLOR.a = 0.0;
-		}
-	} else if (selectedImage < 0.42) {
-		float textureValue = texture(wipeImage3, UV).r;
-		if (textureValue < percent) {
-			COLOR.a = 0.0;
-		}
-	} else if (selectedImage < .56) {
-		float textureValue = texture(wipeImage4, UV).r;
-		if (textureValue < percent) {
-			COLOR.a = 0.0;
-		}
-	} else if (selectedImage < 0.70) {
-		float textureValue = texture(wipeImage5, UV).r;
-		if (textureValue < percent) {
-			COLOR.a = 0.0;
-		}
-	} else if (selectedImage < 0.86 ){
-		float textureValue = texture(wipeImage6, UV).r;
-		if (textureValue < percent) {
-			COLOR.a = 0.0;
-		}
-	} else {
-		float textureValue = texture(wipeImage7, UV).r;
-		if (textureValue < percent) {
-			COLOR.a = 0.0;
-		}
-	}
-	// float textureValue = texture(wipeImage2, UV).r;
+	float value = texture(mask, UV).r;
+	float alpha = smoothstep(cutoff, cutoff + smooth_size, value * (1.0 - smooth_size) + smooth_size);
+	
+	COLOR.a = alpha;
 }"
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
-shader_param/selectedImage = 0.0
-shader_param/percent = 0.0
-shader_param/wipeImage1 = ExtResource( 4 )
-shader_param/wipeImage2 = ExtResource( 5 )
-shader_param/wipeImage3 = ExtResource( 7 )
-shader_param/wipeImage4 = ExtResource( 1 )
-shader_param/wipeImage5 = ExtResource( 3 )
-shader_param/wipeImage6 = ExtResource( 7 )
-shader_param/wipeImage7 = ExtResource( 8 )
+shader_param/smooth_size = 0.306
+shader_param/cutoff = 1.0
+shader_param/mask = ExtResource( 5 )
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -95,16 +42,16 @@ tracks/0/keys = {
 resource_name = "default"
 step = 0.05
 tracks/0/type = "value"
-tracks/0/path = NodePath("ColorRect:material:shader_param/percent")
-tracks/0/interp = 2
+tracks/0/path = NodePath("ColorRect:material:shader_param/cutoff")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.25, 0.6, 0.75 ),
+"times": PoolRealArray( 0, 0.25, 0.6, 0.9 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 1.0, 0.0, 0.088, 1.0 ]
+"values": [ 1.0, 0.0, 0.0, 1.0 ]
 }
 tracks/1/type = "method"
 tracks/1/path = NodePath(".")
@@ -113,14 +60,11 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.75 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0.25 ),
+"transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "pick_random_transition"
-}, {
-"args": [  ],
-"method": "queue_free"
+"method": "emit_screen_covered"
 } ]
 }
 tracks/2/type = "method"
@@ -130,20 +74,6 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0.25 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "emit_screen_covered"
-} ]
-}
-tracks/3/type = "method"
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
 "times": PoolRealArray(  ),
 "transitions": PoolRealArray(  ),
 "values": [  ]
@@ -157,7 +87,7 @@ script = ExtResource( 2 )
 material = SubResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.129412, 0.0823529, 0.192157, 1 )
+color = Color( 0, 0, 0, 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "default"
