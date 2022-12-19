@@ -321,9 +321,9 @@ uppercase = true
 
 [node name="MainMenuOptions" type="VBoxContainer" parent="."]
 margin_left = 270.0
-margin_top = 63.0
+margin_top = 58.0
 margin_right = 366.0
-margin_bottom = 155.0
+margin_bottom = 172.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
@@ -366,10 +366,20 @@ size_flags_vertical = 0
 custom_constants/separation = 4
 custom_styles/separator = SubResource( 2 )
 
-[node name="QuitButton" parent="MainMenuOptions" instance=ExtResource( 2 )]
+[node name="FeedbackButton" parent="MainMenuOptions" instance=ExtResource( 2 )]
 margin_top = 74.0
 margin_right = 60.0
 margin_bottom = 92.0
+rect_min_size = Vector2( 60, 18 )
+rect_pivot_offset = Vector2( 0, 9 )
+size_flags_horizontal = 0
+text = "FEEDBACK"
+align = 0
+
+[node name="QuitButton" parent="MainMenuOptions" instance=ExtResource( 2 )]
+margin_top = 96.0
+margin_right = 60.0
+margin_bottom = 114.0
 rect_min_size = Vector2( 60, 18 )
 rect_pivot_offset = Vector2( 0, 9 )
 size_flags_horizontal = 0
