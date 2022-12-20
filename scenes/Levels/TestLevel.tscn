@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Decorative/FloatingPebble.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/SpringyMushroom.tscn" type="PackedScene" id=3]
 
 [node name="BaseLevel" instance=ExtResource( 1 )]
 
@@ -19,6 +20,12 @@ tile_data = PoolIntArray( -131082, 6, 1, -131056, 8, 1, -131054, 6, 1, -131041, 
 
 [node name="Flag" parent="." index="4"]
 position = Vector2( -324, -261 )
+
+[node name="SpringyMushroom" parent="StageInteractions" index="0" instance=ExtResource( 3 )]
+position = Vector2( 531, -27 )
+
+[node name="SpringyMushroom2" parent="StageInteractions" index="1" instance=ExtResource( 3 )]
+position = Vector2( 585, -153 )
 
 [node name="FloatingPebble" parent="StageDecorations" index="0" instance=ExtResource( 2 )]
 position = Vector2( -288, -27 )

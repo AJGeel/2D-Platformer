@@ -4,6 +4,7 @@ signal loop_total_changed
 signal death_total_changed
 signal enemies_killed_changed
 signal time_total_changed
+signal launched_by_mushroom
 
 export(PackedScene) var levelCompleteScene
 
@@ -37,6 +38,9 @@ func _unhandled_input(event):
 		var pauseInstance = pauseScene.instance()
 		add_child(pauseInstance)
 
+func bounced_on_mushroom():
+	emit_signal("launched_by_mushroom")
+
 func loop_collected():
 	collectedLoops += 1
 	emit_signal("loop_total_changed", totalLoops, collectedLoops)
@@ -46,6 +50,7 @@ func loop_total_changed(newTotal):
 	emit_signal("loop_total_changed", totalLoops, collectedLoops)
 
 func time_total_changed():
+	# TODO: Fix paused menu increasing time.
 	if (timerActive):
 		var currentTime = OS.get_unix_time()
 		totalTime = currentTime - startTime
@@ -79,6 +84,5 @@ func on_player_died():
 func on_player_won():
 	currentPlayerNode.disable_player_input()
 	timerActive = false
-	
 	var levelComplete = levelCompleteScene.instance()
 	add_child(levelComplete)

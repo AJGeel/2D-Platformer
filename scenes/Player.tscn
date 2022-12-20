@@ -34,7 +34,7 @@
 [ext_resource path="res://audio/custom/player-movement/jump-002.ogg" type="AudioStream" id=33]
 [ext_resource path="res://audio/custom/player-movement/jump-004.ogg" type="AudioStream" id=34]
 
-[sub_resource type="Shader" id=6]
+[sub_resource type="Shader" id=9]
 code = "shader_type canvas_item;
 
 uniform vec4 baseColor : hint_color;
@@ -45,14 +45,14 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id=7]
-shader = SubResource( 6 )
+shader = SubResource( 9 )
 shader_param/baseColor = Color( 0.964706, 0.447059, 0.501961, 1 )
 
 [sub_resource type="Curve" id=8]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.252595, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 16.0
+radius = 13.0
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 4, 7 )
@@ -266,7 +266,6 @@ shape = SubResource( 4 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
 animation = "idle"
-frame = 5
 playing = true
 offset = Vector2( 0, -12 )
 

@@ -135,9 +135,8 @@ collision_mask = 0
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -6.272 )
 frames = SubResource( 5 )
-frame = 3
+frame = 10
 playing = true
 
 [node name="AudioPlayers" type="Node" parent="."]

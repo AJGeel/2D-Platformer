@@ -20,6 +20,8 @@ var minDashSpeed = 200
 var horizontalAcceleration = 2000
 var jumpSpeed = 320
 var jumpTerminationMultiplier = 4
+var mushroomBoost = -600
+var isLaunched = false
 var bufferedJump = false
 var hasDoubleJump = false
 var hasDash = false
@@ -34,6 +36,10 @@ func _ready():
 	$HazardArea.connect("area_entered", self, "on_hazard_area_entered")
 	$AnimatedSprite.connect("frame_changed", self, "on_animated_sprite_frame_changed")
 	defaultHazardMask = $HazardArea.collision_mask
+	
+	
+	var baseLevel = get_tree().get_nodes_in_group("base_level")[0]
+	baseLevel.connect("launched_by_mushroom", self, "on_launched_by_mushroom")
 
 func _process(delta):
 	match currentState:
@@ -83,7 +89,7 @@ func process_normal(delta):
 		bufferedJump = true
 		jumpBufferTimer.start()
 	
-	if (velocity.y < 0 && !Input.is_action_pressed("jump")):
+	if (velocity.y < 0 && !Input.is_action_pressed("jump") && !isLaunched):
 		velocity.y += gravity * jumpTerminationMultiplier * delta
 	else:
 		velocity.y += gravity * delta
@@ -94,16 +100,23 @@ func process_normal(delta):
 	if (wasOnFloor && !is_on_floor()):
 		$CoyoteTimer.start()
 	
-	# Just landed on the floor
+	# Landing on the floor & footsteps
 	if (!wasOnFloor && is_on_floor() && !isStateNew):
 		var footstepScale = clamp(prevVelocity.y / 300, 1, 3)
-		var shakeScale = clamp(prevVelocity.y / 800, 0, 1.5)
+		var shakeScale = clamp(prevVelocity.y / 500, 0, 2)
+		
 		add_footsteps(footstepScale)
-		$"/root/Helpers".apply_camera_shake(shakeScale)
+		
+		# Big landing
+		if (shakeScale >= 1):
+			$"/root/Helpers".apply_twitch()
+			$"/root/Helpers".apply_camera_shake(shakeScale)
+			# TODO Add crunch sound effect
 	
 	if (is_on_floor()):
 		hasDoubleJump = true
 		hasDash = true
+		isLaunched = false
 	
 	if (unlockedDash && hasDash && Input.is_action_just_pressed("dash")):
 		call_deferred("change_state", State.DASHING)
@@ -206,8 +219,10 @@ func on_hazard_area_entered(_area2d):
 	$"/root/Helpers".apply_camera_shake(0.75)
 	call_deferred("kill")
 
-func on_bouncy_platform_entered(_area2d):
-	pass
+func on_launched_by_mushroom():
+	isLaunched = true
+	velocity.y = mushroomBoost
+	add_double_jump_effects()
 
 func on_animated_sprite_frame_changed():
 	if ($AnimatedSprite.animation == "run" && $AnimatedSprite.frame == 0):
