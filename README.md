@@ -10,11 +10,7 @@
 
 <h3 align="center">Godot 2D Platformer</h3>
 
-  <p align="center">
-    Tagging along with the GOAT FireBelley to create a 2D Platformer in Godot
-    <br />
-    <a href="https://www.udemy.com/course/create-a-complete-2d-platformer-in-the-godot-engine/"><strong>Udemy Course »</strong></a>
-  </p>
+  <a href="https://trello.com/b/lWfqwrKf/calcium-crew-conquest">Trello board</a>
 
   <br />
 
