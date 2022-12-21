@@ -91,6 +91,8 @@ height = 10.0
 collision_layer = 0
 script = ExtResource( 2 )
 dashHazardMask = 262144
+unlockedDash = false
+unlockedDoubleJump = false
 
 [node name="CoyoteTimer" type="Timer" parent="."]
 wait_time = 0.15
@@ -266,6 +268,7 @@ shape = SubResource( 4 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
 animation = "idle"
+frame = 1
 playing = true
 offset = Vector2( 0, -12 )
 

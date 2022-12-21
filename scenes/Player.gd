@@ -8,8 +8,8 @@ var footstepParticles = preload("res://scenes/FootstepParticles.tscn")
 enum State {NORMAL, DASHING, INPUT_DISABLED}
 
 export(int, LAYERS_2D_PHYSICS) var dashHazardMask
-export(bool) var unlockedDash = false
-export(bool) var unlockedDoubleJump = false
+export(bool) var unlockedDash = true
+export(bool) var unlockedDoubleJump = true
 export(bool) var unlockedWallJump = false
 
 var gravity = 1000
@@ -36,7 +36,6 @@ func _ready():
 	$HazardArea.connect("area_entered", self, "on_hazard_area_entered")
 	$AnimatedSprite.connect("frame_changed", self, "on_animated_sprite_frame_changed")
 	defaultHazardMask = $HazardArea.collision_mask
-	
 	
 	var baseLevel = get_tree().get_nodes_in_group("base_level")[0]
 	baseLevel.connect("launched_by_mushroom", self, "on_launched_by_mushroom")
