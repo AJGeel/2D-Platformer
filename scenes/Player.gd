@@ -8,19 +8,20 @@ var footstepParticles = preload("res://scenes/FootstepParticles.tscn")
 enum State {NORMAL, DASHING, INPUT_DISABLED}
 
 export(int, LAYERS_2D_PHYSICS) var dashHazardMask
-export(bool) var unlockedDash = true
-export(bool) var unlockedDoubleJump = true
-export(bool) var unlockedWallJump = false
+export(bool) var unlockedDash = false
+export(bool) var unlockedDoubleJump = false
+export(bool) var unlockedWallJump = true
 
-var gravity = 1000
+const GRAVITY = 1000
+const MAX_HORIZONTAL_SPEED = 140
+const MAX_DASH_SPEED = 500
+const MIN_DASH_SPEED = 200
+const HORIZONTAL_ACCELERATION = 2000
+const JUMP_SPEED = 320
+const JUMP_TERMINATION_MULTIPLIER = 4
+const MUSHROOM_BOOST = -600
+
 var velocity = Vector2.ZERO
-var maxHorizontalSpeed = 140
-var maxDashSpeed = 500
-var minDashSpeed = 200
-var horizontalAcceleration = 2000
-var jumpSpeed = 320
-var jumpTerminationMultiplier = 4
-var mushroomBoost = -600
 var isLaunched = false
 var bufferedJump = false
 var hasDoubleJump = false
@@ -63,25 +64,25 @@ func process_normal(delta):
 	var moveVector = get_movement_vector()
 	var prevVelocity = velocity
 	
-	velocity.x += moveVector.x * horizontalAcceleration * delta
+	velocity.x += moveVector.x * HORIZONTAL_ACCELERATION * delta
 	if (moveVector.x == 0):
 		velocity.x = lerp(0, velocity.x, pow(2, -50 * delta))
-	velocity.x = clamp(velocity.x, -maxHorizontalSpeed, maxHorizontalSpeed)
+	velocity.x = clamp(velocity.x, -MAX_HORIZONTAL_SPEED, MAX_HORIZONTAL_SPEED)
 	
 	if (moveVector.y < 0 && (is_on_floor() || !$CoyoteTimer.is_stopped() || (unlockedDoubleJump && hasDoubleJump))):
 		
 		if (!is_on_floor() && $CoyoteTimer.is_stopped()):
 			# Double Jump
-			velocity.y = moveVector.y * jumpSpeed
+			velocity.y = moveVector.y * JUMP_SPEED
 			add_double_jump_effects()
 		else:
 			# Single Jump
-			velocity.y = moveVector.y * jumpSpeed
+			velocity.y = moveVector.y * JUMP_SPEED
 		$CoyoteTimer.stop()
 	
 	elif (is_on_floor() && bufferedJump == true):
 		bufferedJump = false
-		velocity.y = -1 * jumpSpeed
+		velocity.y = -1 * JUMP_SPEED
 	
 	# Jump input buffer
 	if Input.is_action_just_pressed("jump"):
@@ -89,9 +90,9 @@ func process_normal(delta):
 		jumpBufferTimer.start()
 	
 	if (velocity.y < 0 && !Input.is_action_pressed("jump") && !isLaunched):
-		velocity.y += gravity * jumpTerminationMultiplier * delta
+		velocity.y += GRAVITY * JUMP_TERMINATION_MULTIPLIER * delta
 	else:
-		velocity.y += gravity * delta
+		velocity.y += GRAVITY * delta
 	
 	var wasOnFloor = is_on_floor()
 	velocity = move_and_slide(velocity, Vector2.UP)
@@ -113,13 +114,19 @@ func process_normal(delta):
 			# TODO Add crunch sound effect
 	
 	if (is_on_floor()):
+		# Reset values when you hit the floor
 		hasDoubleJump = true
 		hasDash = true
 		isLaunched = false
 	
 	if (unlockedDash && hasDash && Input.is_action_just_pressed("dash")):
+		# Handle dash state logic
 		call_deferred("change_state", State.DASHING)
 		hasDash = false
+	
+	if (is_on_wall()):
+		# Slow down fall gravity
+		pass
 	
 	update_animation()
 
@@ -140,19 +147,19 @@ func process_dash(delta):
 		else :
 			velocityMod = 1 if $AnimatedSprite.flip_h else -1
 		
-		velocity = Vector2(maxDashSpeed * velocityMod, 0)
+		velocity = Vector2(MAX_DASH_SPEED * velocityMod, 0)
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 	velocity.x = lerp(0, velocity.x, pow(2, -8 * delta))
 	
-	if (abs(velocity.x) < minDashSpeed):
+	if (abs(velocity.x) < MIN_DASH_SPEED):
 		call_deferred("change_state", State.NORMAL)
 
 func process_input_disabled(delta):
 	if (isStateNew):
 		$AnimatedSprite.play("idle")
 	velocity.x = lerp(0, velocity.x, pow(2, -50 *delta))
-	velocity.y += gravity * delta
+	velocity.y += GRAVITY * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 func get_movement_vector():
@@ -220,7 +227,7 @@ func on_hazard_area_entered(_area2d):
 
 func on_launched_by_mushroom():
 	isLaunched = true
-	velocity.y = mushroomBoost
+	velocity.y = MUSHROOM_BOOST
 	add_double_jump_effects()
 
 func on_animated_sprite_frame_changed():
