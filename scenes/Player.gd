@@ -10,7 +10,7 @@ enum State {NORMAL, DASHING, WALL_SLIDE, INPUT_DISABLED}
 export(int, LAYERS_2D_PHYSICS) var dashHazardMask
 export(bool) var unlockedDash = false
 export(bool) var unlockedDoubleJump = false
-export(bool) var unlockedWallJump = true
+export(bool) var unlockedWallJump = false
 
 const HORIZONTAL_ACCELERATION = 2000
 const MAX_HORIZONTAL_SPEED = 140
@@ -181,7 +181,8 @@ func process_wall_slide(delta):
 		velocity.y += GRAVITY * delta
 	
 	# Handle wall jump
-	if (moveVector.y < 0 && !wallJumpCooldownActive):
+	if (unlockedWallJump && (moveVector.y < 0) && !wallJumpCooldownActive):
+		add_wall_particles(1.25, wallDirection)
 		velocity.y = moveVector.y * JUMP_SPEED
 		velocity.x -= wallDirection * 300
 		$AnimatedSprite.flip_h = false if wallDirection > 0 else true
