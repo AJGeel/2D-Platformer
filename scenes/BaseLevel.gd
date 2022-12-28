@@ -50,7 +50,6 @@ func loop_total_changed(newTotal):
 	emit_signal("loop_total_changed", totalLoops, collectedLoops)
 
 func time_total_changed():
-	# TODO: Fix paused menu increasing time.
 	if (timerActive):
 		var currentTime = OS.get_unix_time()
 		totalTime = currentTime - startTime
