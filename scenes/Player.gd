@@ -20,6 +20,7 @@ const JUMP_TERMINATION_MULTIPLIER = 4
 
 const WALL_SLIDE_GRAVITY = 200
 const MAX_WALL_SLIDE_SPEED = 100
+const WALL_JUMP_X_SPEED = 200
 
 const MAX_DASH_SPEED = 500
 const MIN_DASH_SPEED = 200
@@ -38,10 +39,9 @@ var wallDirection = 1
 var wallJumpCooldownActive = false
 var defaultHazardMask = 0
 
-onready var jumpBufferTimer: = $JumpBufferTimer
+onready var JumpBufferTimer: = $JumpBufferTimer
 onready var LeftWallRaycasts = $WallRaycasts/LeftWallRaycasts
 onready var RightWallRaycasts = $WallRaycasts/RightWallRaycasts
-onready var WallJumpCooldown = $WallJumpCooldown
 
 func _ready():
 	$HazardArea.connect("area_entered", self, "on_hazard_area_entered")
@@ -95,7 +95,7 @@ func process_normal(delta):
 	# Jump input buffer
 	if Input.is_action_just_pressed("jump"):
 		bufferedJump = true
-		jumpBufferTimer.start()
+		JumpBufferTimer.start()
 	
 	if (velocity.y < 0 && !Input.is_action_pressed("jump") && !isLaunched):
 		velocity.y += GRAVITY * JUMP_TERMINATION_MULTIPLIER * delta
@@ -167,25 +167,30 @@ func process_wall_slide(delta):
 	wallDirection = update_wall_direction()
 	
 	# Handle X movement
-	handle_x_movement(moveVector, delta, -10)
+	if (wallJumpCooldownActive):
+		velocity.x = lerp(0, velocity.x, pow(2, -5 * delta))
+	else:
+		handle_x_movement(moveVector, delta, -10)
 	
 	# Handle Y movement
 	if is_on_wall() && velocity.y >= 0:
 		velocity.y += WALL_SLIDE_GRAVITY * delta
 		velocity.y = clamp(velocity.y, 0, MAX_WALL_SLIDE_SPEED)
-		# Spawn particles on wall
+		add_wall_particles(0.5, wallDirection)
 	else:
 		velocity.y += GRAVITY * delta
 	
 	# Handle wall jump
-	if (moveVector.y < 0):
+	if (moveVector.y < 0 && !wallJumpCooldownActive):
 		velocity.y = moveVector.y * JUMP_SPEED
-		velocity.x -= wallDirection * 500
+		velocity.x -= wallDirection * 300
 		$AnimatedSprite.flip_h = false if wallDirection > 0 else true
-		WallJumpCooldown.start()
+		
 		wallJumpCooldownActive = true
-	
-	print(WallJumpCooldown.time_left)
+		change_trail_to(true)
+		yield(get_tree().create_timer(.250), "timeout")
+		wallJumpCooldownActive = false
+		change_trail_to(false)
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
@@ -252,6 +257,14 @@ func add_footsteps(scale = 1):
 	$AudioPlayers/FootstepAudioPlayer.play()
 	footstep.scale = Vector2.ONE * scale
 	footstep.global_position = global_position
+
+func add_wall_particles(scale = 1, wallDirection = -1):
+	var wallParticle = footstepParticles.instance()
+	get_parent().add_child(wallParticle)
+	
+	wallParticle.scale = Vector2.ONE * scale
+	wallParticle.global_position = global_position
+	wallParticle.global_position.x += 6 * wallDirection
 
 func add_double_jump_effects():
 	$"/root/Helpers".apply_camera_shake(0.75)

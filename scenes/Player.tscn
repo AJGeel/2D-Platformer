@@ -100,10 +100,6 @@ one_shot = true
 wait_time = 0.1
 one_shot = true
 
-[node name="WallJumpCooldown" type="Timer" parent="."]
-wait_time = 0.25
-one_shot = true
-
 [node name="AudioPlayers" type="Node" parent="."]
 
 [node name="FootstepAudioPlayer" parent="AudioPlayers" instance=ExtResource( 13 )]
@@ -284,7 +280,6 @@ disabled = true
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
 animation = "idle"
-frame = 2
 playing = true
 offset = Vector2( 0, -12 )
 
@@ -317,3 +312,5 @@ cast_to = Vector2( 3, 0 )
 position = Vector2( 5, -13 )
 enabled = true
 cast_to = Vector2( 3, 0 )
+
+[connection signal="timeout" from="JumpBufferTimer" to="." method="_on_JumpBufferTimer_timeout"]
