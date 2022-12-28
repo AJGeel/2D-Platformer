@@ -5,20 +5,25 @@ signal died
 var playerDeathScene = preload("res://scenes/PlayerDeath.tscn")
 var footstepParticles = preload("res://scenes/FootstepParticles.tscn")
 
-enum State {NORMAL, DASHING, INPUT_DISABLED}
+enum State {NORMAL, DASHING, WALL_SLIDE, INPUT_DISABLED}
 
 export(int, LAYERS_2D_PHYSICS) var dashHazardMask
 export(bool) var unlockedDash = false
 export(bool) var unlockedDoubleJump = false
 export(bool) var unlockedWallJump = true
 
-const GRAVITY = 1000
-const MAX_HORIZONTAL_SPEED = 140
-const MAX_DASH_SPEED = 500
-const MIN_DASH_SPEED = 200
 const HORIZONTAL_ACCELERATION = 2000
+const MAX_HORIZONTAL_SPEED = 140
+const GRAVITY = 1000
 const JUMP_SPEED = 320
 const JUMP_TERMINATION_MULTIPLIER = 4
+
+const WALL_SLIDE_GRAVITY = 200
+const MAX_WALL_SLIDE_SPEED = 100
+
+const MAX_DASH_SPEED = 500
+const MIN_DASH_SPEED = 200
+
 const MUSHROOM_BOOST = -600
 
 var velocity = Vector2.ZERO
@@ -29,17 +34,23 @@ var hasDash = false
 var currentState = State.NORMAL
 var isStateNew = true
 var isDying = false
+var wallDirection = 1
+var wallJumpCooldownActive = false
 var defaultHazardMask = 0
 
 onready var jumpBufferTimer: = $JumpBufferTimer
+onready var LeftWallRaycasts = $WallRaycasts/LeftWallRaycasts
+onready var RightWallRaycasts = $WallRaycasts/RightWallRaycasts
+onready var WallJumpCooldown = $WallJumpCooldown
 
 func _ready():
 	$HazardArea.connect("area_entered", self, "on_hazard_area_entered")
 	$AnimatedSprite.connect("frame_changed", self, "on_animated_sprite_frame_changed")
 	defaultHazardMask = $HazardArea.collision_mask
 	
-	var baseLevel = get_tree().get_nodes_in_group("base_level")[0]
-	baseLevel.connect("launched_by_mushroom", self, "on_launched_by_mushroom")
+	var baseLevels = get_tree().get_nodes_in_group("base_level")
+	if (baseLevels.size() > 0):
+		baseLevels[0].connect("launched_by_mushroom", self, "on_launched_by_mushroom")
 
 func _process(delta):
 	match currentState:
@@ -47,6 +58,8 @@ func _process(delta):
 			process_normal(delta)
 		State.DASHING:
 			process_dash(delta)
+		State.WALL_SLIDE:
+			process_wall_slide(delta)
 		State.INPUT_DISABLED:
 			process_input_disabled(delta)
 	isStateNew = false
@@ -62,15 +75,10 @@ func process_normal(delta):
 		$HazardArea.collision_mask = defaultHazardMask
 	
 	var moveVector = get_movement_vector()
-	var prevVelocity = velocity
 	
-	velocity.x += moveVector.x * HORIZONTAL_ACCELERATION * delta
-	if (moveVector.x == 0):
-		velocity.x = lerp(0, velocity.x, pow(2, -50 * delta))
-	velocity.x = clamp(velocity.x, -MAX_HORIZONTAL_SPEED, MAX_HORIZONTAL_SPEED)
+	handle_x_movement(moveVector, delta, -17)
 	
 	if (moveVector.y < 0 && (is_on_floor() || !$CoyoteTimer.is_stopped() || (unlockedDoubleJump && hasDoubleJump))):
-		
 		if (!is_on_floor() && $CoyoteTimer.is_stopped()):
 			# Double Jump
 			velocity.y = moveVector.y * JUMP_SPEED
@@ -102,9 +110,8 @@ func process_normal(delta):
 	
 	# Landing on the floor & footsteps
 	if (!wasOnFloor && is_on_floor() && !isStateNew):
-		var footstepScale = clamp(prevVelocity.y / 300, 1, 3)
-		var shakeScale = clamp(prevVelocity.y / 500, 0, 2)
-		
+		var footstepScale = clamp(velocity.y / 300, 1, 3)
+		var shakeScale = clamp(velocity.y / 500, 0, 2)
 		add_footsteps(footstepScale)
 		
 		# Big landing
@@ -120,13 +127,13 @@ func process_normal(delta):
 		isLaunched = false
 	
 	if (unlockedDash && hasDash && Input.is_action_just_pressed("dash")):
-		# Handle dash state logic
+		# Change to Dash State
 		call_deferred("change_state", State.DASHING)
 		hasDash = false
 	
-	if (is_on_wall()):
-		# Slow down fall gravity
-		pass
+	# Change to Wall Slide state
+	if !is_on_floor() && (check_is_valid_wall(LeftWallRaycasts) || check_is_valid_wall(RightWallRaycasts)):
+		call_deferred("change_state", State.WALL_SLIDE)
 	
 	update_animation()
 
@@ -153,6 +160,36 @@ func process_dash(delta):
 	velocity.x = lerp(0, velocity.x, pow(2, -8 * delta))
 	
 	if (abs(velocity.x) < MIN_DASH_SPEED):
+		call_deferred("change_state", State.NORMAL)
+
+func process_wall_slide(delta):
+	var moveVector = get_movement_vector()
+	wallDirection = update_wall_direction()
+	
+	# Handle X movement
+	handle_x_movement(moveVector, delta, -10)
+	
+	# Handle Y movement
+	if is_on_wall() && velocity.y >= 0:
+		velocity.y += WALL_SLIDE_GRAVITY * delta
+		velocity.y = clamp(velocity.y, 0, MAX_WALL_SLIDE_SPEED)
+		# Spawn particles on wall
+	else:
+		velocity.y += GRAVITY * delta
+	
+	# Handle wall jump
+	if (moveVector.y < 0):
+		velocity.y = moveVector.y * JUMP_SPEED
+		velocity.x -= wallDirection * 500
+		$AnimatedSprite.flip_h = false if wallDirection > 0 else true
+		WallJumpCooldown.start()
+		wallJumpCooldownActive = true
+	
+	print(WallJumpCooldown.time_left)
+	
+	velocity = move_and_slide(velocity, Vector2.UP)
+	
+	if (is_on_floor() || !check_is_valid_wall(LeftWallRaycasts) && !check_is_valid_wall(RightWallRaycasts) && !wallJumpCooldownActive):
 		call_deferred("change_state", State.NORMAL)
 
 func process_input_disabled(delta):
@@ -203,6 +240,12 @@ func change_trail_to(state):
 	else:
 		$TrailParticles.emitting = false
 
+func handle_x_movement(moveVector, delta, exponential):
+	velocity.x += moveVector.x * HORIZONTAL_ACCELERATION * delta
+	if (moveVector.x == 0):
+		velocity.x = lerp(0, velocity.x, pow(2, exponential * delta))
+	velocity.x = clamp(velocity.x, -MAX_HORIZONTAL_SPEED, MAX_HORIZONTAL_SPEED)
+
 func add_footsteps(scale = 1):
 	var footstep = footstepParticles.instance()
 	get_parent().add_child(footstep)
@@ -217,6 +260,19 @@ func add_double_jump_effects():
 	change_trail_to(true)
 	yield(get_tree().create_timer(.4), "timeout")
 	change_trail_to(false)
+
+func update_wall_direction():
+	var isNearWallLeft = check_is_valid_wall(LeftWallRaycasts)
+	var isNearWallRight = check_is_valid_wall(RightWallRaycasts)
+	wallDirection = -int(isNearWallLeft) + int(isNearWallRight)
+	
+	return wallDirection
+
+func check_is_valid_wall(wallRaycasts):
+	for raycast in wallRaycasts.get_children():
+		if raycast.is_colliding():
+			return true
+	return false
 
 func disable_player_input():
 	change_state(State.INPUT_DISABLED)

@@ -13,7 +13,7 @@ func _ready():
 	direction = startDirection
 	$GoalDetector.connect("area_entered", self, "on_goal_entered")
 
-func _process(delta):
+func _process(_delta):
 	if (is_on_wall()):
 		change_direction()
 	
