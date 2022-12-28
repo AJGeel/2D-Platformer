@@ -42,10 +42,11 @@ var defaultHazardMask = 0
 onready var JumpBufferTimer: = $JumpBufferTimer
 onready var LeftWallRaycasts = $WallRaycasts/LeftWallRaycasts
 onready var RightWallRaycasts = $WallRaycasts/RightWallRaycasts
+onready var AnimatedSprite = $SpriteWrapper/AnimatedSprite
 
 func _ready():
 	$HazardArea.connect("area_entered", self, "on_hazard_area_entered")
-	$AnimatedSprite.connect("frame_changed", self, "on_animated_sprite_frame_changed")
+	AnimatedSprite.connect("frame_changed", self, "on_animated_sprite_frame_changed")
 	defaultHazardMask = $HazardArea.collision_mask
 	
 	var baseLevels = get_tree().get_nodes_in_group("base_level")
@@ -75,10 +76,14 @@ func process_normal(delta):
 		$HazardArea.collision_mask = defaultHazardMask
 	
 	var moveVector = get_movement_vector()
+	var prevVelocity = velocity
 	
 	handle_x_movement(moveVector, delta, -17)
 	
 	if (moveVector.y < 0 && (is_on_floor() || !$CoyoteTimer.is_stopped() || (unlockedDoubleJump && hasDoubleJump))):
+		$AnimationPlayer.queue("jump")
+		$AnimationPlayer.queue("RESET")
+		
 		if (!is_on_floor() && $CoyoteTimer.is_stopped()):
 			# Double Jump
 			velocity.y = moveVector.y * JUMP_SPEED
@@ -110,15 +115,20 @@ func process_normal(delta):
 	
 	# Landing on the floor & footsteps
 	if (!wasOnFloor && is_on_floor() && !isStateNew):
-		var footstepScale = clamp(velocity.y / 300, 1, 3)
-		var shakeScale = clamp(velocity.y / 500, 0, 2)
+		var footstepScale = clamp(prevVelocity.y / 300, 1, 3)
+		var shakeScale = clamp(prevVelocity.y / 500, 0, 2)
 		add_footsteps(footstepScale)
 		
 		# Big landing
 		if (shakeScale >= 1):
+			# TODO Add crunch sound effect
 			$"/root/Helpers".apply_twitch()
 			$"/root/Helpers".apply_camera_shake(shakeScale)
-			# TODO Add crunch sound effect
+			$AnimationPlayer.queue("harsh_landing")
+			$AnimationPlayer.queue("RESET")
+		else:
+			$AnimationPlayer.queue("land")
+			$AnimationPlayer.queue("RESET")
 	
 	if (is_on_floor()):
 		# Reset values when you hit the floor
@@ -145,14 +155,14 @@ func process_dash(delta):
 		$AudioPlayers/DashAudioPlayer.play()
 		$AudioPlayers/DashAudioPlayer2.play()
 		$DashArea/CollisionShape2D.disabled = false
-		$AnimatedSprite.play("jump")
+		AnimatedSprite.play("jump")
 		$HazardArea.collision_mask = dashHazardMask
 		var moveVector = get_movement_vector()
 		var velocityMod = 1
 		if (moveVector.x != 0):
 			velocityMod = sign(moveVector.x)
 		else :
-			velocityMod = 1 if $AnimatedSprite.flip_h else -1
+			velocityMod = 1 if AnimatedSprite.flip_h else -1
 		
 		velocity = Vector2(MAX_DASH_SPEED * velocityMod, 0)
 	
@@ -185,7 +195,7 @@ func process_wall_slide(delta):
 		add_wall_particles(1.25, wallDirection)
 		velocity.y = moveVector.y * JUMP_SPEED
 		velocity.x -= wallDirection * 300
-		$AnimatedSprite.flip_h = false if wallDirection > 0 else true
+		AnimatedSprite.flip_h = false if wallDirection > 0 else true
 		
 		wallJumpCooldownActive = true
 		change_trail_to(true)
@@ -200,7 +210,7 @@ func process_wall_slide(delta):
 
 func process_input_disabled(delta):
 	if (isStateNew):
-		$AnimatedSprite.play("idle")
+		AnimatedSprite.play("idle")
 	velocity.x = lerp(0, velocity.x, pow(2, -50 *delta))
 	velocity.y += GRAVITY * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
@@ -215,17 +225,17 @@ func update_animation():
 	var moveVec = get_movement_vector()
 	
 	if (!is_on_floor()):
-		$AnimatedSprite.play("jump")
+		AnimatedSprite.play("jump")
 	elif (moveVec.x != 0):
-		$AnimatedSprite.play("run")
+		AnimatedSprite.play("run")
 	else:
 		if Input.is_action_pressed("down"):
-			$AnimatedSprite.play("crouch")
+			AnimatedSprite.play("crouch")
 		else:
-			$AnimatedSprite.play("idle")
+			AnimatedSprite.play("idle")
 	
 	if (moveVec.x != 0):
-		$AnimatedSprite.flip_h = true if moveVec.x > 0 else false
+		AnimatedSprite.flip_h = true if moveVec.x > 0 else false
 
 func kill():
 	if (isDying):
@@ -301,7 +311,7 @@ func on_launched_by_mushroom():
 	add_double_jump_effects()
 
 func on_animated_sprite_frame_changed():
-	if ($AnimatedSprite.animation == "run" && $AnimatedSprite.frame == 0):
+	if (AnimatedSprite.animation == "run" && AnimatedSprite.frame == 0):
 		add_footsteps(0.5)
 
 func _on_JumpBufferTimer_timeout():
