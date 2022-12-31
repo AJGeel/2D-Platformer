@@ -192,6 +192,8 @@ func process_wall_slide(delta):
 	
 	# Handle wall jump
 	if (unlockedWallJump && (moveVector.y < 0) && !wallJumpCooldownActive):
+		$AnimationPlayer.queue("jump")
+		$AnimationPlayer.queue("RESET")
 		add_wall_particles(1.25, wallDirection)
 		velocity.y = moveVector.y * JUMP_SPEED
 		velocity.x -= wallDirection * 300
@@ -308,6 +310,8 @@ func on_hazard_area_entered(_area2d):
 func on_launched_by_mushroom():
 	isLaunched = true
 	velocity.y = MUSHROOM_BOOST
+	$AnimationPlayer.queue("jump")
+	$AnimationPlayer.queue("RESET")
 	add_double_jump_effects()
 
 func on_animated_sprite_frame_changed():

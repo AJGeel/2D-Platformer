@@ -69,6 +69,11 @@ func register_player(player):
 
 func create_player():
 	var playerInstance = playerScene.instance()
+	
+	# TODO: Re-instance player unlocks based on game state
+	# playerInstance.unlockedDash = true
+	# playerInstance.unlockedDoubleJump = true
+	# playerInstance.unlockedWallJump = true
 	$PlayerRoot.add_child(playerInstance)
 	playerInstance.global_position = spawnPosition
 	register_player(playerInstance)
