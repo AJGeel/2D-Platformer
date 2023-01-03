@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Resource",
+"class": "DialogueResource",
+"language": "GDScript",
+"path": "res://addons/dialogue_manager/dialogue_resource.gd"
+} ]
+_global_script_class_icons={
+"DialogueResource": ""
+}
+
 [application]
 
 config/name="Calcium Crew: Conquest"
@@ -24,6 +34,8 @@ Helpers="*res://scripts/helpers.gd"
 ScreenTransitionManager="*res://scenes/UI/ScreenTransitionManager.tscn"
 MouseCursor="*res://scenes/UI/MouseCursor.tscn"
 MusicPlayer="*res://scenes/MusicPlayer.tscn"
+GameState="*res://scripts/game_state.gd"
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [display]
 
@@ -36,7 +48,7 @@ window/stretch/aspect="keep_height"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/center_pivot_offset/plugin.cfg", "res://addons/node_library/plugin.cfg", "res://addons/retile/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/center_pivot_offset/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/node_library/plugin.cfg", "res://addons/retile/plugin.cfg" )
 
 [global]
 

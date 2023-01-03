@@ -1,0 +1,326 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/dialogue_manager/dialogue_resource.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+resource_version = 27
+syntax_version = 2
+raw_text = "~ prelude
+
+A distant voice: Hey you — can you hear me?
+You: Oh, praise Keith, another living being! I thought I was alone...
+You: Where am I? What happened?
+A distant voice: You're in a prison cell on the wastelands of what used to be planet Earth.
+A distant voice: As for what happened, that's a long story. All I know is that I woke up in this cell just like you.
+You: How long have we been here?
+A distant voice: I don't know. Time seems to have no meaning in this place.
+You: Is there any way to escape?
+A distant voice: I've tried everything, but it's no use. These cells are built to withstand even the strongest of blows. We're stuck here, at least for now.
+You: Do you have any idea why we were brought here?
+A distant voice: No, but I have a feeling we're not the only ones. I've heard the sound of other prisoners in the cells around us. It's possible that we were all brought here for some sort of twisted experiment or entertainment.
+You: That's insane. We have to find a way out of here.
+A distant voice: Agreed. But we'll need to be careful. There are guards patrolling the area, and they won't hesitate to use force if they catch us trying to escape.
+You: We'll have to be smart about it then. Maybe we can find a weakness in the cells or a way to distract the guards.
+A distant voice: It's worth a try. We can't just sit here and do nothing. We have to find a way out of here, no matter what it takes.
+
+
+~ tutorial
+
+if has_met_nathan == false
+	???: Hello
+	set has_met_nathan = true
+else
+	???: Hello again!
+???: Here are some choices.
+- First one
+	???: You picked the first one.
+- Second one
+	???: You picked the second one.
+- Start again => tutorial
+- End the conversation => END
+???: For more information about conditional dialogue, mutations, and all the fun stuff, see the online documentation."
+errors = [  ]
+titles = {
+"prelude": "2",
+"tutorial": "21"
+}
+lines = {
+"0": {
+"next_id": "2",
+"text": "prelude",
+"type": "title"
+},
+"10": {
+"character": "A distant voice",
+"character_replacements": [  ],
+"next_id": "11",
+"replacements": [  ],
+"text": "I've tried everything, but it's no use. These cells are built to withstand even the strongest of blows. We're stuck here, at least for now.",
+"translation_key": "I've tried everything, but it's no use. These cells are built to withstand even the strongest of blows. We're stuck here, at least for now.",
+"type": "dialogue"
+},
+"11": {
+"character": "You",
+"character_replacements": [  ],
+"next_id": "12",
+"replacements": [  ],
+"text": "Do you have any idea why we were brought here?",
+"translation_key": "Do you have any idea why we were brought here?",
+"type": "dialogue"
+},
+"12": {
+"character": "A distant voice",
+"character_replacements": [  ],
+"next_id": "13",
+"replacements": [  ],
+"text": "No, but I have a feeling we're not the only ones. I've heard the sound of other prisoners in the cells around us. It's possible that we were all brought here for some sort of twisted experiment or entertainment.",
+"translation_key": "No, but I have a feeling we're not the only ones. I've heard the sound of other prisoners in the cells around us. It's possible that we were all brought here for some sort of twisted experiment or entertainment.",
+"type": "dialogue"
+},
+"13": {
+"character": "You",
+"character_replacements": [  ],
+"next_id": "14",
+"replacements": [  ],
+"text": "That's insane. We have to find a way out of here.",
+"translation_key": "That's insane. We have to find a way out of here.",
+"type": "dialogue"
+},
+"14": {
+"character": "A distant voice",
+"character_replacements": [  ],
+"next_id": "15",
+"replacements": [  ],
+"text": "Agreed. But we'll need to be careful. There are guards patrolling the area, and they won't hesitate to use force if they catch us trying to escape.",
+"translation_key": "Agreed. But we'll need to be careful. There are guards patrolling the area, and they won't hesitate to use force if they catch us trying to escape.",
+"type": "dialogue"
+},
+"15": {
+"character": "You",
+"character_replacements": [  ],
+"next_id": "16",
+"replacements": [  ],
+"text": "We'll have to be smart about it then. Maybe we can find a weakness in the cells or a way to distract the guards.",
+"translation_key": "We'll have to be smart about it then. Maybe we can find a weakness in the cells or a way to distract the guards.",
+"type": "dialogue"
+},
+"16": {
+"character": "A distant voice",
+"character_replacements": [  ],
+"next_id": "",
+"replacements": [  ],
+"text": "It's worth a try. We can't just sit here and do nothing. We have to find a way out of here, no matter what it takes.",
+"translation_key": "It's worth a try. We can't just sit here and do nothing. We have to find a way out of here, no matter what it takes.",
+"type": "dialogue"
+},
+"19": {
+"next_id": "21",
+"text": "tutorial",
+"type": "title"
+},
+"2": {
+"character": "A distant voice",
+"character_replacements": [  ],
+"next_id": "3",
+"replacements": [  ],
+"text": "Hey you — can you hear me?",
+"translation_key": "Hey you — can you hear me?",
+"type": "dialogue"
+},
+"21": {
+"condition": {
+"expression": [ {
+"type": "variable",
+"value": "has_met_nathan"
+}, {
+"type": "comparison",
+"value": "=="
+}, {
+"type": "bool",
+"value": false
+} ]
+},
+"next_conditional_id": "24",
+"next_id": "22",
+"next_id_after": "26",
+"type": "condition"
+},
+"22": {
+"character": "???",
+"character_replacements": [  ],
+"next_id": "23",
+"parent_id": "21",
+"replacements": [  ],
+"text": "Hello",
+"translation_key": "Hello",
+"type": "dialogue"
+},
+"23": {
+"mutation": {
+"expression": [ {
+"type": "variable",
+"value": "has_met_nathan"
+}, {
+"type": "assignment",
+"value": "="
+}, {
+"type": "bool",
+"value": true
+} ]
+},
+"next_id": "26",
+"parent_id": "21",
+"type": "mutation"
+},
+"24": {
+"next_conditional_id": "26",
+"next_id": "25",
+"next_id_after": "26",
+"type": "condition"
+},
+"25": {
+"character": "???",
+"character_replacements": [  ],
+"next_id": "26",
+"parent_id": "24",
+"replacements": [  ],
+"text": "Hello again!",
+"translation_key": "Hello again!",
+"type": "dialogue"
+},
+"26": {
+"character": "???",
+"character_replacements": [  ],
+"next_id": "27",
+"replacements": [  ],
+"text": "Here are some choices.",
+"translation_key": "Here are some choices.",
+"type": "dialogue"
+},
+"27": {
+"next_id": "28",
+"next_id_after": "33",
+"replacements": [  ],
+"responses": PoolStringArray( "27", "29", "31", "32" ),
+"text": "First one",
+"translation_key": "First one",
+"type": "response"
+},
+"28": {
+"character": "???",
+"character_replacements": [  ],
+"next_id": "33",
+"parent_id": "27",
+"replacements": [  ],
+"text": "You picked the first one.",
+"translation_key": "You picked the first one.",
+"type": "dialogue"
+},
+"29": {
+"next_id": "30",
+"next_id_after": "33",
+"replacements": [  ],
+"text": "Second one",
+"translation_key": "Second one",
+"type": "response"
+},
+"3": {
+"character": "You",
+"character_replacements": [  ],
+"next_id": "4",
+"replacements": [  ],
+"text": "Oh, praise Keith, another living being! I thought I was alone...",
+"translation_key": "Oh, praise Keith, another living being! I thought I was alone...",
+"type": "dialogue"
+},
+"30": {
+"character": "???",
+"character_replacements": [  ],
+"next_id": "33",
+"parent_id": "29",
+"replacements": [  ],
+"text": "You picked the second one.",
+"translation_key": "You picked the second one.",
+"type": "dialogue"
+},
+"31": {
+"next_id": "21",
+"next_id_after": "33",
+"replacements": [  ],
+"text": "Start again",
+"translation_key": "Start again",
+"type": "response"
+},
+"32": {
+"next_id": "end",
+"next_id_after": "33",
+"replacements": [  ],
+"text": "End the conversation",
+"translation_key": "End the conversation",
+"type": "response"
+},
+"33": {
+"character": "???",
+"character_replacements": [  ],
+"next_id": "",
+"replacements": [  ],
+"text": "For more information about conditional dialogue, mutations, and all the fun stuff, see the online documentation.",
+"translation_key": "For more information about conditional dialogue, mutations, and all the fun stuff, see the online documentation.",
+"type": "dialogue"
+},
+"4": {
+"character": "You",
+"character_replacements": [  ],
+"next_id": "5",
+"replacements": [  ],
+"text": "Where am I? What happened?",
+"translation_key": "Where am I? What happened?",
+"type": "dialogue"
+},
+"5": {
+"character": "A distant voice",
+"character_replacements": [  ],
+"next_id": "6",
+"replacements": [  ],
+"text": "You're in a prison cell on the wastelands of what used to be planet Earth.",
+"translation_key": "You're in a prison cell on the wastelands of what used to be planet Earth.",
+"type": "dialogue"
+},
+"6": {
+"character": "A distant voice",
+"character_replacements": [  ],
+"next_id": "7",
+"replacements": [  ],
+"text": "As for what happened, that's a long story. All I know is that I woke up in this cell just like you.",
+"translation_key": "As for what happened, that's a long story. All I know is that I woke up in this cell just like you.",
+"type": "dialogue"
+},
+"7": {
+"character": "You",
+"character_replacements": [  ],
+"next_id": "8",
+"replacements": [  ],
+"text": "How long have we been here?",
+"translation_key": "How long have we been here?",
+"type": "dialogue"
+},
+"8": {
+"character": "A distant voice",
+"character_replacements": [  ],
+"next_id": "9",
+"replacements": [  ],
+"text": "I don't know. Time seems to have no meaning in this place.",
+"translation_key": "I don't know. Time seems to have no meaning in this place.",
+"type": "dialogue"
+},
+"9": {
+"character": "You",
+"character_replacements": [  ],
+"next_id": "10",
+"replacements": [  ],
+"text": "Is there any way to escape?",
+"translation_key": "Is there any way to escape?",
+"type": "dialogue"
+}
+}
