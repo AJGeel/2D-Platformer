@@ -42,7 +42,7 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="Curve" id=2]
-_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0375204, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.978793, 0.990991 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
 [node name="FloatingPebble" type="Node2D"]
 script = ExtResource( 2 )
@@ -55,7 +55,7 @@ anims/float = SubResource( 4 )
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 material = SubResource( 1 )
 amount = 1
-lifetime = 360.0
+lifetime = 42069.0
 preprocess = 20.0
 texture = ExtResource( 1 )
 gravity = Vector2( 0, 0 )

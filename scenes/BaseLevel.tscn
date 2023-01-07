@@ -7,7 +7,7 @@
 [ext_resource path="res://scenes/UI/LevelUI.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/UI/LevelComplete.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/BaseLevel.gd" type="Script" id=7]
-[ext_resource path="res://resources/decorative_tileset.tres" type="TileSet" id=8]
+[ext_resource path="res://resources/tileset_decorative.tres" type="TileSet" id=8]
 [ext_resource path="res://scenes/OutOfBounds.tscn" type="PackedScene" id=10]
 [ext_resource path="res://resources/shaders/horizontal-twitch.gdshader" type="Shader" id=11]
 [ext_resource path="res://assets/background/parallax/clouds.png" type="Texture" id=12]
@@ -88,12 +88,24 @@ autoplay = "RESET"
 anims/RESET = SubResource( 3 )
 anims/Twitch = SubResource( 4 )
 
+[node name="DecorativeTileMapFront" type="TileMap" parent="."]
+z_index = 1337
+tile_set = ExtResource( 8 )
+cell_size = Vector2( 18, 18 )
+format = 1
+
+[node name="InvisibleTileMap" type="TileMap" parent="."]
+visible = false
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 18, 18 )
+format = 1
+
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
 cell_size = Vector2( 18, 18 )
 format = 1
 
-[node name="DecorativeTileMap" type="TileMap" parent="."]
+[node name="DecorativeTileMapBack" type="TileMap" parent="."]
 tile_set = ExtResource( 8 )
 cell_size = Vector2( 18, 18 )
 format = 1
