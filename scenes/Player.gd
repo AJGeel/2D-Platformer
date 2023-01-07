@@ -81,8 +81,7 @@ func process_normal(delta):
 	handle_x_movement(moveVector, delta, -17)
 	
 	if (moveVector.y < 0 && (is_on_floor() || !$CoyoteTimer.is_stopped() || (unlockedDoubleJump && hasDoubleJump))):
-		$AnimationPlayer.queue("jump")
-		$AnimationPlayer.queue("RESET")
+		queue_animation_player("jump")
 		
 		if (!is_on_floor() && $CoyoteTimer.is_stopped()):
 			# Double Jump
@@ -124,11 +123,9 @@ func process_normal(delta):
 			# TODO Add crunch sound effect
 			$"/root/Helpers".apply_twitch()
 			$"/root/Helpers".apply_camera_shake(shakeScale)
-			$AnimationPlayer.queue("harsh_landing")
-			$AnimationPlayer.queue("RESET")
+			queue_animation_player("harsh_landing")
 		else:
-			$AnimationPlayer.queue("land")
-			$AnimationPlayer.queue("RESET")
+			queue_animation_player("land")
 	
 	if (is_on_floor()):
 		# Reset values when you hit the floor
@@ -192,8 +189,7 @@ func process_wall_slide(delta):
 	
 	# Handle wall jump
 	if (unlockedWallJump && (moveVector.y < 0) && !wallJumpCooldownActive):
-		$AnimationPlayer.queue("jump")
-		$AnimationPlayer.queue("RESET")
+		queue_animation_player("jump")
 		add_wall_particles(1.25, wallDirection)
 		velocity.y = moveVector.y * JUMP_SPEED
 		velocity.x -= wallDirection * 300
@@ -222,6 +218,13 @@ func get_movement_vector():
 	moveVector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	moveVector.y = -1 if Input.is_action_just_pressed("jump") else 0
 	return moveVector
+
+func queue_animation_player(animationName : String):
+	var AP = $AnimationPlayer
+	AP.play(animationName)
+	#$AnimationPlayer.clear_queue()
+	#$AnimationPlayer.queue(animationName)
+	$AnimationPlayer.queue("RESET")
 
 func update_animation():
 	var moveVec = get_movement_vector()
@@ -310,8 +313,7 @@ func on_hazard_area_entered(_area2d):
 func on_launched_by_mushroom():
 	isLaunched = true
 	velocity.y = MUSHROOM_BOOST
-	$AnimationPlayer.queue("jump")
-	$AnimationPlayer.queue("RESET")
+	queue_animation_player("jump")
 	add_double_jump_effects()
 
 func on_animated_sprite_frame_changed():
