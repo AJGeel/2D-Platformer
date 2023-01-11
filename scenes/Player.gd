@@ -222,8 +222,6 @@ func get_movement_vector():
 func queue_animation_player(animationName : String):
 	var AP = $AnimationPlayer
 	AP.play(animationName)
-	#$AnimationPlayer.clear_queue()
-	#$AnimationPlayer.queue(animationName)
 	$AnimationPlayer.queue("RESET")
 
 func update_animation():

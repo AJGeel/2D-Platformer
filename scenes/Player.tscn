@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://assets/player/white_character_walk_1.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Player.gd" type="Script" id=2]
@@ -26,6 +26,7 @@
 [ext_resource path="res://audio/kenney_impact/impactGlass_medium_000.ogg" type="AudioStream" id=24]
 [ext_resource path="res://audio/kenney_impact/impactGlass_medium_003.ogg" type="AudioStream" id=25]
 [ext_resource path="res://audio/kenney_impact/impactGlass_medium_002.ogg" type="AudioStream" id=26]
+[ext_resource path="res://scenes/Interactions/InteractionComponent.tscn" type="PackedScene" id=27]
 [ext_resource path="res://audio/custom/player-movement/jump-003.ogg" type="AudioStream" id=28]
 [ext_resource path="res://audio/custom/woosh/woosh-002.ogg" type="AudioStream" id=29]
 [ext_resource path="res://audio/custom/woosh/woosh-001.ogg" type="AudioStream" id=30]
@@ -166,7 +167,8 @@ animations = [ {
 extents = Vector2( 5, 8 )
 
 [node name="Player" type="KinematicBody2D" groups=["player"]]
-collision_layer = 0
+collision_layer = 2048
+collision_mask = 2049
 script = ExtResource( 2 )
 dashHazardMask = 262144
 
@@ -331,8 +333,11 @@ texture = ExtResource( 8 )
 gravity = Vector2( 0, 0 )
 scale_amount_curve = SubResource( 8 )
 
+[node name="InteractionArea" parent="." instance=ExtResource( 27 )]
+position = Vector2( 0, -11 )
+INTERACTION_PARENT = NodePath("..")
+
 [node name="PickupArea" type="Area2D" parent="."]
-visible = false
 collision_layer = 524288
 collision_mask = 524288
 
@@ -367,7 +372,7 @@ disabled = true
 [node name="AnimatedSprite" type="AnimatedSprite" parent="SpriteWrapper"]
 frames = SubResource( 2 )
 animation = "idle"
-frame = 6
+frame = 1
 playing = true
 offset = Vector2( 0, -12 )
 

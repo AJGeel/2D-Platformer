@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/interactions/cell-gate/cell-gate-2h.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Interactions/CellGate/CellGate.gd" type="Script" id=2]
 [ext_resource path="res://assets/effects/particles.png" type="Texture" id=3]
+[ext_resource path="res://scenes/Interactions/Lock.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Animation" id=6]
 length = 0.001
@@ -83,6 +84,9 @@ tracks/2/keys = {
 "values": [ false, true ]
 }
 
+[sub_resource type="CircleShape2D" id=7]
+radius = 15.0
+
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 4, 18 )
 
@@ -112,6 +116,13 @@ scale = Vector2( 1e-05, 1 )
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( 0, -18 )
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 2048
+collision_mask = 2048
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource( 7 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2( 4, 0 )
@@ -143,3 +154,5 @@ scale_amount_curve = SubResource( 4 )
 color_ramp = SubResource( 5 )
 anim_offset = 1.0
 anim_offset_random = 1.0
+
+[node name="Lock" parent="." instance=ExtResource( 4 )]

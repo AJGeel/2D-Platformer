@@ -164,6 +164,7 @@ click={
 
 2d_physics/layer_1="TERRAIN"
 2d_physics/layer_2="ENEMY"
+2d_physics/layer_12="INTERACTABLE"
 2d_physics/layer_16="OUT_OF_BOUNDS"
 2d_physics/layer_17="ENEMY_HAZARD"
 2d_physics/layer_18="ENEMY_GOAL"

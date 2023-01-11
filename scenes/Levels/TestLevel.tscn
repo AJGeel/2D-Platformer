@@ -21,7 +21,7 @@ tile_data = PoolIntArray( -2228241, 0, 9, -2162705, 0, 65545, -2097173, 0, 9, -2
 position = Vector2( -610, -269 )
 
 [node name="EnemySpawner" parent="Enemies" index="0" instance=ExtResource( 5 )]
-position = Vector2( 22, -16 )
+position = Vector2( -305, 117 )
 
 [node name="SpringyMushroom" parent="StageInteractions" index="0" instance=ExtResource( 3 )]
 position = Vector2( 531, -27 )
