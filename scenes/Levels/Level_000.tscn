@@ -48,6 +48,7 @@ position = Vector2( 18, -18 )
 
 [node name="CellGate2" parent="StageInteractions" index="3" instance=ExtResource( 9 )]
 position = Vector2( 792, -198 )
+GATE_HEIGHT = 3
 
 [node name="SpringyMushroom" parent="StageInteractions" index="4" instance=ExtResource( 10 )]
 position = Vector2( 225, 297 )
@@ -270,7 +271,10 @@ position = Vector2( 48, -530 )
 position = Vector2( -36, 0 )
 
 [node name="Player" parent="PlayerRoot" index="0"]
-position = Vector2( 18, 0 )
+position = Vector2( -9, -9 )
+unlockedDash = true
+unlockedDoubleJump = true
+unlockedWallJump = true
 
 [node name="OutOfBounds" parent="." index="14"]
 position = Vector2( 0, 648 )

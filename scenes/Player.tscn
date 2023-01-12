@@ -167,8 +167,7 @@ animations = [ {
 extents = Vector2( 5, 8 )
 
 [node name="Player" type="KinematicBody2D" groups=["player"]]
-collision_layer = 2048
-collision_mask = 2049
+collision_layer = 0
 script = ExtResource( 2 )
 dashHazardMask = 262144
 
@@ -333,7 +332,7 @@ texture = ExtResource( 8 )
 gravity = Vector2( 0, 0 )
 scale_amount_curve = SubResource( 8 )
 
-[node name="InteractionArea" parent="." instance=ExtResource( 27 )]
+[node name="InteractionComponent" parent="." instance=ExtResource( 27 )]
 position = Vector2( 0, -11 )
 INTERACTION_PARENT = NodePath("..")
 
@@ -372,7 +371,7 @@ disabled = true
 [node name="AnimatedSprite" type="AnimatedSprite" parent="SpriteWrapper"]
 frames = SubResource( 2 )
 animation = "idle"
-frame = 1
+frame = 5
 playing = true
 offset = Vector2( 0, -12 )
 

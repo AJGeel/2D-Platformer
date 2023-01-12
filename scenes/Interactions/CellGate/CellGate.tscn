@@ -88,7 +88,7 @@ tracks/2/keys = {
 radius = 15.0
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 4, 18 )
+extents = Vector2( 3, 18 )
 
 [sub_resource type="CanvasItemMaterial" id=3]
 particles_animation = true
@@ -129,6 +129,7 @@ position = Vector2( 4, 0 )
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( -4, 0 )
 shape = SubResource( 2 )
 
 [node name="DustParticles" type="CPUParticles2D" parent="."]
