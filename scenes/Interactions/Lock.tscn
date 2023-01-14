@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/interactions/lock.png" type="Texture" id=1]
+[ext_resource path="res://assets/effects/particles.png" type="Texture" id=2]
 
 [sub_resource type="Animation" id=4]
 resource_name = "Explode"
@@ -18,7 +19,7 @@ tracks/0/keys = {
 "values": [ false ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("CPUParticles2D:emitting")
+tracks/1/path = NodePath("LockParticles:emitting")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -42,6 +43,18 @@ tracks/2/keys = {
 "args": [  ],
 "method": "queue_free"
 } ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SmokeParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -100,7 +113,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("CPUParticles2D:emitting")
+tracks/2/path = NodePath("LockParticles:emitting")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -111,6 +124,18 @@ tracks/2/keys = {
 "update": 0,
 "values": [ false ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("SmokeParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="CanvasItemMaterial" id=5]
 particles_animation = true
@@ -119,11 +144,17 @@ particles_anim_v_frames = 3
 particles_anim_loop = false
 
 [sub_resource type="Curve" id=6]
-_data = [ Vector2( 0.00280899, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.699438, 0.783311 ), 0.0, 0.0, 0, 0, Vector2( 0.925562, 0 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0.00280899, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.664441, 0.430383 ), 0.0, 0.0, 0, 0, Vector2( 0.925562, 0 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="Gradient" id=7]
 offsets = PoolRealArray( 0.430723, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="CanvasItemMaterial" id=8]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
 
 [node name="Lock" type="Node2D"]
 z_index = 1337
@@ -136,25 +167,49 @@ anims/Explode = SubResource( 4 )
 anims/Jiggle = SubResource( 2 )
 anims/RESET = SubResource( 3 )
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+[node name="LockParticles" type="CPUParticles2D" parent="."]
 material = SubResource( 5 )
 emitting = false
-amount = 9
+amount = 21
 lifetime = 1.5
 one_shot = true
-explosiveness = 0.93
+explosiveness = 0.95
 texture = ExtResource( 1 )
 emission_shape = 2
 emission_rect_extents = Vector2( 4, 4 )
-direction = Vector2( 0, -1 )
+direction = Vector2( 0, 0 )
 spread = 180.0
 gravity = Vector2( 0, 30 )
-initial_velocity = 40.0
+initial_velocity = 89.64
 initial_velocity_random = 0.27
-angular_velocity = 203.89
+angular_velocity = 720.0
 angular_velocity_random = 1.0
-damping = 16.53
+damping = 52.7
 damping_random = 0.17
+angle = 131.7
+angle_random = 1.0
+scale_amount_curve = SubResource( 6 )
+color_ramp = SubResource( 7 )
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[node name="SmokeParticles" type="CPUParticles2D" parent="."]
+material = SubResource( 8 )
+emitting = false
+amount = 12
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.95
+texture = ExtResource( 2 )
+emission_shape = 2
+emission_rect_extents = Vector2( 4, 4 )
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, -10 )
+initial_velocity = 15.0
+initial_velocity_random = 0.27
+angular_velocity = 720.0
+angular_velocity_random = 1.0
 angle = 131.7
 angle_random = 1.0
 scale_amount_curve = SubResource( 6 )
