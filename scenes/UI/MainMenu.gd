@@ -25,8 +25,8 @@ func on_connect_pressed():
 	$"/root/ScreenTransitionManager".transition_to_scene("res://scenes/UI/ConnectMenu.tscn")
 
 func on_feedback_pressed():
-	print("Feedback btn pressed")
-	OS.shell_open("https://discord.gg/mTPmh74byM")
+	# Open the Discord
+	var _shell = OS.shell_open("https://discord.gg/mTPmh74byM")
 
 func on_quit_pressed():
 	get_tree().quit()

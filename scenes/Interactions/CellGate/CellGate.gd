@@ -12,7 +12,7 @@ var SPRITE_4H = preload("res://assets/interactions/cell-gate/cell-gate-4h.png")
 # TODO Debug: mutative state _ready collision props
 const FACTOR = 18
 
-# Update sprite and collision props on init
+# Update sprite and collision props on _ready
 func _ready():
 	update_sprite()
 	update_collision_props()
@@ -24,7 +24,7 @@ func interaction_can_interact() -> bool:
 	else:
 		return true
 
-func interaction_interact(interactionTarget: Node) -> void:
+func interaction_interact(_interactionTarget: Node) -> void:
 	if (isOpen || isOpening):
 		return
 	
@@ -61,15 +61,11 @@ func update_collision_props():
 	var dustParticlesNode = $DustParticles
 	
 	print("DEBUG: Updating collision props for ", self)
-	print("DEBUG: Original state:")
-	print("DEBUG: ", collisionNode.shape.extents.y)
-	print("DEBUG: ", collisionNode.position.y)
+	print("DEBUG: Original state: shape.extents=(", collisionNode.shape.extents.y, "), position.y=(", collisionNode.position.y, ")")
 	collisionNode.shape.extents.y = FACTOR * (GATE_HEIGHT / 2) # (18, 27, 36)
 	collisionNode.position.y = -1 * FACTOR * ((GATE_HEIGHT - 1) / 2) # (0, -9, -18)
 	
-	print("DEBUG: Final state:")
-	print("DEBUG: ", collisionNode.shape.extents.y)
-	print("DEBUG: ", collisionNode.position.y)
+	print("DEBUG: Mutated state:  shape.extents=(", collisionNode.shape.extents.y, "), position.y=(", collisionNode.position.y, ")")
 	
 	dustParticlesNode.amount = 4 * GATE_HEIGHT # (8, 12, 16)
 	dustParticlesNode.emission_rect_extents.y = GATE_HEIGHT * 8 - 4 # (12, 20, 28)

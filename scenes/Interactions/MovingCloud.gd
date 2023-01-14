@@ -11,7 +11,7 @@ var direction = Vector2.ZERO
 
 func _ready():
 	direction = startDirection
-	$GoalDetector.connect("area_entered", self, "on_goal_entered")
+	var _goalDetectorEntered = $GoalDetector.connect("area_entered", self, "on_goal_entered")
 
 func _process(_delta):
 	if (is_on_wall()):

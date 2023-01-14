@@ -7,8 +7,8 @@ var lastAnimation = null
 func _ready():
 	# Update label text
 	$Node2D/PanelContainer/MarginContainer/Label.text = text
-	$Area2D.connect("area_entered", self, "on_area_entered")
-	$Area2D.connect("area_exited", self, "on_area_exited")
+	var _areaEntered = $Area2D.connect("area_entered", self, "on_area_entered")
+	var _areaExited = $Area2D.connect("area_exited", self, "on_area_exited")
 	$AnimationPlayer.playback_speed = 1.25
 
 func on_area_entered(_area2d):

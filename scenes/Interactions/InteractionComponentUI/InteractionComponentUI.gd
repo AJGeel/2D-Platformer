@@ -15,7 +15,7 @@ var fixedPosition : Vector2
 
 func _ready():
 	# We need to connect ourselves to the interaction components' signal
-	get_node(INTERACTION_COMPONENT_NODEPATH).connect("on_interactable_changed", self, "interactable_target_changed", [], CONNECT_DEFERRED)
+	var _interactionNode = get_node(INTERACTION_COMPONENT_NODEPATH).connect("on_interactable_changed", self, "interactable_target_changed", [], CONNECT_DEFERRED)
 	
 	# On load, we should be hidden
 	hide()

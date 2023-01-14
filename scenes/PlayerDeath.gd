@@ -1,14 +1,14 @@
 extends KinematicBody2D
 
 var velocity = Vector2.ZERO
-var gravity = 1000
+const GRAVITY = 1000
 
-var words = ["Oof", "Ow", "Ouch", "Argh", "Darn", "Youch", "Yoink", "Owie", "Shucks", "Crunch", "Yeet", "Ugh", "Golly", "Oy"]
+# var words = ["Oof", "Ow", "Ouch", "Argh", "Darn", "Youch", "Yoink", "Owie", "Shucks", "Crunch", "Yeet", "Ugh", "Golly", "Oy"]
 
 func _ready():
 	if (velocity.x > 0):
 		$Visuals.scale = Vector2(-1, 1)
-	$HurtboxArea.connect("area_entered", self, "on_hurtbox_entered")
+	var _hurtboxArea = $HurtboxArea.connect("area_entered", self, "on_hurtbox_entered")
 	$AudioPlayers/DeathSoundPlayer1.play()
 	$AudioPlayers/DeathSoundPlayer2.play()
 	$AudioPlayers/DeathSoundPlayer3.play()
@@ -16,7 +16,7 @@ func _ready():
 	# $Text/Label.text = randomWord
 
 func _process(delta):
-	velocity.y += gravity * delta
+	velocity.y += GRAVITY * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	if (is_on_floor()):

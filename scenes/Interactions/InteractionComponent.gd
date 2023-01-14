@@ -9,14 +9,12 @@ var interactionTarget : Node
 func _process(_delta):
 	# Check whether the player is trying to interact
 	if (Input.is_action_just_pressed("ui_accept")):
-		print("DEBUG: Player tried to interact")
 		if (interactionTarget != null):
-			print("DEBUG: ... and player successfully interacted")
+			# Trigger the interaction
 			interactionTarget.interaction_interact(self)
 			
 			# Cleanup: remove interaction target
 			reset_interaction_target()
-			# Todo: trigger animation
 
 # Signal triggered when the player enters an interactable area
 func _on_InteractionComponent_area_entered(area):

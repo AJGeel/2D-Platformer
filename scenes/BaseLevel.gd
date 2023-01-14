@@ -28,7 +28,7 @@ func _ready():
 	register_player($PlayerRoot/Player)
 	loop_total_changed(get_tree().get_nodes_in_group("loop").size())
 	startTime = OS.get_unix_time()
-	$Flag.connect("player_won", self, "on_player_won")
+	var _flag = $Flag.connect("player_won", self, "on_player_won")
 
 func _process(_delta):
 	time_total_changed()

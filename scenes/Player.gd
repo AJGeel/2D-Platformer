@@ -45,7 +45,7 @@ onready var RightWallRaycasts = $WallRaycasts/RightWallRaycasts
 onready var AnimatedSprite = $SpriteWrapper/AnimatedSprite
 
 func _ready():
-	$HazardArea.connect("area_entered", self, "on_hazard_area_entered")
+	var _hazardArea = $HazardArea.connect("area_entered", self, "on_hazard_area_entered")
 	AnimatedSprite.connect("frame_changed", self, "on_animated_sprite_frame_changed")
 	defaultHazardMask = $HazardArea.collision_mask
 	

@@ -41,7 +41,7 @@ position = Vector2( -882, -396 )
 position = Vector2( 480, 208 )
 
 [node name="Key" parent="StageInteractions" index="1" instance=ExtResource( 7 )]
-position = Vector2( 69, -31 )
+position = Vector2( 333, -90 )
 
 [node name="CellGate" parent="StageInteractions" index="2" instance=ExtResource( 9 )]
 position = Vector2( 18, -18 )

@@ -11,8 +11,8 @@ var startDirection = Vector2.RIGHT
 
 func _ready():
 	direction = startDirection
-	$GoalDetector.connect("area_entered", self, "on_goal_entered")
-	$HurtboxArea.connect("area_entered", self, "on_hurtbox_entered")
+	var _goalEntered = $GoalDetector.connect("area_entered", self, "on_goal_entered")
+	var _hurtboxEntered = $HurtboxArea.connect("area_entered", self, "on_hurtbox_entered")
 
 func _process(delta):
 	if (isSpawning):
