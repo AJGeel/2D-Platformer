@@ -112,7 +112,7 @@ anims/RESET = SubResource( 6 )
 anims/SwingOpen = SubResource( 1 )
 
 [node name="TileMap" type="TileMap" parent="."]
-z_index = 1337
+z_index = 500
 tile_set = ExtResource( 5 )
 cell_size = Vector2( 18, 18 )
 cell_quadrant_size = 18

@@ -46,7 +46,7 @@ onready var AnimatedSprite := $SpriteWrapper/AnimatedSprite
 
 func _ready():
 	var _hazardArea = $HazardArea.connect("area_entered", self, "on_hazard_area_entered")
-	AnimatedSprite.connect("frame_changed", self, "on_animated_sprite_frame_changed")
+	var _playerFrameChanged = AnimatedSprite.connect("frame_changed", self, "on_animated_sprite_frame_changed")
 	defaultHazardMask = $HazardArea.collision_mask
 	
 	var baseLevels = get_tree().get_nodes_in_group("base_level")
@@ -291,9 +291,10 @@ func add_double_jump_effects():
 func update_wall_direction():
 	var isNearWallLeft = check_is_valid_wall(LeftWallRaycasts)
 	var isNearWallRight = check_is_valid_wall(RightWallRaycasts)
-	wallDirection = -int(isNearWallLeft) + int(isNearWallRight)
 	
-	return wallDirection
+	var returnValue = -int(isNearWallLeft) + int(isNearWallRight)
+	
+	return returnValue
 
 func check_is_valid_wall(wallRaycasts):
 	for raycast in wallRaycasts.get_children():
