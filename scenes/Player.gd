@@ -12,37 +12,37 @@ export(bool) var unlockedDash = false
 export(bool) var unlockedDoubleJump = false
 export(bool) var unlockedWallJump = false
 
-const HORIZONTAL_ACCELERATION = 2000
-const MAX_HORIZONTAL_SPEED = 140
-const GRAVITY = 1000
-const JUMP_SPEED = 320
-const JUMP_TERMINATION_MULTIPLIER = 4
+const HORIZONTAL_ACCELERATION: int = 2000
+const MAX_HORIZONTAL_SPEED: int = 140
+const GRAVITY: int = 1000
+const JUMP_SPEED: int = 320
+const JUMP_TERMINATION_MULTIPLIER: int = 4
 
-const WALL_SLIDE_GRAVITY = 200
-const MAX_WALL_SLIDE_SPEED = 100
-const WALL_JUMP_X_SPEED = 200
+const WALL_SLIDE_GRAVITY: int = 200
+const MAX_WALL_SLIDE_SPEED: int = 100
+const WALL_JUMP_X_SPEED: int = 200
 
-const MAX_DASH_SPEED = 500
-const MIN_DASH_SPEED = 200
+const MAX_DASH_SPEED: int = 500
+const MIN_DASH_SPEED: int = 200
 
-const MUSHROOM_BOOST = -600
+const MUSHROOM_BOOST: int = -600
 
-var velocity = Vector2.ZERO
-var isLaunched = false
-var bufferedJump = false
-var hasDoubleJump = false
-var hasDash = false
-var currentState = State.NORMAL
-var isStateNew = true
-var isDying = false
-var wallDirection = 1
-var wallJumpCooldownActive = false
-var defaultHazardMask = 0
+var velocity := Vector2.ZERO
+var isLaunched: bool = false
+var bufferedJump: bool = false
+var hasDoubleJump: bool = false
+var hasDash: bool = false
+var currentState = State.NORMAL #TODO: Static typing
+var isStateNew: bool = true
+var isDying: bool = false
+var wallDirection: int = 1
+var wallJumpCooldownActive: bool = false
+var defaultHazardMask: int = 0
 
-onready var JumpBufferTimer: = $JumpBufferTimer
-onready var LeftWallRaycasts = $WallRaycasts/LeftWallRaycasts
-onready var RightWallRaycasts = $WallRaycasts/RightWallRaycasts
-onready var AnimatedSprite = $SpriteWrapper/AnimatedSprite
+onready var JumpBufferTimer := $JumpBufferTimer
+onready var LeftWallRaycasts := $WallRaycasts/LeftWallRaycasts
+onready var RightWallRaycasts := $WallRaycasts/RightWallRaycasts
+onready var AnimatedSprite := $SpriteWrapper/AnimatedSprite
 
 func _ready():
 	var _hazardArea = $HazardArea.connect("area_entered", self, "on_hazard_area_entered")

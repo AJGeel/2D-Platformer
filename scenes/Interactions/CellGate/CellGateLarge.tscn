@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://assets/interactions/cell-gate/cell-gate-2h.png" type="Texture" id=1]
+[ext_resource path="res://_aseprite/cell/cell-gate-4h.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Interactions/CellGate/CellGate.gd" type="Script" id=2]
 [ext_resource path="res://assets/effects/particles.png" type="Texture" id=3]
 [ext_resource path="res://scenes/Interactions/Lock.tscn" type="PackedScene" id=4]
+[ext_resource path="res://resources/tileset_decorative.tres" type="TileSet" id=5]
 
 [sub_resource type="Animation" id=6]
 length = 0.001
@@ -66,10 +67,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ false, false, true ]
+"values": [ false, true ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("../DustParticles:emitting")
@@ -88,7 +89,7 @@ tracks/2/keys = {
 radius = 15.0
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 3, 18 )
+extents = Vector2( 5, 36 )
 
 [sub_resource type="CanvasItemMaterial" id=3]
 particles_animation = true
@@ -102,16 +103,24 @@ _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.106742, 1 ), 0.0, 0.0, 0, 
 [sub_resource type="Gradient" id=5]
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[node name="CellGate" type="Node2D"]
+[node name="CellGateLarge" type="Node2D"]
 script = ExtResource( 2 )
-GATE_HEIGHT = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite")
 anims/RESET = SubResource( 6 )
 anims/SwingOpen = SubResource( 1 )
 
+[node name="TileMap" type="TileMap" parent="."]
+z_index = 1337
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 18, 18 )
+cell_quadrant_size = 18
+format = 1
+tile_data = PoolIntArray( -131073, 9, 0, -196608, 9, 4, -65537, 9, 65536, -131072, 9, 65540, -1, 9, 65536, -65536, 9, 65540, 65535, 9, 131072, 0, 9, 131076 )
+
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -36 )
 scale = Vector2( 1e-05, 1 )
 texture = ExtResource( 1 )
 centered = false
@@ -129,12 +138,12 @@ position = Vector2( 4, 0 )
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( -4, 0 )
+position = Vector2( -4, -18 )
 shape = SubResource( 2 )
 
 [node name="DustParticles" type="CPUParticles2D" parent="."]
 material = SubResource( 3 )
-position = Vector2( 6, 0 )
+position = Vector2( 0, -18 )
 emitting = false
 one_shot = true
 explosiveness = 0.8
