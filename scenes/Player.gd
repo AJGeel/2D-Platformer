@@ -39,6 +39,8 @@ var wallDirection: int = 1
 var wallJumpCooldownActive: bool = false
 var defaultHazardMask: int = 0
 
+var rng = RandomNumberGenerator.new()
+
 onready var JumpBufferTimer := $JumpBufferTimer
 onready var LeftWallRaycasts := $WallRaycasts/LeftWallRaycasts
 onready var RightWallRaycasts := $WallRaycasts/RightWallRaycasts
@@ -48,6 +50,8 @@ func _ready():
 	var _hazardArea = $HazardArea.connect("area_entered", self, "on_hazard_area_entered")
 	var _playerFrameChanged = AnimatedSprite.connect("frame_changed", self, "on_animated_sprite_frame_changed")
 	defaultHazardMask = $HazardArea.collision_mask
+	
+	rng.randomize()
 	
 	var baseLevels = get_tree().get_nodes_in_group("base_level")
 	if (baseLevels.size() > 0):
@@ -251,6 +255,7 @@ func kill():
 		playerDeathInstance.global_position = global_position
 		$"/root/Helpers".apply_twitch()
 		$"/root/Helpers".apply_camera_shake(1)
+		$"/root/Helpers".apply_vignette()
 		emit_signal("died")
 
 func change_trail_to(state):
@@ -265,12 +270,13 @@ func handle_x_movement(moveVector, delta, exponential):
 		velocity.x = lerp(0, velocity.x, pow(2, exponential * delta))
 	velocity.x = clamp(velocity.x, -MAX_HORIZONTAL_SPEED, MAX_HORIZONTAL_SPEED)
 
-func add_footsteps(scale = 1):
+func add_footsteps(scale = 1, sound: bool = false):
 	var footstep = footstepParticles.instance()
 	get_parent().add_child(footstep)
-	$AudioPlayers/FootstepAudioPlayer.play()
 	footstep.scale = Vector2.ONE * scale
 	footstep.global_position = global_position
+	if (sound):
+		$AudioPlayers/FootstepAudioPlayer.play()
 
 func add_wall_particles(scale = 1, wallDirection = -1):
 	var wallParticle = footstepParticles.instance()
@@ -316,8 +322,13 @@ func on_launched_by_mushroom():
 	add_double_jump_effects()
 
 func on_animated_sprite_frame_changed():
-	if (AnimatedSprite.animation == "run" && AnimatedSprite.frame == 0):
-		add_footsteps(0.5)
+	if (AnimatedSprite.animation == "run"):
+		var randomSize = rng.randf_range(.25, .5)
+		
+		if (AnimatedSprite.frame == 0):
+			add_footsteps(randomSize, true)
+		else:
+			add_footsteps(randomSize)
 
 func _on_JumpBufferTimer_timeout():
 	bufferedJump = false

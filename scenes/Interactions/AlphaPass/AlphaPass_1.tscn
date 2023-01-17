@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/effects/sparkle.png" type="Texture" id=1]
 [ext_resource path="res://assets/interactions/alpha-passes/alpha-pass-1.png" type="Texture" id=2]
@@ -16,6 +16,11 @@ _data = [ Vector2( 0, 0.560732 ), 0.0, 0.0, 0, 0, Vector2( 0.166118, 1 ), 0.0, 0
 [sub_resource type="Gradient" id=3]
 offsets = PoolRealArray( 0.828571, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="Shader" id=5]
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
 
 [sub_resource type="Animation" id=4]
 resource_name = "Hover"
@@ -132,22 +137,23 @@ anim_speed = 1.0
 [node name="Visuals" type="Node2D" parent="."]
 
 [node name="Ellipses" type="Node2D" parent="Visuals"]
-modulate = Color( 1, 1, 1, 0.917597 )
-scale = Vector2( 1.04479, 1.04479 )
+modulate = Color( 1, 1, 1, 0.883507 )
+scale = Vector2( 1.04026, 1.04026 )
 
 [node name="Ellipse_1" type="Sprite" parent="Visuals/Ellipses"]
 modulate = Color( 1, 1, 1, 0.262745 )
-scale = Vector2( 1.46877, 1.46877 )
+scale = Vector2( 1.44155, 1.44155 )
 texture = ExtResource( 3 )
 
 [node name="Ellipse_2" type="Sprite" parent="Visuals/Ellipses"]
 modulate = Color( 1, 1, 1, 0.262745 )
-scale = Vector2( 1.35835, 1.35835 )
+material = SubResource( 6 )
+scale = Vector2( 1.32207, 1.32207 )
 texture = ExtResource( 3 )
 
 [node name="Ellipse_3" type="Sprite" parent="Visuals/Ellipses"]
 modulate = Color( 1, 1, 1, 0.262745 )
-scale = Vector2( 1.20315, 1.20315 )
+scale = Vector2( 1.16233, 1.16233 )
 texture = ExtResource( 3 )
 
 [node name="Ticket" type="Sprite" parent="Visuals"]
