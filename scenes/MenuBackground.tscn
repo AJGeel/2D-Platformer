@@ -5,7 +5,7 @@
 [ext_resource path="res://resources/tileset.tres" type="TileSet" id=6]
 [ext_resource path="res://scenes/Spikes.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/Loop.tscn" type="PackedScene" id=9]
-[ext_resource path="res://resources/decorative_tileset.tres" type="TileSet" id=10]
+[ext_resource path="res://resources/tileset_decorative.tres" type="TileSet" id=10]
 [ext_resource path="res://scenes/GameCamera.tscn" type="PackedScene" id=12]
 
 [sub_resource type="OpenSimplexNoise" id=1]

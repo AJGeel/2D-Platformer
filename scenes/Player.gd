@@ -12,42 +12,46 @@ export(bool) var unlockedDash = false
 export(bool) var unlockedDoubleJump = false
 export(bool) var unlockedWallJump = false
 
-const HORIZONTAL_ACCELERATION = 2000
-const MAX_HORIZONTAL_SPEED = 140
-const GRAVITY = 1000
-const JUMP_SPEED = 320
-const JUMP_TERMINATION_MULTIPLIER = 4
+const HORIZONTAL_ACCELERATION: int = 2000
+const MAX_HORIZONTAL_SPEED: int = 140
+const GRAVITY: int = 1000
+const JUMP_SPEED: int = 320
+const JUMP_TERMINATION_MULTIPLIER: int = 4
 
-const WALL_SLIDE_GRAVITY = 200
-const MAX_WALL_SLIDE_SPEED = 100
-const WALL_JUMP_X_SPEED = 200
+const WALL_SLIDE_GRAVITY: int = 200
+const MAX_WALL_SLIDE_SPEED: int = 100
+const WALL_JUMP_X_SPEED: int = 200
 
-const MAX_DASH_SPEED = 500
-const MIN_DASH_SPEED = 200
+const MAX_DASH_SPEED: int = 500
+const MIN_DASH_SPEED: int = 200
 
-const MUSHROOM_BOOST = -600
+const MUSHROOM_BOOST: int = -600
 
-var velocity = Vector2.ZERO
-var isLaunched = false
-var bufferedJump = false
-var hasDoubleJump = false
-var hasDash = false
-var currentState = State.NORMAL
-var isStateNew = true
-var isDying = false
-var wallDirection = 1
-var wallJumpCooldownActive = false
-var defaultHazardMask = 0
+var velocity := Vector2.ZERO
+var isLaunched: bool = false
+var bufferedJump: bool = false
+var hasDoubleJump: bool = false
+var hasDash: bool = false
+var currentState = State.NORMAL #TODO: Static typing
+var isStateNew: bool = true
+var isDying: bool = false
+var wallDirection: int = 1
+var wallJumpCooldownActive: bool = false
+var defaultHazardMask: int = 0
 
-onready var JumpBufferTimer: = $JumpBufferTimer
-onready var LeftWallRaycasts = $WallRaycasts/LeftWallRaycasts
-onready var RightWallRaycasts = $WallRaycasts/RightWallRaycasts
-onready var AnimatedSprite = $SpriteWrapper/AnimatedSprite
+var rng = RandomNumberGenerator.new()
+
+onready var JumpBufferTimer := $JumpBufferTimer
+onready var LeftWallRaycasts := $WallRaycasts/LeftWallRaycasts
+onready var RightWallRaycasts := $WallRaycasts/RightWallRaycasts
+onready var AnimatedSprite := $SpriteWrapper/AnimatedSprite
 
 func _ready():
-	$HazardArea.connect("area_entered", self, "on_hazard_area_entered")
-	AnimatedSprite.connect("frame_changed", self, "on_animated_sprite_frame_changed")
+	var _hazardArea = $HazardArea.connect("area_entered", self, "on_hazard_area_entered")
+	var _playerFrameChanged = AnimatedSprite.connect("frame_changed", self, "on_animated_sprite_frame_changed")
 	defaultHazardMask = $HazardArea.collision_mask
+	
+	rng.randomize()
 	
 	var baseLevels = get_tree().get_nodes_in_group("base_level")
 	if (baseLevels.size() > 0):
@@ -81,8 +85,7 @@ func process_normal(delta):
 	handle_x_movement(moveVector, delta, -17)
 	
 	if (moveVector.y < 0 && (is_on_floor() || !$CoyoteTimer.is_stopped() || (unlockedDoubleJump && hasDoubleJump))):
-		$AnimationPlayer.queue("jump")
-		$AnimationPlayer.queue("RESET")
+		queue_animation_player("jump")
 		
 		if (!is_on_floor() && $CoyoteTimer.is_stopped()):
 			# Double Jump
@@ -124,11 +127,9 @@ func process_normal(delta):
 			# TODO Add crunch sound effect
 			$"/root/Helpers".apply_twitch()
 			$"/root/Helpers".apply_camera_shake(shakeScale)
-			$AnimationPlayer.queue("harsh_landing")
-			$AnimationPlayer.queue("RESET")
+			queue_animation_player("harsh_landing")
 		else:
-			$AnimationPlayer.queue("land")
-			$AnimationPlayer.queue("RESET")
+			queue_animation_player("land")
 	
 	if (is_on_floor()):
 		# Reset values when you hit the floor
@@ -192,8 +193,7 @@ func process_wall_slide(delta):
 	
 	# Handle wall jump
 	if (unlockedWallJump && (moveVector.y < 0) && !wallJumpCooldownActive):
-		$AnimationPlayer.queue("jump")
-		$AnimationPlayer.queue("RESET")
+		queue_animation_player("jump")
 		add_wall_particles(1.25, wallDirection)
 		velocity.y = moveVector.y * JUMP_SPEED
 		velocity.x -= wallDirection * 300
@@ -223,6 +223,11 @@ func get_movement_vector():
 	moveVector.y = -1 if Input.is_action_just_pressed("jump") else 0
 	return moveVector
 
+func queue_animation_player(animationName : String):
+	var AP = $AnimationPlayer
+	AP.play(animationName)
+	$AnimationPlayer.queue("RESET")
+
 func update_animation():
 	var moveVec = get_movement_vector()
 	
@@ -250,6 +255,7 @@ func kill():
 		playerDeathInstance.global_position = global_position
 		$"/root/Helpers".apply_twitch()
 		$"/root/Helpers".apply_camera_shake(1)
+		$"/root/Helpers".apply_vignette()
 		emit_signal("died")
 
 func change_trail_to(state):
@@ -264,12 +270,13 @@ func handle_x_movement(moveVector, delta, exponential):
 		velocity.x = lerp(0, velocity.x, pow(2, exponential * delta))
 	velocity.x = clamp(velocity.x, -MAX_HORIZONTAL_SPEED, MAX_HORIZONTAL_SPEED)
 
-func add_footsteps(scale = 1):
+func add_footsteps(scale = 1, sound: bool = false):
 	var footstep = footstepParticles.instance()
 	get_parent().add_child(footstep)
-	$AudioPlayers/FootstepAudioPlayer.play()
 	footstep.scale = Vector2.ONE * scale
 	footstep.global_position = global_position
+	if (sound):
+		$AudioPlayers/FootstepAudioPlayer.play()
 
 func add_wall_particles(scale = 1, wallDirection = -1):
 	var wallParticle = footstepParticles.instance()
@@ -290,9 +297,10 @@ func add_double_jump_effects():
 func update_wall_direction():
 	var isNearWallLeft = check_is_valid_wall(LeftWallRaycasts)
 	var isNearWallRight = check_is_valid_wall(RightWallRaycasts)
-	wallDirection = -int(isNearWallLeft) + int(isNearWallRight)
 	
-	return wallDirection
+	var returnValue = -int(isNearWallLeft) + int(isNearWallRight)
+	
+	return returnValue
 
 func check_is_valid_wall(wallRaycasts):
 	for raycast in wallRaycasts.get_children():
@@ -310,13 +318,17 @@ func on_hazard_area_entered(_area2d):
 func on_launched_by_mushroom():
 	isLaunched = true
 	velocity.y = MUSHROOM_BOOST
-	$AnimationPlayer.queue("jump")
-	$AnimationPlayer.queue("RESET")
+	queue_animation_player("jump")
 	add_double_jump_effects()
 
 func on_animated_sprite_frame_changed():
-	if (AnimatedSprite.animation == "run" && AnimatedSprite.frame == 0):
-		add_footsteps(0.5)
+	if (AnimatedSprite.animation == "run"):
+		var randomSize = rng.randf_range(.25, .5)
+		
+		if (AnimatedSprite.frame == 0):
+			add_footsteps(randomSize, true)
+		else:
+			add_footsteps(randomSize)
 
 func _on_JumpBufferTimer_timeout():
 	bufferedJump = false

@@ -10,12 +10,12 @@ var rng = RandomNumberGenerator.new()
 
 func _ready():
 	rng.randomize()
-	connect("mouse_entered", self, "on_mouse_entered")
-	connect("focus_entered", self, "on_mouse_entered")
-	connect("mouse_exited", self, "on_mouse_exited")
-	connect("focus_exited", self, "on_mouse_exited")
-	connect("focus_exited", self, "on_focus_exited")
-	connect("pressed", self, "on_pressed")
+	var _mouseEntered = connect("mouse_entered", self, "on_mouse_entered")
+	var _focusEntered = connect("focus_entered", self, "on_mouse_entered")
+	var _mouseExited = connect("mouse_exited", self, "on_mouse_exited")
+	var _focusMouseExited = connect("focus_exited", self, "on_mouse_exited")
+	var _focusExited = connect("focus_exited", self, "on_focus_exited")
+	var _pressed = connect("pressed", self, "on_pressed")
 
 
 func _process(_delta):

@@ -28,7 +28,7 @@ func _ready():
 	register_player($PlayerRoot/Player)
 	loop_total_changed(get_tree().get_nodes_in_group("loop").size())
 	startTime = OS.get_unix_time()
-	$Flag.connect("player_won", self, "on_player_won")
+	var _flag = $Flag.connect("player_won", self, "on_player_won")
 
 func _process(_delta):
 	time_total_changed()
@@ -67,7 +67,7 @@ func register_player(player):
 	currentPlayerNode = player
 	currentPlayerNode.connect("died", self, "on_player_died", [], CONNECT_DEFERRED)
 
-func create_player():
+func respawn_player():
 	var playerInstance = playerScene.instance()
 	
 	# TODO: Re-instance player unlocks based on game state
@@ -83,7 +83,7 @@ func on_player_died():
 	currentPlayerNode.queue_free()
 	var timer = get_tree().create_timer(1.25)
 	yield(timer, "timeout")
-	create_player()
+	respawn_player()
 
 func on_player_won():
 	currentPlayerNode.disable_player_input()

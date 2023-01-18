@@ -5,8 +5,8 @@ signal percentage_changed
 var currentPercentage = 1.0
 
 func _ready():
-	$SubtractButton.connect("pressed", self, "on_button_pressed", [-0.1])
-	$AddButton.connect("pressed", self, "on_button_pressed", [0.1])
+	var _subtractBtn = $SubtractButton.connect("pressed", self, "on_button_pressed", [-0.1])
+	var _addBtn = $AddButton.connect("pressed", self, "on_button_pressed", [0.1])
 
 func set_current_percentage(percent):
 	currentPercentage = clamp(percent, 0, 1)

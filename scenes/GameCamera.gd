@@ -31,14 +31,36 @@ func _process(delta):
 		var calculatedOffset = Vector2(xSample, ySample) * maxShakeOffset * pow(currentShakePercentage, 2)
 		offset = calculatedOffset
 		
-		currentShakePercentage = clamp(currentShakePercentage - shakeDecay * delta, 0, 1)
+		currentShakePercentage = clamp(currentShakePercentage - shakeDecay * delta, 0, 2)
 
-func apply_twitch():
-	$CameraShader/AnimationPlayer.current_animation = "Twitch"
-	$CameraShader/AnimationPlayer.queue("RESET")
+# Camera Shader FX
+
+func apply_twitch(amount = 1):
+	# Cancel any previous animations
+	$CameraShader/ChromaticAbberation/AnimationPlayer.set_current_animation("RESET")
+	
+	match amount:
+		1:
+			$CameraShader/ChromaticAbberation/AnimationPlayer.set_current_animation("Twitch_1")
+		2:
+			$CameraShader/ChromaticAbberation/AnimationPlayer.set_current_animation("Twitch_2")
+	
+	# Cleanup
+	$CameraShader/ChromaticAbberation/AnimationPlayer.queue("RESET")
 
 func apply_shake(percentage):
-	currentShakePercentage = clamp(currentShakePercentage + percentage, 0, 1)
+	currentShakePercentage = clamp(currentShakePercentage + percentage, 0, 2)
+
+func apply_vignette(amount = 1):
+	# Cancel any previous animations
+	$CameraShader/Vignette/AnimationPlayer.set_current_animation("RESET")
+	
+	match amount:
+		1:
+			$CameraShader/Vignette/AnimationPlayer.set_current_animation("Fade")
+	
+	# Cleanup
+	$CameraShader/Vignette/AnimationPlayer.queue("RESET")
 
 func acquire_target_position():
 	var acquired = get_target_position_from_node_group("player")

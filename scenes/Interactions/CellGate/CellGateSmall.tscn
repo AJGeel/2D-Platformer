@@ -1,0 +1,166 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://_aseprite/cell/cell-gate-2h.png" type="Texture" id=1]
+[ext_resource path="res://scenes/Interactions/CellGate/CellGate.gd" type="Script" id=2]
+[ext_resource path="res://assets/effects/particles.png" type="Texture" id=3]
+[ext_resource path="res://scenes/Interactions/Lock.tscn" type="PackedScene" id=4]
+[ext_resource path="res://resources/tileset_decorative.tres" type="TileSet" id=5]
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( -2 ),
+"update": 0,
+"values": [ Vector2( 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../StaticBody2D/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../DustParticles:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "SwingOpen"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5 ),
+"transitions": PoolRealArray( -2, -2, -2 ),
+"update": 0,
+"values": [ Vector2( 0, 1 ), Vector2( 1.2, 1 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../StaticBody2D/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../DustParticles:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 15.0
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 5, 18 )
+
+[sub_resource type="CanvasItemMaterial" id=3]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.106742, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.609551, 0.769358 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=5]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[node name="CellGateSmall" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite")
+anims/RESET = SubResource( 6 )
+anims/SwingOpen = SubResource( 1 )
+
+[node name="TileMap" type="TileMap" parent="."]
+z_index = 500
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 18, 18 )
+cell_quadrant_size = 18
+format = 1
+tile_data = PoolIntArray( -1, 9, 0, -65536, 9, 4, 65535, 9, 131072, 0, 9, 131076 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 1e-05, 1 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -18 )
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 2048
+collision_mask = 2048
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource( 7 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 4, 0 )
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( -4, 0 )
+shape = SubResource( 2 )
+
+[node name="DustParticles" type="CPUParticles2D" parent="."]
+material = SubResource( 3 )
+emitting = false
+one_shot = true
+explosiveness = 0.8
+lifetime_randomness = 0.37
+texture = ExtResource( 3 )
+emission_shape = 2
+emission_rect_extents = Vector2( 4, 12 )
+spread = 5.0
+gravity = Vector2( 0, -10 )
+initial_velocity = 50.0
+initial_velocity_random = 0.16
+angular_velocity = 360.0
+angular_velocity_random = 1.0
+damping = 46.9
+angle = 220.9
+angle_random = 1.0
+scale_amount_curve = SubResource( 4 )
+color_ramp = SubResource( 5 )
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[node name="Lock" parent="." instance=ExtResource( 4 )]

@@ -5,7 +5,12 @@ func apply_camera_shake(percentage):
 	if (cameras.size() > 0):
 		cameras[0].apply_shake(percentage)
 
-func apply_twitch():
+func apply_twitch(amount: int = 1):
 	var cameras = get_tree().get_nodes_in_group("camera")
 	if (cameras.size() > 0):
-		cameras[0].apply_twitch()
+		cameras[0].apply_twitch(amount)
+
+func apply_vignette(amount: int = 1):
+	var cameras = get_tree().get_nodes_in_group("camera")
+	if (cameras.size() > 0):
+		cameras[0].apply_vignette(amount)

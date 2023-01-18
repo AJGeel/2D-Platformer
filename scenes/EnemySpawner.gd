@@ -9,7 +9,7 @@ var currentEnemyNode = null
 var spawnOnNextTick = false
 
 func _ready():
-	$SpawnTimer.connect("timeout", self, "on_spawn_timer_timeout")
+	var _spawnTimerTimeout = $SpawnTimer.connect("timeout", self, "on_spawn_timer_timeout")
 	call_deferred("spawn_enemy")
 
 func spawn_enemy():

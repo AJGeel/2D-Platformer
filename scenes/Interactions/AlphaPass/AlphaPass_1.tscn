@@ -1,0 +1,178 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/effects/sparkle.png" type="Texture" id=1]
+[ext_resource path="res://assets/interactions/alpha-passes/alpha-pass-1.png" type="Texture" id=2]
+[ext_resource path="res://assets/interactions/alpha-passes/ellipse.png" type="Texture" id=3]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0.560732 ), 0.0, 0.0, 0, 0, Vector2( 0.166118, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.657895, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0.828571, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="Shader" id=5]
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "Hover"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Visuals/Ellipses/Ellipse_1:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( -1.31951, -1.31951 ),
+"update": 0,
+"values": [ Vector2( 1.2, 1.2 ), Vector2( 1.5, 1.5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Visuals/Ellipses/Ellipse_2:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( -1.31951, -1.31951 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Visuals/Ellipses/Ellipse_3:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( -1.31951, -1.31951 ),
+"update": 0,
+"values": [ Vector2( 0.8, 0.8 ), Vector2( 1.25, 1.25 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Visuals/Ellipses:scale")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( -1.31951, -1.31951 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.05, 1.05 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Visuals/Ellipses:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( -1.31951, -1.31951 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.588235 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="AlphaPass1" type="Node2D"]
+position = Vector2( 210, 118 )
+
+[node name="BG" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="BG"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -210.0
+margin_top = -118.0
+margin_right = 210.0
+margin_bottom = 118.0
+rect_min_size = Vector2( 420, 236 )
+rect_pivot_offset = Vector2( 210, 0 )
+color = Color( 0.0317125, 0.052403, 0.1875, 1 )
+
+[node name="BGParticles" type="CPUParticles2D" parent="BG"]
+material = SubResource( 1 )
+amount = 50
+texture = ExtResource( 1 )
+emission_shape = 2
+emission_rect_extents = Vector2( 240, 140 )
+gravity = Vector2( 60, 50 )
+angular_velocity = 100.0
+angular_velocity_random = 1.0
+scale_amount = 0.75
+scale_amount_curve = SubResource( 2 )
+color = Color( 0.886275, 0.698039, 0.396078, 0.729412 )
+color_ramp = SubResource( 3 )
+anim_speed = 1.0
+
+[node name="BGParticles2" type="CPUParticles2D" parent="BG"]
+material = SubResource( 1 )
+amount = 80
+lifetime = 2.0
+texture = ExtResource( 1 )
+emission_shape = 2
+emission_rect_extents = Vector2( 240, 140 )
+gravity = Vector2( 30, 25 )
+angular_velocity = 100.0
+angular_velocity_random = 1.0
+scale_amount = 0.5
+scale_amount_curve = SubResource( 2 )
+color = Color( 0.576471, 0.407843, 0.133333, 0.729412 )
+color_ramp = SubResource( 3 )
+anim_speed = 1.0
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Ellipses" type="Node2D" parent="Visuals"]
+modulate = Color( 1, 1, 1, 0.883507 )
+scale = Vector2( 1.04026, 1.04026 )
+
+[node name="Ellipse_1" type="Sprite" parent="Visuals/Ellipses"]
+modulate = Color( 1, 1, 1, 0.262745 )
+scale = Vector2( 1.44155, 1.44155 )
+texture = ExtResource( 3 )
+
+[node name="Ellipse_2" type="Sprite" parent="Visuals/Ellipses"]
+modulate = Color( 1, 1, 1, 0.262745 )
+material = SubResource( 6 )
+scale = Vector2( 1.32207, 1.32207 )
+texture = ExtResource( 3 )
+
+[node name="Ellipse_3" type="Sprite" parent="Visuals/Ellipses"]
+modulate = Color( 1, 1, 1, 0.262745 )
+scale = Vector2( 1.16233, 1.16233 )
+texture = ExtResource( 3 )
+
+[node name="Ticket" type="Sprite" parent="Visuals"]
+texture = ExtResource( 2 )
+
+[node name="TicketParticles" type="CPUParticles2D" parent="Visuals"]
+material = SubResource( 1 )
+amount = 26
+texture = ExtResource( 1 )
+emission_shape = 2
+emission_rect_extents = Vector2( 30, 15 )
+gravity = Vector2( 0, -50 )
+angular_velocity = 100.0
+angular_velocity_random = 1.0
+scale_amount_curve = SubResource( 2 )
+color = Color( 1, 1, 1, 0.729412 )
+color_ramp = SubResource( 3 )
+anim_speed = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Hover"
+anims/Hover = SubResource( 4 )
